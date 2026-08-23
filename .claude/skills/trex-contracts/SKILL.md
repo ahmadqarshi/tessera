@@ -75,8 +75,11 @@ rules like holder caps need the post-move hook to keep count.
 
 These are regulator-mandated and **agent-gated**:
 
-- `forcedTransfer(from, to, amount)` — bypasses **sender consent only**. Gates 2 and 3 still
-  run: you cannot force a transfer to an ineligible receiver.
+- `forcedTransfer` runs gate 2 (`isVerified(_to)`) only. It does not call
+`compliance.canTransfer` — `moduleCheck` is skipped, though `compliance.transferred` still
+fires so module counters stay accurate. Agent force-transfers can therefore breach a
+module-enforced cap. mint does enforce gate 3. This asymmetry is verified in the
+implementation; see contracts/NOTES.md.
 - `freezePartialTokens(addr, amount)` / `unfreeze` — locks part of a balance in place.
 - `setAddressFrozen(addr, bool)` — freezes a whole wallet.
 - `pause()` / `unpause()` — global emergency stop.

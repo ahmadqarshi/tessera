@@ -64,8 +64,11 @@ claim key on a trusted issuer.
 3. `compliance.canTransfer(from, to, amount)` — view pre-flight
 4. balance move, then `compliance.transferred(...)` — state-mutating counters
 
-`forcedTransfer` bypasses **sender consent only**. Gates 2 and 3 still run. Any test
-asserting otherwise is wrong.
+`forcedTransfer` runs gate 2 (`isVerified(_to)`) only. It does not call
+`compliance.canTransfer` — `moduleCheck` is skipped, though `compliance.transferred` still
+fires so module counters stay accurate. Agent force-transfers can therefore breach a
+module-enforced cap. mint does enforce gate 3. This asymmetry is verified in the
+implementation; see contracts/NOTES.md.
 
 ## Testing requirements
 
