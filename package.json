@@ -5,7 +5,7 @@
   "description": "Tessera — ERC-3643 RWA tokenization & compliance platform (monorepo root)",
   "packageManager": "pnpm@11.5.3",
   "engines": {
-    "node": ">=20"
+    "node": ">=22.13"
   },
   "scripts": {
     "dev": "turbo run dev",
