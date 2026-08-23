@@ -203,10 +203,14 @@ contract Deploy is Script, TREXConstants {
             );
 
         // 4b. Deploy and bind our custom holder-cap module, then configure its cap.
-        //     addModule is onlyOwner (deployer) and calls module.bindCompliance(compliance);
-        //     the module is plug-and-play so no canComplianceBind gate runs. We bind it HERE —
-        //     before any mint — because the module mirrors holder balances from an empty state,
-        //     so it must see the token's entire holder history (MaxInvestorsModule binding note).
+        //     addModule is onlyOwner (deployer) and calls module.bindCompliance(compliance).
+        //     The module is NOT plug-and-play (isPlugAndPlay() == false), so addModule DOES run
+        //     the canComplianceBind gate; it passes here only because the token is already bound
+        //     (Token.init -> setCompliance -> bindToken) and its totalSupply() == 0 (no mint yet).
+        //     We bind it HERE — before any mint — because the module mirrors holder balances from
+        //     an empty state, so it must see the token's entire holder history. Flipping the module
+        //     to plug-and-play, or reordering addModule before the token/compliance bind, would let
+        //     it attach to a token that already has holders and silently under-count (NOTES §9.1).
         //
         //     The cap is set through compliance.callModuleFunction (onlyOwner): that low-level
         //     call reaches the module with msg.sender == compliance, satisfying the module's

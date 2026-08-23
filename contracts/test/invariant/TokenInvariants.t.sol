@@ -223,6 +223,20 @@ contract TokenInvariants is TREXFixture {
         }
     }
 
+    // ── Call distribution (diagnostic — asserts nothing) ───────────────────────────────────────
+    //
+    // Not a property: a passthrough that lets the handler print how the fuzzer apportioned its calls
+    // across the 9 action selectors, so an under-exercised action is visible rather than silently
+    // starving an invariant into vacuity. Foundry surfaces the console output once per invariant in
+    // the run report. The authoritative cumulative tally across all runs is forge's own per-selector
+    // "Calls/Reverts/Discards" table; this handler-side counter reflects the calls it has seen.
+    /// forge-config: default.invariant.runs = 256
+    /// forge-config: default.invariant.depth = 64
+    /// forge-config: default.invariant.fail-on-revert = true
+    function invariant_callSummary() public view {
+        handler.callSummary();
+    }
+
     // ── Helpers ──────────────────────────────────────────────────────────────────────────────
 
     /// @dev Ground-truth distinct-holder count: actors with a non-zero balance. Exhaustive because
