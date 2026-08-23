@@ -1,0 +1,29 @@
+{
+  "name": "tessera",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Tessera — ERC-3643 RWA tokenization & compliance platform (monorepo root)",
+  "packageManager": "pnpm@11.5.3",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "format": "prettier --write \"**/*.{ts,tsx,js,mjs,cjs,json,md,yml,yaml}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,mjs,cjs,json,md,yml,yaml}\"",
+    "db:migrate": "pnpm --filter @tessera/api db:migrate",
+    "seed": "pnpm --filter @tessera/api seed",
+    "contracts:deploy:local": "forge script script/Deploy.s.sol --root contracts --rpc-url ${RPC_URL_LOCAL:-http://127.0.0.1:8545} --broadcast",
+    "contracts:deploy:amoy": "forge script script/Deploy.s.sol --root contracts --rpc-url ${RPC_URL_AMOY} --broadcast --verify",
+    "contracts:verify:amoy": "forge verify-contract --root contracts --chain 80002 --etherscan-api-key ${POLYGONSCAN_API_KEY}"
+  },
+  "devDependencies": {
+    "prettier": "^3.4.2",
+    "turbo": "^2.5.6",
+    "typescript": "^5.7.3"
+  }
+}

@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#E7EBEF; font-family:"Space Grotesk", system-ui, sans-serif; -webkit-font-smoothing:antialiased; }
+  a { color:#0E635C; text-decoration:none; }
+  a:hover { color:#0B4F4A; text-decoration:underline; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  @keyframes shimmer { 0% { background-position:-340px 0; } 100% { background-position:340px 0; } }
+</style>
+</helmet>
+
+<div style="padding:64px 64px 140px; background:#E7EBEF; color:#161A20; --accent:{{ accent }}; --r:{{ radius }}; --mono:{{ monoFace }};">
+
+  <div style="max-width:1440px; margin:0 auto 56px;">
+    <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#0E635C;">Tessera · Investor portal</div>
+    <h1 style="margin:16px 0 0; font-size:44px; font-weight:600; letter-spacing:-0.03em;">Screens</h1>
+    <p style="margin:14px 0 0; max-width:64ch; font-size:15px; line-height:1.65; color:#515B67; text-wrap:pretty;">Seven flows for an investor holding tokenized real estate. Chain mechanics stay behind plain language; compliance state is never softened or hidden. Built on the Tessera tokens — pine teal primary, 4px radius, mono for anything that came off-chain.</p>
+  </div>
+
+  <div style="display:grid; gap:80px; justify-items:start;">
+
+    <div style="display:grid; gap:16px;">
+      <div style="display:flex; align-items:baseline; gap:12px;">
+        <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; color:#0E635C;">01</span>
+        <span style="font-size:18px; font-weight:600;">Sign in</span>
+        <span style="font-size:13px; color:#6E7885;">Wallet connect + SIWE signature. One decision on screen.</span>
+      </div>
+      <div data-screen-label="01 Sign in" style="width:1440px; height:860px; background:#fff; border:1px solid #C7CED6; border-radius:6px; box-shadow:0 8px 28px rgba(22,26,32,0.10); overflow:hidden; display:grid; grid-template-columns:1fr 620px;">
+        <div style="background:#0B2320; padding:56px 60px; display:flex; flex-direction:column; justify-content:space-between; position:relative;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:16px; height:16px; border:2px solid #3FA396; transform:rotate(45deg);"></div>
+            <span style="font-size:14px; font-weight:600; color:#fff;">Tessera</span>
+          </div>
+          <div>
+            <div style="font-size:38px; line-height:1.15; font-weight:600; color:#fff; letter-spacing:-0.025em; max-width:15ch;">Own a share of buildings that already pay rent.</div>
+            <div style="font-size:14px; line-height:1.7; color:#9FBDB7; margin-top:22px; max-width:44ch;">Every tranche on Tessera is a regulated security backed by a single titled property, held through a licensed issuer and settled on-chain.</div>
+            <div style="display:flex; gap:44px; margin-top:44px; padding-top:28px; border-top:1px solid #1C3F3A;">
+              <div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:22px; color:#fff;">€412M</div><div style="font-size:12px; color:#7FA39C; margin-top:5px;">Assets tokenized</div></div>
+              <div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:22px; color:#fff;">18</div><div style="font-size:12px; color:#7FA39C; margin-top:5px;">Live tranches</div></div>
+              <div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:22px; color:#fff;">4,120</div><div style="font-size:12px; color:#7FA39C; margin-top:5px;">Verified investors</div></div>
+            </div>
+          </div>
+          <div style="font-size:12px; color:#5F827C; line-height:1.6; max-width:52ch;">Tessera Securities S.à r.l. is supervised by the CSSF. Tokenized shares are not deposits and may lose value.</div>
+        </div>
+        <div style="padding:0 72px; display:flex; flex-direction:column; justify-content:center; background:#fff;">
+          <h2 style="margin:0; font-size:26px; font-weight:600; letter-spacing:-0.02em;">Sign in</h2>
+          <p style="margin:10px 0 0; font-size:14px; line-height:1.6; color:#515B67;">Connect the wallet linked to your investor account, then sign a message to prove it is yours. No transaction, no fee.</p>
+          <div style="display:grid; gap:10px; margin-top:32px;">
+            <button style="display:flex; align-items:center; gap:12px; width:100%; text-align:left; border:1px solid #0E635C; background:#0E635C; color:#fff; font-family:inherit; font-size:14px; font-weight:600; padding:14px 18px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#0B4F4A; border-color:#0B4F4A;">
+              <span style="width:20px; height:20px; border-radius:4px; background:rgba(255,255,255,0.18); display:inline-flex; align-items:center; justify-content:center; font-size:11px;">◆</span>
+              Connect wallet
+              <span style="margin-left:auto; font-size:13px; opacity:0.75;">→</span>
+            </button>
+            <button style="display:flex; align-items:center; gap:12px; width:100%; text-align:left; border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:14px; font-weight:600; padding:14px 18px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9; border-color:#9AA4AF;">
+              <span style="width:20px; height:20px; border-radius:4px; background:#EDF0F3; display:inline-flex; align-items:center; justify-content:center; font-size:11px; color:#515B67;">▣</span>
+              WalletConnect
+              <span style="margin-left:auto; font-size:12px; color:#9AA4AF;">QR</span>
+            </button>
+            <button style="display:flex; align-items:center; gap:12px; width:100%; text-align:left; border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:14px; font-weight:600; padding:14px 18px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9; border-color:#9AA4AF;">
+              <span style="width:20px; height:20px; border-radius:4px; background:#EDF0F3; display:inline-flex; align-items:center; justify-content:center; font-size:11px; color:#515B67;">⛓</span>
+              Coinbase Wallet
+            </button>
+          </div>
+
+          <div style="margin-top:28px; border:1px solid #DFE4E9; border-radius:var(--r,4px); background:#FAFBFC; padding:18px 20px;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span style="width:18px; height:18px; border-radius:50%; border:2px solid #0E635C; border-top-color:transparent; animation:spin 0.8s linear infinite; display:inline-block;"></span>
+              <span style="font-size:13px; font-weight:600;">Waiting for signature</span>
+              <span style="margin-left:auto; display:inline-flex; align-items:center; gap:7px; background:#F5F7F9; border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:4px 8px;"><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px;">0x7A3f9B…9C21</span></span>
+            </div>
+            <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px; line-height:1.7; color:#515B67; margin-top:14px; padding-top:14px; border-top:1px solid #EDF0F3;">
+              tessera.io wants you to sign in with your Ethereum account.<br>
+              Nonce &nbsp;8Jq2xR41<br>
+              Issued &nbsp;2026-08-23T09:14:02Z<br>
+              Expires &nbsp;in 5 minutes
+            </div>
+          </div>
+
+          <div style="display:flex; gap:10px; align-items:flex-start; margin-top:20px; border:1px solid #F5C9C3; background:#FDECEA; border-radius:var(--r,4px); padding:12px 14px;">
+            <span style="color:#B42318; font-size:12px; margin-top:1px;">✕</span>
+            <div style="font-size:12.5px; line-height:1.55; color:#8E1B12;"><strong style="font-weight:600;">Signature rejected.</strong> You declined the request in your wallet. Nothing was sent and no fee was charged.</div>
+          </div>
+
+          <div style="font-size:12px; color:#6E7885; margin-top:28px; line-height:1.6;">New to Tessera? Connecting a wallet creates an account. You will complete identity checks before you can invest.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid; gap:16px;">
+      <div style="display:flex; align-items:baseline; gap:12px;">
+        <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; color:#0E635C;">02</span>
+        <span style="font-size:18px; font-weight:600;">Identity verification</span>
+        <span style="font-size:13px; color:#6E7885;">Four states of the same screen: connected → submitting → in review → verified.</span>
+      </div>
+      <div style="display:grid; grid-template-columns:706px 706px; gap:28px;">
+
+        <div data-screen-label="02a KYC start" style="width:706px; background:#fff; border:1px solid #C7CED6; border-radius:6px; box-shadow:0 8px 28px rgba(22,26,32,0.10); overflow:hidden;">
+          <div style="display:flex; align-items:center; gap:16px; height:52px; padding:0 24px; border-bottom:1px solid #DFE4E9;">
+            <div style="display:flex; align-items:center; gap:9px;"><div style="width:13px; height:13px; border:2px solid #0E635C; transform:rotate(45deg);"></div><span style="font-size:13px; font-weight:600;">Tessera</span></div>
+            <span style="margin-left:auto; display:inline-flex; align-items:center; gap:7px; background:#F5F7F9; border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:4px 9px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px;">0x7A3f9B…9C21</span>
+          </div>
+          <div style="padding:34px 40px 40px;">
+            <div style="display:flex; gap:0; align-items:center; margin-bottom:30px;">
+              <div style="display:flex; align-items:center; gap:9px;"><div style="width:20px; height:20px; border-radius:50%; background:#0E7A5F; color:#fff; font-size:10px; display:flex; align-items:center; justify-content:center;">✓</div><span style="font-size:12px; font-weight:600;">Wallet</span></div>
+              <div style="flex:1; height:1px; background:#DFE4E9; margin:0 12px;"></div>
+              <div style="display:flex; align-items:center; gap:9px;"><div style="width:20px; height:20px; border-radius:50%; background:#0E635C; color:#fff; font-size:10px; display:flex; align-items:center; justify-content:center;">2</div><span style="font-size:12px; font-weight:600;">Identity</span></div>
+              <div style="flex:1; height:1px; background:#DFE4E9; margin:0 12px;"></div>
+              <div style="display:flex; align-items:center; gap:9px;"><div style="width:20px; height:20px; border-radius:50%; border:1px solid #C7CED6; color:#9AA4AF; font-size:10px; display:flex; align-items:center; justify-content:center;">3</div><span style="font-size:12px; color:#9AA4AF;">Review</span></div>
+              <div style="flex:1; height:1px; background:#DFE4E9; margin:0 12px;"></div>
+              <div style="display:flex; align-items:center; gap:9px;"><div style="width:20px; height:20px; border-radius:50%; border:1px solid #C7CED6; color:#9AA4AF; font-size:10px; display:flex; align-items:center; justify-content:center;">4</div><span style="font-size:12px; color:#9AA4AF;">Invest</span></div>
+            </div>
+            <h2 style="margin:0; font-size:24px; font-weight:600; letter-spacing:-0.02em;">Verify your identity</h2>
+            <p style="margin:10px 0 0; font-size:14px; line-height:1.65; color:#515B67; max-width:56ch;">Securities law requires us to know who holds each tranche. Our partner Northgate Trust runs the check and issues a credential to your wallet — Tessera never stores your documents.</p>
+            <div style="display:grid; gap:10px; margin-top:24px;">
+              <div style="display:flex; align-items:center; gap:12px; border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:14px 16px;"><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#6E7885; width:14px;">1</span><div style="flex:1;"><div style="font-size:13px; font-weight:600;">Photo ID and a selfie</div><div style="font-size:12px; color:#6E7885; margin-top:2px;">Passport, national ID or driving licence</div></div><span style="font-size:12px; color:#9AA4AF;">~3 min</span></div>
+              <div style="display:flex; align-items:center; gap:12px; border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:14px 16px;"><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#6E7885; width:14px;">2</span><div style="flex:1;"><div style="font-size:13px; font-weight:600;">Proof of address</div><div style="font-size:12px; color:#6E7885; margin-top:2px;">Utility bill or bank statement, last 3 months</div></div><span style="font-size:12px; color:#9AA4AF;">~2 min</span></div>
+              <div style="display:flex; align-items:center; gap:12px; border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:14px 16px;"><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#6E7885; width:14px;">3</span><div style="flex:1;"><div style="font-size:13px; font-weight:600;">Investor declaration</div><div style="font-size:12px; color:#6E7885; margin-top:2px;">Residency and accreditation questions</div></div><span style="font-size:12px; color:#9AA4AF;">~2 min</span></div>
+            </div>
+            <div style="display:flex; gap:8px; margin-top:22px;">
+              <span style="display:inline-flex; align-items:center; gap:6px; background:#EFF1F4; border:1px dashed #C7CED6; color:#6E7885; padding:4px 9px; border-radius:var(--r,4px); font-size:12px; font-weight:500;">KYC</span>
+              <span style="display:inline-flex; align-items:center; gap:6px; background:#EFF1F4; border:1px dashed #C7CED6; color:#6E7885; padding:4px 9px; border-radius:var(--r,4px); font-size:12px; font-weight:500;">AML</span>
+              <span style="display:inline-flex; align-items:center; gap:6px; background:#EFF1F4; border:1px dashed #C7CED6; color:#6E7885; padding:4px 9px; border-radius:var(--r,4px); font-size:12px; font-weight:500;">EU residency</span>
+            </div>
+            <button style="margin-top:26px; border:1px solid #0E635C; background:#0E635C; color:#fff; font-family:inherit; font-size:14px; font-weight:600; padding:12px 22px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#0B4F4A;">Start verification</button>
+            <div style="font-size:12px; color:#6E7885; margin-top:14px;">You can leave and return; progress is saved against your wallet.</div>
+          </div>
+        </div>
+
+        <div data-screen-label="02b KYC submitting" style="width:706px; background:#fff; border:1px solid #C7CED6; border-radius:6px; box-shadow:0 8px 28px rgba(22,26,32,0.10); overflow:hidden;">
+          <div style="display:flex; align-items:center; gap:16px; height:52px; padding:0 24px; border-bottom:1px solid #DFE4E9;">
+            <div style="display:flex; align-items:center; gap:9px;"><div style="width:13px; height:13px; border:2px solid #0E635C; transform:rotate(45deg);"></div><span style="font-size:13px; font-weight:600;">Tessera</span></div>
+            <span style="margin-left:auto; display:inline-flex; align-items:center; gap:7px; background:#F5F7F9; border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:4px 9px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px;">0x7A3f9B…9C21</span>
+          </div>
+          <div style="padding:34px 40px 40px;">
+            <div style="font-size:11px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#6E7885;">Step 2 of 4 · Identity</div>
+            <h2 style="margin:12px 0 0; font-size:24px; font-weight:600; letter-spacing:-0.02em;">Uploading your documents</h2>
+            <div style="margin-top:24px; border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden;">
+              <div style="display:flex; align-items:center; gap:12px; padding:14px 16px; border-bottom:1px solid #EDF0F3;"><span style="color:#0E7A5F; font-size:12px;">✓</span><div style="flex:1; font-size:13px;">Passport · NLD</div><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#6E7885;">2.4 MB</span></div>
+              <div style="display:flex; align-items:center; gap:12px; padding:14px 16px; border-bottom:1px solid #EDF0F3;"><span style="color:#0E7A5F; font-size:12px;">✓</span><div style="flex:1; font-size:13px;">Selfie capture</div><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#6E7885;">1.1 MB</span></div>
+              <div style="padding:14px 16px;">
+                <div style="display:flex; align-items:center; gap:12px;"><span style="width:12px; height:12px; border:2px solid #DFE4E9; border-top-color:#0E635C; border-radius:50%; animation:spin 0.7s linear infinite; display:inline-block;"></span><div style="flex:1; font-size:13px;">Bank statement · Aug 2026</div><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#6E7885;">64%</span></div>
+                <div style="height:3px; background:#EDF0F3; border-radius:2px; margin-top:12px; overflow:hidden;"><div style="width:64%; height:100%; background:#0E635C;"></div></div>
+              </div>
+            </div>
+            <div style="display:flex; gap:10px; align-items:flex-start; margin-top:18px; border:1px solid #F5C9C3; background:#FDECEA; border-radius:var(--r,4px); padding:12px 14px;">
+              <span style="color:#B42318; font-size:12px; margin-top:1px;">✕</span>
+              <div style="flex:1; font-size:12.5px; line-height:1.55; color:#8E1B12;"><strong style="font-weight:600;">Proof of address was unreadable.</strong> The name on the document did not match your ID. Upload a clearer copy or a different document.</div>
+              <button style="border:1px solid #B42318; background:#fff; color:#B42318; font-family:inherit; font-size:12px; font-weight:600; padding:6px 12px; border-radius:var(--r,4px); cursor:pointer; flex:none;" style-hover="background:#B42318; color:#fff;">Replace</button>
+            </div>
+            <div style="display:flex; gap:10px; margin-top:26px;">
+              <button style="border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:14px; font-weight:600; padding:12px 20px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">Back</button>
+              <button disabled="disabled" style="border:1px solid #DFE4E9; background:#EDF0F3; color:#9AA4AF; font-family:inherit; font-size:14px; font-weight:600; padding:12px 20px; border-radius:var(--r,4px); cursor:not-allowed;">Submit for review</button>
+            </div>
+          </div>
+        </div>
+
+        <div data-screen-label="02c KYC in review" style="width:706px; background:#fff; border:1px solid #C7CED6; border-radius:6px; box-shadow:0 8px 28px rgba(22,26,32,0.10); overflow:hidden;">
+          <div style="display:flex; align-items:center; gap:16px; height:52px; padding:0 24px; border-bottom:1px solid #DFE4E9;">
+            <div style="display:flex; align-items:center; gap:9px;"><div style="width:13px; height:13px; border:2px solid #0E635C; transform:rotate(45deg);"></div><span style="font-size:13px; font-weight:600;">Tessera</span></div>
+            <span style="margin-left:auto; display:inline-flex; align-items:center; gap:7px; background:#FDF3E0; border:1px solid #F0DCAE; color:#9A6410; padding:4px 10px; border-radius:var(--r,4px); font-size:12px; font-weight:600;"><span style="width:6px; height:6px; border-radius:50%; background:#9A6410;"></span>Pending</span>
+          </div>
+          <div style="padding:44px 40px 40px; text-align:center;">
+            <div style="width:44px; height:44px; border-radius:50%; background:#FDF3E0; border:1px solid #F0DCAE; color:#9A6410; display:flex; align-items:center; justify-content:center; font-size:17px; margin:0 auto;">◷</div>
+            <h2 style="margin:20px 0 0; font-size:24px; font-weight:600; letter-spacing:-0.02em;">Your application is in review</h2>
+            <p style="margin:12px auto 0; font-size:14px; line-height:1.65; color:#515B67; max-width:50ch;">Northgate Trust is checking your documents. Most reviews finish within four hours; we will email you and update this page the moment a decision lands.</p>
+            <div style="display:flex; justify-content:center; gap:8px; margin-top:22px;">
+              <span style="display:inline-flex; align-items:center; gap:6px; background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:4px 9px; border-radius:var(--r,4px); font-size:12px; font-weight:500;">KYC ✓</span>
+              <span style="display:inline-flex; align-items:center; gap:6px; background:#FDF3E0; border:1px solid #F0DCAE; color:#9A6410; padding:4px 9px; border-radius:var(--r,4px); font-size:12px; font-weight:500;">AML ◷</span>
+              <span style="display:inline-flex; align-items:center; gap:6px; background:#FDF3E0; border:1px solid #F0DCAE; color:#9A6410; padding:4px 9px; border-radius:var(--r,4px); font-size:12px; font-weight:500;">EU residency ◷</span>
+            </div>
+            <div style="margin-top:30px; border:1px solid #DFE4E9; border-radius:var(--r,4px); text-align:left; overflow:hidden;">
+              <div style="display:grid; grid-template-columns:170px 1fr;">
+                <div style="padding:11px 18px; font-size:12px; color:#6E7885; border-bottom:1px solid #F5F7F9;">Submitted</div>
+                <div style="padding:11px 18px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; border-bottom:1px solid #F5F7F9;">23 Aug 2026, 09:22 CET</div>
+                <div style="padding:11px 18px; font-size:12px; color:#6E7885; border-bottom:1px solid #F5F7F9;">Reviewer</div>
+                <div style="padding:11px 18px; font-size:12px; border-bottom:1px solid #F5F7F9;">Northgate Trust</div>
+                <div style="padding:11px 18px; font-size:12px; color:#6E7885;">Reference</div>
+                <div style="padding:11px 18px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px;">NGT-2026-084419</div>
+              </div>
+            </div>
+            <div style="display:flex; justify-content:center; gap:10px; margin-top:26px;">
+              <button style="border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:14px; font-weight:600; padding:11px 20px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">Browse offerings meanwhile</button>
+              <button style="border:1px solid transparent; background:transparent; color:#0E635C; font-family:inherit; font-size:14px; font-weight:600; padding:11px 16px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F2F8F7;">Contact support</button>
+            </div>
+          </div>
+        </div>
+
+        <div data-screen-label="02d KYC verified" style="width:706px; background:#fff; border:1px solid #C7CED6; border-radius:6px; box-shadow:0 8px 28px rgba(22,26,32,0.10); overflow:hidden;">
+          <div style="display:flex; align-items:center; gap:16px; height:52px; padding:0 24px; border-bottom:1px solid #DFE4E9;">
+            <div style="display:flex; align-items:center; gap:9px;"><div style="width:13px; height:13px; border:2px solid #0E635C; transform:rotate(45deg);"></div><span style="font-size:13px; font-weight:600;">Tessera</span></div>
+            <span style="margin-left:auto; display:inline-flex; align-items:center; gap:7px; background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:4px 10px; border-radius:var(--r,4px); font-size:12px; font-weight:600;"><span style="width:6px; height:6px; border-radius:50%; background:#0E7A5F;"></span>Verified</span>
+          </div>
+          <div style="padding:44px 40px 40px; text-align:center;">
+            <div style="width:44px; height:44px; border-radius:50%; background:#0E7A5F; color:#fff; display:flex; align-items:center; justify-content:center; font-size:18px; margin:0 auto;">✓</div>
+            <h2 style="margin:20px 0 0; font-size:24px; font-weight:600; letter-spacing:-0.02em;">You are verified</h2>
+            <p style="margin:12px auto 0; font-size:14px; line-height:1.65; color:#515B67; max-width:50ch;">Your credential has been issued to your wallet. You can now subscribe to any tranche whose requirements you meet.</p>
+            <div style="display:flex; justify-content:center; gap:8px; margin-top:22px;">
+              <span title="Issued by Northgate Trust · expires 2027-08-23" style="display:inline-flex; align-items:center; gap:6px; background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:4px 9px; border-radius:var(--r,4px); font-size:12px; font-weight:500; cursor:help;">KYC ✓</span>
+              <span title="Issued by Chainalysis KYT · expires 2027-02-14" style="display:inline-flex; align-items:center; gap:6px; background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:4px 9px; border-radius:var(--r,4px); font-size:12px; font-weight:500; cursor:help;">AML ✓</span>
+              <span title="Issued by Northgate Trust · Netherlands (NL)" style="display:inline-flex; align-items:center; gap:6px; background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:4px 9px; border-radius:var(--r,4px); font-size:12px; font-weight:500; cursor:help;">EU residency ✓</span>
+              <span title="No issuer has attested this topic" style="display:inline-flex; align-items:center; gap:6px; background:#EFF1F4; border:1px dashed #C7CED6; color:#6E7885; padding:4px 9px; border-radius:var(--r,4px); font-size:12px; font-weight:500; cursor:help;">Professional investor</span>
+            </div>
+            <div style="margin-top:26px; display:flex; align-items:center; justify-content:space-between; gap:16px; border:1px solid #B7E0D0; background:#E6F4EF; border-radius:var(--r,4px); padding:14px 18px; text-align:left;">
+              <div><div style="font-size:13px; font-weight:600; color:#0B5241;">Credential issued to your wallet</div><div style="font-size:12px; color:#3E7060; margin-top:3px;">Valid until 23 Aug 2027 · renews with a fresh document check</div></div>
+              <span style="display:inline-flex; align-items:center; gap:8px; background:#fff; border:1px solid #B7E0D0; border-radius:var(--r,4px); padding:5px 9px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#0B5241;">0x7A3f9B…9C21 ⧉</span>
+            </div>
+            <button style="margin-top:26px; border:1px solid #0E635C; background:#0E635C; color:#fff; font-family:inherit; font-size:14px; font-weight:600; padding:12px 24px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#0B4F4A;">Browse offerings</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid; gap:16px;">
+      <div style="display:flex; align-items:baseline; gap:12px;">
+        <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; color:#0E635C;">03</span>
+        <span style="font-size:18px; font-weight:600;">Offerings</span>
+        <span style="font-size:13px; color:#6E7885;">Tranche cards with filters. Eligibility is stated on the card, not discovered at checkout.</span>
+      </div>
+      <div data-screen-label="03 Offerings" style="width:1440px; background:#fff; border:1px solid #C7CED6; border-radius:6px; box-shadow:0 8px 28px rgba(22,26,32,0.10); overflow:hidden;">
+        <div style="display:flex; align-items:center; gap:24px; height:56px; padding:0 32px; border-bottom:1px solid #DFE4E9; background:#fff;">
+          <div style="display:flex; align-items:center; gap:9px;"><div style="width:14px; height:14px; border:2px solid #0E635C; transform:rotate(45deg);"></div><span style="font-size:13px; font-weight:600;">Tessera</span></div>
+          <div style="display:flex; gap:22px; font-size:13px;">
+            <span style="color:#0B4F4A; font-weight:600; border-bottom:2px solid #0E635C; padding:19px 0; cursor:pointer;">Offerings</span>
+            <span style="color:#515B67; padding:19px 0; cursor:pointer;" style-hover="color:#161A20;">Portfolio</span>
+            <span style="color:#515B67; padding:19px 0; cursor:pointer;" style-hover="color:#161A20;">Activity</span>
+          </div>
+          <div style="margin-left:auto; display:flex; align-items:center; gap:12px;">
+            <span style="display:inline-flex; align-items:center; gap:7px; background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:4px 10px; border-radius:var(--r,4px); font-size:12px; font-weight:600;"><span style="width:6px; height:6px; border-radius:50%; background:#0E7A5F;"></span>Verified</span>
+            <span style="display:inline-flex; align-items:center; gap:8px; background:#F5F7F9; border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:5px 9px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px;">0x7A3f9B…9C21 ⧉</span>
+            <div style="width:28px; height:28px; border-radius:50%; background:#0B4F4A; color:#fff; font-size:11px; font-weight:600; display:flex; align-items:center; justify-content:center;">LV</div>
+          </div>
+        </div>
+        <div style="padding:36px 32px 44px;">
+          <div style="display:flex; align-items:flex-end; gap:20px;">
+            <div>
+              <h2 style="margin:0; font-size:28px; font-weight:600; letter-spacing:-0.02em;">Offerings</h2>
+              <p style="margin:8px 0 0; font-size:14px; color:#515B67;">18 tranches open to investors verified in the Netherlands.</p>
+            </div>
+            <div style="margin-left:auto; display:flex; align-items:center; gap:8px;">
+              <div style="display:flex; align-items:center; gap:8px; border:1px solid #C7CED6; border-radius:var(--r,4px); padding:7px 11px; background:#fff; width:230px;">
+                <span style="color:#9AA4AF; font-size:12px;">⌕</span>
+                <input type="text" placeholder="Search city or asset" style="flex:1; min-width:0; border:none; outline:none; font-family:inherit; font-size:13px;">
+              </div>
+              <select style="font-family:inherit; font-size:13px; padding:8px 11px; border:1px solid #C7CED6; border-radius:var(--r,4px); background:#fff; appearance:none; color:#262C35;"><option>All asset types</option><option>Multifamily</option><option>Logistics</option></select>
+              <select style="font-family:inherit; font-size:13px; padding:8px 11px; border:1px solid #C7CED6; border-radius:var(--r,4px); background:#fff; appearance:none; color:#262C35;"><option>All countries</option><option>Germany</option><option>Netherlands</option></select>
+            </div>
+          </div>
+          <div style="display:flex; gap:8px; margin-top:22px; padding-bottom:22px; border-bottom:1px solid #EDF0F3; align-items:center;">
+            <span style="display:inline-flex; align-items:center; gap:7px; background:#E3F0EE; border:1px solid #B9D8D3; color:#0B4F4A; padding:5px 11px; border-radius:999px; font-size:12px; font-weight:600; cursor:pointer;">Open now</span>
+            <span style="display:inline-flex; align-items:center; gap:7px; background:#fff; border:1px solid #DFE4E9; color:#515B67; padding:5px 11px; border-radius:999px; font-size:12px; cursor:pointer;" style-hover="border-color:#9AA4AF; color:#161A20;">Eligible for me</span>
+            <span style="display:inline-flex; align-items:center; gap:7px; background:#fff; border:1px solid #DFE4E9; color:#515B67; padding:5px 11px; border-radius:999px; font-size:12px; cursor:pointer;" style-hover="border-color:#9AA4AF; color:#161A20;">Income-producing</span>
+            <span style="display:inline-flex; align-items:center; gap:7px; background:#fff; border:1px solid #DFE4E9; color:#515B67; padding:5px 11px; border-radius:999px; font-size:12px; cursor:pointer;" style-hover="border-color:#9AA4AF; color:#161A20;">Under €200 / unit</span>
+            <span style="margin-left:auto; font-size:12px; color:#6E7885;">Sorted by newest</span>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:24px;">
+
+            <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden; background:#fff; box-shadow:0 1px 2px rgba(22,26,32,0.06); cursor:pointer;" style-hover="border-color:#9AA4AF; box-shadow:0 6px 18px rgba(22,26,32,0.10);">
+              <div style="height:168px; background:#D4DAE1; display:flex; align-items:center; justify-content:center; position:relative; border-bottom:1px solid #DFE4E9;">
+                <span style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#8B94A0;">Property image</span>
+                <span style="position:absolute; top:12px; left:12px; display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.94); border:1px solid #DFE4E9; color:#0E7A5F; padding:3px 9px; border-radius:3px; font-size:11px; font-weight:600;"><span style="width:5px; height:5px; border-radius:50%; background:#0E7A5F;"></span>Open</span>
+              </div>
+              <div style="padding:18px 20px 20px;">
+                <div style="display:flex; align-items:baseline; gap:10px;"><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12.5px; font-weight:600; color:#0B4F4A;">BER-A</span><span style="font-size:15px; font-weight:600;">Prenzlauer Höfe</span></div>
+                <div style="font-size:12px; color:#6E7885; margin-top:4px;">Berlin, Germany · Multifamily</div>
+                <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:16px; padding-top:14px; border-top:1px solid #EDF0F3;">
+                  <div><div style="font-size:10.5px; color:#6E7885; letter-spacing:0.05em; text-transform:uppercase;">Tranche</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:14px; margin-top:5px;">€50.0M</div></div>
+                  <div><div style="font-size:10.5px; color:#6E7885; letter-spacing:0.05em; text-transform:uppercase;">Per unit</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:14px; margin-top:5px;">€184.20</div></div>
+                  <div><div style="font-size:10.5px; color:#6E7885; letter-spacing:0.05em; text-transform:uppercase;">Holders</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:14px; margin-top:5px;">148 <span style="font-size:10.5px; color:#9AA4AF;">/ 199</span></div></div>
+                </div>
+                <div style="display:flex; gap:6px; margin-top:14px;">
+                  <span style="display:inline-flex; background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:3px 8px; border-radius:3px; font-size:11px; font-weight:500;">You are eligible</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden; background:#fff; box-shadow:0 1px 2px rgba(22,26,32,0.06); cursor:pointer;" style-hover="border-color:#9AA4AF; box-shadow:0 6px 18px rgba(22,26,32,0.10);">
+              <div style="height:168px; background:#D4DAE1; display:flex; align-items:center; justify-content:center; position:relative; border-bottom:1px solid #DFE4E9;">
+                <span style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#8B94A0;">Property image</span>
+                <span style="position:absolute; top:12px; left:12px; display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.94); border:1px solid #DFE4E9; color:#0E7A5F; padding:3px 9px; border-radius:3px; font-size:11px; font-weight:600;"><span style="width:5px; height:5px; border-radius:50%; background:#0E7A5F;"></span>Open</span>
+              </div>
+              <div style="padding:18px 20px 20px;">
+                <div style="display:flex; align-items:baseline; gap:10px;"><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12.5px; font-weight:600; color:#0B4F4A;">AMS-B</span><span style="font-size:15px; font-weight:600;">Zuidas Logistics Park</span></div>
+                <div style="font-size:12px; color:#6E7885; margin-top:4px;">Amsterdam, Netherlands · Logistics</div>
+                <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:16px; padding-top:14px; border-top:1px solid #EDF0F3;">
+                  <div><div style="font-size:10.5px; color:#6E7885; letter-spacing:0.05em; text-transform:uppercase;">Tranche</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:14px; margin-top:5px;">€28.5M</div></div>
+                  <div><div style="font-size:10.5px; color:#6E7885; letter-spacing:0.05em; text-transform:uppercase;">Per unit</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:14px; margin-top:5px;">€96.40</div></div>
+                  <div><div style="font-size:10.5px; color:#6E7885; letter-spacing:0.05em; text-transform:uppercase;">Holders</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:14px; margin-top:5px;">92 <span style="font-size:10.5px; color:#9AA4AF;">/ 199</span></div></div>
+                </div>
+                <div style="display:flex; gap:6px; margin-top:14px;">
+                  <span style="display:inline-flex; background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:3px 8px; border-radius:3px; font-size:11px; font-weight:500;">You are eligible</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden; background:#fff; box-shadow:0 1px 2px rgba(22,26,32,0.06); cursor:pointer;" style-hover="border-color:#9AA4AF; box-shadow:0 6px 18px rgba(22,26,32,0.10);">
+              <div style="height:168px; background:#D4DAE1; display:flex; align-items:center; justify-content:center; position:relative; border-bottom:1px solid #DFE4E9;">
+                <span style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#8B94A0;">Property image</span>
+                <span style="position:absolute; top:12px; left:12px; display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.94); border:1px solid #F0DCAE; color:#9A6410; padding:3px 9px; border-radius:3px; font-size:11px; font-weight:600;"><span style="width:5px; height:5px; border-radius:50%; background:#9A6410;"></span>Closing soon</span>
+              </div>
+              <div style="padding:18px 20px 20px;">
+                <div style="display:flex; align-items:baseline; gap:10px;"><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12.5px; font-weight:600; color:#0B4F4A;">MIL-A</span><span style="font-size:15px; font-weight:600;">Corso Venezia 12</span></div>
+                <div style="font-size:12px; color:#6E7885; margin-top:4px;">Milan, Italy · Mixed use</div>
+                <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:16px; padding-top:14px; border-top:1px solid #EDF0F3;">
+                  <div><div style="font-size:10.5px; color:#6E7885; letter-spacing:0.05em; text-transform:uppercase;">Tranche</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:14px; margin-top:5px;">€19.2M</div></div>
+                  <div><div style="font-size:10.5px; color:#6E7885; letter-spacing:0.05em; text-transform:uppercase;">Per unit</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:14px; margin-top:5px;">€212.00</div></div>
+                  <div><div style="font-size:10.5px; color:#6E7885; letter-spacing:0.05em; text-transform:uppercase;">Holders</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:14px; margin-top:5px;">197 <span style="font-size:10.5px; color:#9AA4AF;">/ 199</span></div></div>
+                </div>
+                <div style="display:flex; gap:6px; margin-top:14px;">
+                  <span style="display:inline-flex; background:#FDF3E0; border:1px solid #F0DCAE; color:#9A6410; padding:3px 8px; border-radius:3px; font-size:11px; font-weight:500;">2 places left</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden; background:#fff; box-shadow:0 1px 2px rgba(22,26,32,0.06); cursor:pointer;" style-hover="border-color:#9AA4AF; box-shadow:0 6px 18px rgba(22,26,32,0.10);">
+              <div style="height:168px; background:#D4DAE1; display:flex; align-items:center; justify-content:center; position:relative; border-bottom:1px solid #DFE4E9;">
+                <span style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#8B94A0;">Property image</span>
+                <span style="position:absolute; top:12px; left:12px; display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.94); border:1px solid #DFE4E9; color:#0E7A5F; padding:3px 9px; border-radius:3px; font-size:11px; font-weight:600;"><span style="width:5px; height:5px; border-radius:50%; background:#0E7A5F;"></span>Open</span>
+              </div>
+              <div style="padding:18px 20px 20px;">
+                <div style="display:flex; align-items:baseline; gap:10px;"><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12.5px; font-weight:600; color:#0B4F4A;">LIS-A</span><span style="font-size:15px; font-weight:600;">Alcântara Riverside</span></div>
+                <div style="font-size:12px; color:#6E7885; margin-top:4px;">Lisbon, Portugal · Hospitality</div>
+                <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:16px; padding-top:14px; border-top:1px solid #EDF0F3;">
+                  <div><div style="font-size:10.5px; color:#6E7885; letter-spacing:0.05em; text-transform:uppercase;">Tranche</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:14px; margin-top:5px;">€12.0M</div></div>
+                  <div><div style="font-size:10.5px; color:#6E7885; letter-spacing:0.05em; text-transform:uppercase;">Per unit</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:14px; margin-top:5px;">€74.80</div></div>
+                  <div><div style="font-size:10.5px; color:#6E7885; letter-spacing:0.05em; text-transform:uppercase;">Holders</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:14px; margin-top:5px;">61 <span style="font-size:10.5px; color:#9AA4AF;">/ 199</span></div></div>
+                </div>
+                <div style="display:flex; gap:6px; margin-top:14px;">
+                  <span style="display:inline-flex; background:#EFF1F4; border:1px solid #D8DDE4; color:#5A6472; padding:3px 8px; border-radius:3px; font-size:11px; font-weight:500;">Requires professional investor status</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden; background:#fff; box-shadow:0 1px 2px rgba(22,26,32,0.06); cursor:pointer;" style-hover="border-color:#9AA4AF; box-shadow:0 6px 18px rgba(22,26,32,0.10);">
+              <div style="height:168px; background:#D4DAE1; display:flex; align-items:center; justify-content:center; position:relative; border-bottom:1px solid #DFE4E9;">
+                <span style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#8B94A0;">Property image</span>
+                <span style="position:absolute; top:12px; left:12px; display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.94); border:1px solid #D8DDE4; color:#5A6472; padding:3px 9px; border-radius:3px; font-size:11px; font-weight:600;"><span style="width:5px; height:5px; border-radius:50%; background:#5A6472;"></span>Paused</span>
+              </div>
+              <div style="padding:18px 20px 20px;">
+                <div style="display:flex; align-items:baseline; gap:10px;"><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12.5px; font-weight:600; color:#0B4F4A;">CPH-A</span><span style="font-size:15px; font-weight:600;">Nordhavn Block 7</span></div>
+                <div style="font-size:12px; color:#6E7885; margin-top:4px;">Copenhagen, Denmark · Office</div>
+                <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:16px; padding-top:14px; border-top:1px solid #EDF0F3;">
+                  <div><div style="font-size:10.5px; color:#6E7885; letter-spacing:0.05em; text-transform:uppercase;">Tranche</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:14px; margin-top:5px;">€34.4M</div></div>
+                  <div><div style="font-size:10.5px; color:#6E7885; letter-spacing:0.05em; text-transform:uppercase;">Per unit</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:14px; margin-top:5px;">€130.00</div></div>
+                  <div><div style="font-size:10.5px; color:#6E7885; letter-spacing:0.05em; text-transform:uppercase;">Holders</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:14px; margin-top:5px;">120 <span style="font-size:10.5px; color:#9AA4AF;">/ 199</span></div></div>
+                </div>
+                <div style="display:flex; gap:6px; margin-top:14px;">
+                  <span style="display:inline-flex; background:#EFF1F4; border:1px solid #D8DDE4; color:#5A6472; padding:3px 8px; border-radius:3px; font-size:11px; font-weight:500;">Trading paused by issuer</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden; background:#fff; box-shadow:0 1px 2px rgba(22,26,32,0.06); cursor:pointer;" style-hover="border-color:#9AA4AF; box-shadow:0 6px 18px rgba(22,26,32,0.10);">
+              <div style="height:168px; background:#D4DAE1; display:flex; align-items:center; justify-content:center; position:relative; border-bottom:1px solid #DFE4E9;">
+                <span style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#8B94A0;">Property image</span>
+                <span style="position:absolute; top:12px; left:12px; display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.94); border:1px solid #DFE4E9; color:#0E7A5F; padding:3px 9px; border-radius:3px; font-size:11px; font-weight:600;"><span style="width:5px; height:5px; border-radius:50%; background:#0E7A5F;"></span>Open</span>
+              </div>
+              <div style="padding:18px 20px 20px;">
+                <div style="display:flex; align-items:baseline; gap:10px;"><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12.5px; font-weight:600; color:#0B4F4A;">VIE-C</span><span style="font-size:15px; font-weight:600;">Leopoldstadt Residences</span></div>
+                <div style="font-size:12px; color:#6E7885; margin-top:4px;">Vienna, Austria · Multifamily</div>
+                <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:16px; padding-top:14px; border-top:1px solid #EDF0F3;">
+                  <div><div style="font-size:10.5px; color:#6E7885; letter-spacing:0.05em; text-transform:uppercase;">Tranche</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:14px; margin-top:5px;">€22.8M</div></div>
+                  <div><div style="font-size:10.5px; color:#6E7885; letter-spacing:0.05em; text-transform:uppercase;">Per unit</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:14px; margin-top:5px;">€158.50</div></div>
+                  <div><div style="font-size:10.5px; color:#6E7885; letter-spacing:0.05em; text-transform:uppercase;">Holders</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:14px; margin-top:5px;">83 <span style="font-size:10.5px; color:#9AA4AF;">/ 199</span></div></div>
+                </div>
+                <div style="display:flex; gap:6px; margin-top:14px;">
+                  <span style="display:inline-flex; background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:3px 8px; border-radius:3px; font-size:11px; font-weight:500;">You are eligible</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:706px 706px; gap:28px; margin-top:12px;">
+        <div data-screen-label="03a Offerings loading" style="background:#fff; border:1px solid #C7CED6; border-radius:6px; box-shadow:0 8px 28px rgba(22,26,32,0.10); overflow:hidden;">
+          <div style="padding:12px 22px; background:#FAFBFC; border-bottom:1px solid #DFE4E9; font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Loading</div>
+          <div style="padding:24px 22px 26px; display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+            <div style="border:1px solid #EDF0F3; border-radius:var(--r,4px); overflow:hidden;">
+              <div style="height:120px; background:linear-gradient(90deg,#EDF0F3 0%,#F7F9FA 40%,#EDF0F3 80%); background-size:340px 100%; animation:shimmer 1.4s linear infinite;"></div>
+              <div style="padding:16px; display:grid; gap:9px;">
+                <div style="height:11px; width:60%; border-radius:2px; background:linear-gradient(90deg,#EDF0F3 0%,#F7F9FA 40%,#EDF0F3 80%); background-size:340px 100%; animation:shimmer 1.4s linear infinite;"></div>
+                <div style="height:9px; width:80%; border-radius:2px; background:#EDF0F3;"></div>
+                <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:8px;">
+                  <div style="height:9px; border-radius:2px; background:#EDF0F3;"></div><div style="height:9px; border-radius:2px; background:#EDF0F3;"></div><div style="height:9px; border-radius:2px; background:#EDF0F3;"></div>
+                </div>
+              </div>
+            </div>
+            <div style="border:1px solid #EDF0F3; border-radius:var(--r,4px); overflow:hidden;">
+              <div style="height:120px; background:linear-gradient(90deg,#EDF0F3 0%,#F7F9FA 40%,#EDF0F3 80%); background-size:340px 100%; animation:shimmer 1.4s linear infinite;"></div>
+              <div style="padding:16px; display:grid; gap:9px;">
+                <div style="height:11px; width:70%; border-radius:2px; background:linear-gradient(90deg,#EDF0F3 0%,#F7F9FA 40%,#EDF0F3 80%); background-size:340px 100%; animation:shimmer 1.4s linear infinite;"></div>
+                <div style="height:9px; width:55%; border-radius:2px; background:#EDF0F3;"></div>
+                <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:8px;">
+                  <div style="height:9px; border-radius:2px; background:#EDF0F3;"></div><div style="height:9px; border-radius:2px; background:#EDF0F3;"></div><div style="height:9px; border-radius:2px; background:#EDF0F3;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div data-screen-label="03b Offerings empty" style="background:#fff; border:1px solid #C7CED6; border-radius:6px; box-shadow:0 8px 28px rgba(22,26,32,0.10); overflow:hidden; display:flex; flex-direction:column;">
+          <div style="padding:12px 22px; background:#FAFBFC; border-bottom:1px solid #DFE4E9; font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">No matches</div>
+          <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:58px 40px;">
+            <div style="width:34px; height:34px; border:1px solid #C7CED6; transform:rotate(45deg); margin-bottom:24px;"></div>
+            <div style="font-size:16px; font-weight:600;">Nothing open in Denmark right now</div>
+            <div style="font-size:13px; color:#6E7885; margin-top:8px; max-width:40ch; line-height:1.6;">Two Copenhagen tranches are in preparation. We will email you when they open to Dutch-resident investors.</div>
+            <div style="display:flex; gap:10px; margin-top:22px;">
+              <button style="border:1px solid #0E635C; background:#0E635C; color:#fff; font-family:inherit; font-size:13px; font-weight:600; padding:9px 16px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#0B4F4A;">Notify me</button>
+              <button style="border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:13px; font-weight:600; padding:9px 16px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">Clear filters</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid; gap:16px;">
+      <div style="display:flex; align-items:baseline; gap:12px;">
+        <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; color:#0E635C;">04</span>
+        <span style="font-size:18px; font-weight:600;">Offering detail</span>
+        <span style="font-size:13px; color:#6E7885;">Invest is disabled until every requirement is met, and says exactly which one is missing.</span>
+      </div>
+      <div data-screen-label="04 Offering detail" style="width:1440px; background:#fff; border:1px solid #C7CED6; border-radius:6px; box-shadow:0 8px 28px rgba(22,26,32,0.10); overflow:hidden;">
+        <div style="display:flex; align-items:center; gap:24px; height:56px; padding:0 32px; border-bottom:1px solid #DFE4E9;">
+          <div style="display:flex; align-items:center; gap:9px;"><div style="width:14px; height:14px; border:2px solid #0E635C; transform:rotate(45deg);"></div><span style="font-size:13px; font-weight:600;">Tessera</span></div>
+          <div style="display:flex; gap:22px; font-size:13px;">
+            <span style="color:#0B4F4A; font-weight:600; border-bottom:2px solid #0E635C; padding:19px 0; cursor:pointer;">Offerings</span>
+            <span style="color:#515B67; padding:19px 0; cursor:pointer;" style-hover="color:#161A20;">Portfolio</span>
+            <span style="color:#515B67; padding:19px 0; cursor:pointer;" style-hover="color:#161A20;">Activity</span>
+          </div>
+          <div style="margin-left:auto; display:flex; align-items:center; gap:12px;">
+            <span style="display:inline-flex; align-items:center; gap:7px; background:#FDF3E0; border:1px solid #F0DCAE; color:#9A6410; padding:4px 10px; border-radius:var(--r,4px); font-size:12px; font-weight:600;"><span style="width:6px; height:6px; border-radius:50%; background:#9A6410;"></span>Verification pending</span>
+            <span style="display:inline-flex; align-items:center; gap:8px; background:#F5F7F9; border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:5px 9px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px;">0x7A3f9B…9C21 ⧉</span>
+            <div style="width:28px; height:28px; border-radius:50%; background:#0B4F4A; color:#fff; font-size:11px; font-weight:600; display:flex; align-items:center; justify-content:center;">LV</div>
+          </div>
+        </div>
+        <div style="height:320px; background:#D4DAE1; display:flex; align-items:flex-end; position:relative; border-bottom:1px solid #DFE4E9;">
+          <span style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:#8B94A0;">Hero property image</span>
+          <div style="position:relative; padding:26px 32px; width:100%; background:linear-gradient(to top, rgba(11,35,32,0.92) 0%, rgba(11,35,32,0.80) 62%, rgba(11,35,32,0) 100%);">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; font-weight:600; color:#C6D6D3;">BER-A</span>
+              <span style="display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.94); border:1px solid #B7E0D0; color:#0E7A5F; padding:3px 9px; border-radius:3px; font-size:11px; font-weight:600;"><span style="width:5px; height:5px; border-radius:50%; background:#0E7A5F;"></span>Open</span>
+            </div>
+            <div style="font-size:30px; font-weight:600; color:#fff; letter-spacing:-0.02em; margin-top:8px;">Prenzlauer Höfe</div>
+            <div style="font-size:13px; color:#C6D6D3; margin-top:6px;">Schönhauser Allee 128, 10437 Berlin, Germany · Multifamily, 214 units</div>
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 400px; gap:40px; padding:36px 32px 44px;">
+          <div>
+            <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; padding-bottom:28px; border-bottom:1px solid #EDF0F3;">
+              <div><div style="font-size:11px; color:#6E7885; letter-spacing:0.06em; text-transform:uppercase;">Asset backing</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:24px; margin-top:8px;">€50.0M</div><div style="font-size:12px; color:#6E7885; margin-top:4px;">Valued Mar 2026, JLL</div></div>
+              <div><div style="font-size:11px; color:#6E7885; letter-spacing:0.06em; text-transform:uppercase;">Price per unit</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:24px; margin-top:8px;">€184.20</div><div style="font-size:12px; color:#6E7885; margin-top:4px;">271,444 units issued</div></div>
+              <div><div style="font-size:11px; color:#6E7885; letter-spacing:0.06em; text-transform:uppercase;">Target yield</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:24px; margin-top:8px;">4.8%</div><div style="font-size:12px; color:#6E7885; margin-top:4px;">Net, distributed quarterly</div></div>
+              <div><div style="font-size:11px; color:#6E7885; letter-spacing:0.06em; text-transform:uppercase;">Holders</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:24px; margin-top:8px;">148</div><div style="font-size:12px; color:#6E7885; margin-top:4px;">Cap 199 by prospectus</div></div>
+            </div>
+            <h3 style="margin:28px 0 0; font-size:18px; font-weight:600;">About the asset</h3>
+            <p style="margin:12px 0 0; font-size:14px; line-height:1.75; color:#3A424D; max-width:70ch; text-wrap:pretty;">Prenzlauer Höfe is a fully let 214-unit residential block completed in 1998 and refurbished in 2021. Rents are indexed to the Berlin Mietspiegel and the building has held occupancy above 96% for eleven consecutive quarters. The tranche represents a senior claim on net rental income and on proceeds if the asset is sold.</p>
+            <p style="margin:14px 0 0; font-size:14px; line-height:1.75; color:#3A424D; max-width:70ch; text-wrap:pretty;">Title is held by Tessera Berlin Propco I GmbH, a bankruptcy-remote entity whose shares are pledged to a security trustee acting for token holders. Quarterly distributions are paid in EURC to the wallet holding the tranche.</p>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:28px;">
+              <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:14px 16px;"><div style="font-size:12px; color:#6E7885;">Occupancy</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:16px; margin-top:6px;">96.7%</div></div>
+              <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:14px 16px;"><div style="font-size:12px; color:#6E7885;">Net rent, last 12m</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:16px; margin-top:6px;">€2.41M</div></div>
+              <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:14px 16px;"><div style="font-size:12px; color:#6E7885;">Loan to value</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:16px; margin-top:6px;">38%</div></div>
+              <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:14px 16px;"><div style="font-size:12px; color:#6E7885;">Lock-up</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:16px; margin-top:6px;">12 months</div></div>
+            </div>
+            <h3 style="margin:32px 0 0; font-size:18px; font-weight:600;">Token</h3>
+            <div style="margin-top:14px; border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden; max-width:640px;">
+              <div style="display:grid; grid-template-columns:170px 1fr;">
+                <div style="padding:10px 18px; font-size:12px; color:#6E7885; border-bottom:1px solid #F5F7F9;">Standard</div>
+                <div style="padding:10px 18px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; border-bottom:1px solid #F5F7F9;">ERC-3643</div>
+                <div style="padding:10px 18px; font-size:12px; color:#6E7885; border-bottom:1px solid #F5F7F9;">Contract</div>
+                <div style="padding:10px 18px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; border-bottom:1px solid #F5F7F9; color:#0E635C;">0x7A3f9B2c…19C2149 ⧉</div>
+                <div style="padding:10px 18px; font-size:12px; color:#6E7885;">Transfer agent</div>
+                <div style="padding:10px 18px; font-size:12px;">Northgate Trust (LU)</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:grid; gap:16px; align-content:start;">
+            <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:22px 22px 24px; box-shadow:0 1px 2px rgba(22,26,32,0.06);">
+              <div style="font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Subscribe</div>
+              <div style="display:flex; align-items:baseline; gap:8px; margin-top:12px;">
+                <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:28px;">€184.20</span>
+                <span style="font-size:13px; color:#6E7885;">/ unit</span>
+              </div>
+              <div style="margin-top:18px;">
+                <label style="display:block; font-size:12px; font-weight:600; color:#3A424D; margin-bottom:6px;">Units</label>
+                <div style="display:flex; border:1px solid #C7CED6; border-radius:var(--r,4px); overflow:hidden; background:#F5F7F9;">
+                  <input type="text" value="100" disabled="disabled" style="flex:1; min-width:0; border:none; background:transparent; font-family:var(--mono,'Roboto Mono'),monospace; font-size:14px; padding:10px 12px; color:#9AA4AF; cursor:not-allowed;">
+                  <div style="display:flex; align-items:center; padding:0 12px; border-left:1px solid #DFE4E9; font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; color:#9AA4AF;">BER-A</div>
+                </div>
+                <div style="display:flex; justify-content:space-between; font-size:12px; color:#6E7885; margin-top:8px;"><span>Minimum 50 units</span><span style="font-family:var(--mono,'Roboto Mono'),monospace;">€18,420.00</span></div>
+              </div>
+              <button disabled="disabled" style="width:100%; margin-top:18px; border:1px solid #DFE4E9; background:#EDF0F3; color:#9AA4AF; font-family:inherit; font-size:14px; font-weight:600; padding:13px 20px; border-radius:var(--r,4px); cursor:not-allowed;">Invest</button>
+              <div style="display:flex; gap:10px; align-items:flex-start; margin-top:12px; border:1px solid #F0DCAE; background:#FDF3E0; border-radius:var(--r,4px); padding:12px 14px;">
+                <span style="color:#9A6410; font-size:12px; margin-top:1px;">◷</span>
+                <div style="font-size:12.5px; line-height:1.55; color:#7C4F0B;"><strong style="font-weight:600;">Your verification is still in review.</strong> You can invest as soon as Northgate Trust issues your AML and residency credentials — usually within four hours.</div>
+              </div>
+              <button style="width:100%; margin-top:10px; border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:13px; font-weight:600; padding:10px 16px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">Check verification status</button>
+            </div>
+
+            <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:20px 22px 22px;">
+              <div style="font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Compliance requirements</div>
+              <div style="font-size:12.5px; color:#515B67; margin-top:8px; line-height:1.55;">This tranche can only be held by wallets carrying all three credentials.</div>
+              <div style="display:grid; gap:8px; margin-top:16px;">
+                <div style="display:flex; align-items:center; gap:10px; border:1px solid #B7E0D0; background:#E6F4EF; border-radius:var(--r,4px); padding:9px 12px;"><span style="color:#0E7A5F; font-size:12px;">✓</span><span style="flex:1; font-size:13px; font-weight:500; color:#0B5241;">KYC</span><span style="font-size:11px; color:#3E7060;">Northgate Trust</span></div>
+                <div style="display:flex; align-items:center; gap:10px; border:1px solid #F0DCAE; background:#FDF3E0; border-radius:var(--r,4px); padding:9px 12px;"><span style="color:#9A6410; font-size:12px;">◷</span><span style="flex:1; font-size:13px; font-weight:500; color:#7C4F0B;">AML</span><span style="font-size:11px; color:#8A6224;">In review</span></div>
+                <div style="display:flex; align-items:center; gap:10px; border:1px solid #F0DCAE; background:#FDF3E0; border-radius:var(--r,4px); padding:9px 12px;"><span style="color:#9A6410; font-size:12px;">◷</span><span style="flex:1; font-size:13px; font-weight:500; color:#7C4F0B;">EU residency</span><span style="font-size:11px; color:#8A6224;">In review</span></div>
+              </div>
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-top:16px; padding-top:14px; border-top:1px solid #EDF0F3;">
+                <span style="font-size:12px; color:#6E7885;">Jurisdictions accepted</span>
+                <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px; color:#3A424D;">EU/EEA · CH · UK</span>
+              </div>
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-top:10px;">
+                <span style="font-size:12px; color:#6E7885;">Holder cap</span>
+                <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px; color:#3A424D;">148 / 199</span>
+              </div>
+            </div>
+
+            <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:18px 22px 20px;">
+              <div style="font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Documents</div>
+              <div style="display:grid; gap:2px; margin-top:12px;">
+                <a href="#04" style="display:flex; align-items:center; gap:10px; font-size:13px; padding:7px 0;">Prospectus (CSSF approved)<span style="margin-left:auto; font-size:11px; color:#9AA4AF;">PDF · 2.1 MB</span></a>
+                <a href="#04" style="display:flex; align-items:center; gap:10px; font-size:13px; padding:7px 0;">Valuation report, JLL<span style="margin-left:auto; font-size:11px; color:#9AA4AF;">PDF · 8.4 MB</span></a>
+                <a href="#04" style="display:flex; align-items:center; gap:10px; font-size:13px; padding:7px 0;">Q2 2026 asset report<span style="margin-left:auto; font-size:11px; color:#9AA4AF;">PDF · 1.2 MB</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid; gap:16px;">
+      <div style="display:flex; align-items:baseline; gap:12px;">
+        <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; color:#0E635C;">05</span>
+        <span style="font-size:18px; font-weight:600;">Dashboard</span>
+        <span style="font-size:13px; color:#6E7885;">Portfolio value first, then holdings — with any frozen balance named on the row it affects.</span>
+      </div>
+      <div data-screen-label="05 Dashboard" style="width:1440px; background:#fff; border:1px solid #C7CED6; border-radius:6px; box-shadow:0 8px 28px rgba(22,26,32,0.10); overflow:hidden;">
+        <div style="display:flex; align-items:center; gap:24px; height:56px; padding:0 32px; border-bottom:1px solid #DFE4E9;">
+          <div style="display:flex; align-items:center; gap:9px;"><div style="width:14px; height:14px; border:2px solid #0E635C; transform:rotate(45deg);"></div><span style="font-size:13px; font-weight:600;">Tessera</span></div>
+          <div style="display:flex; gap:22px; font-size:13px;">
+            <span style="color:#515B67; padding:19px 0; cursor:pointer;" style-hover="color:#161A20;">Offerings</span>
+            <span style="color:#0B4F4A; font-weight:600; border-bottom:2px solid #0E635C; padding:19px 0; cursor:pointer;">Portfolio</span>
+            <span style="color:#515B67; padding:19px 0; cursor:pointer;" style-hover="color:#161A20;">Activity</span>
+          </div>
+          <div style="margin-left:auto; display:flex; align-items:center; gap:12px;">
+            <span style="display:inline-flex; align-items:center; gap:7px; background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:4px 10px; border-radius:var(--r,4px); font-size:12px; font-weight:600;"><span style="width:6px; height:6px; border-radius:50%; background:#0E7A5F;"></span>Verified</span>
+            <span style="display:inline-flex; align-items:center; gap:8px; background:#F5F7F9; border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:5px 9px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px;">0x7A3f9B…9C21 ⧉</span>
+            <div style="width:28px; height:28px; border-radius:50%; background:#0B4F4A; color:#fff; font-size:11px; font-weight:600; display:flex; align-items:center; justify-content:center;">LV</div>
+          </div>
+        </div>
+        <div style="padding:36px 32px 44px;">
+          <div style="display:flex; align-items:flex-start; gap:20px;">
+            <div>
+              <div style="font-size:13px; color:#6E7885;">Good morning, Lieke</div>
+              <div style="display:flex; align-items:baseline; gap:14px; margin-top:8px;">
+                <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:44px; letter-spacing:-0.02em;">€248,914.60</span>
+                <span style="font-size:14px; color:#0E7A5F; font-weight:500;">+€3,120.40 · +1.27% this quarter</span>
+              </div>
+              <div style="font-size:12px; color:#6E7885; margin-top:6px;">Marked at the latest independent valuation. Not a live market price.</div>
+            </div>
+            <div style="margin-left:auto; display:flex; gap:10px;">
+              <button style="border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:13px; font-weight:600; padding:10px 16px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">Transfer</button>
+              <button style="border:1px solid #0E635C; background:#0E635C; color:#fff; font-family:inherit; font-size:13px; font-weight:600; padding:10px 16px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#0B4F4A;">Browse offerings</button>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:30px;">
+            <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:16px 18px 18px;"><div style="font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Tranches held</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:24px; margin-top:8px;">3</div></div>
+            <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:16px 18px 18px;"><div style="font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Income, last 12m</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:24px; margin-top:8px;">€11,204.00</div></div>
+            <div style="border:1px solid #F5C9C3; background:#FFFCFC; border-radius:var(--r,4px); padding:16px 18px 18px;"><div style="font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#B42318;">Frozen</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:24px; margin-top:8px; color:#B42318;">€8,420.00</div><div style="font-size:12px; color:#B42318; margin-top:4px;">Lock-up on MIL-A</div></div>
+            <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:16px 18px 18px;"><div style="font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Next distribution</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:24px; margin-top:8px;">30 Sep</div></div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 380px; gap:24px; margin-top:30px; align-items:start;">
+            <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden;">
+              <div style="display:flex; align-items:center; padding:14px 20px; border-bottom:1px solid #DFE4E9;">
+                <span style="font-size:13px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase;">Holdings</span>
+                <span style="margin-left:auto; font-size:12px; color:#6E7885;">Updated 3 minutes ago</span>
+              </div>
+              <div style="display:grid; grid-template-columns:2fr 1.2fr 1.2fr 1fr 80px; gap:16px; padding:0 20px; height:40px; align-items:center; background:#FAFBFC; border-bottom:1px solid #DFE4E9; font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">
+                <div>Tranche</div><div style="text-align:right;">Units</div><div style="text-align:right;">Value</div><div>Status</div><div></div>
+              </div>
+              <div style="display:grid; grid-template-columns:2fr 1.2fr 1.2fr 1fr 80px; gap:16px; padding:0 20px; height:64px; align-items:center; border-bottom:1px solid #EDF0F3;" style-hover="background:#FAFBFC;">
+                <div style="display:flex; align-items:center; gap:12px;"><div style="width:34px; height:34px; background:#D4DAE1; border-radius:3px; flex:none;"></div><div><div style="font-size:13.5px; font-weight:500;">Prenzlauer Höfe</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#6E7885; margin-top:2px;">BER-A · Berlin</div></div></div>
+                <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:13px; text-align:right;">840.000000</div>
+                <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:13px; text-align:right;">€154,728.00</div>
+                <div><span style="display:inline-flex; align-items:center; gap:7px; background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:3px 9px; border-radius:var(--r,4px); font-size:11.5px; font-weight:600;"><span style="width:6px; height:6px; border-radius:50%; background:#0E7A5F;"></span>Transferable</span></div>
+                <div style="text-align:right; color:#6E7885; font-size:14px;">⋯</div>
+              </div>
+              <div style="display:grid; grid-template-columns:2fr 1.2fr 1.2fr 1fr 80px; gap:16px; padding:0 20px; height:64px; align-items:center; border-bottom:1px solid #EDF0F3;" style-hover="background:#FAFBFC;">
+                <div style="display:flex; align-items:center; gap:12px;"><div style="width:34px; height:34px; background:#D4DAE1; border-radius:3px; flex:none;"></div><div><div style="font-size:13.5px; font-weight:500;">Zuidas Logistics Park</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#6E7885; margin-top:2px;">AMS-B · Amsterdam</div></div></div>
+                <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:13px; text-align:right;">890.000000</div>
+                <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:13px; text-align:right;">€85,796.00</div>
+                <div><span style="display:inline-flex; align-items:center; gap:7px; background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:3px 9px; border-radius:var(--r,4px); font-size:11.5px; font-weight:600;"><span style="width:6px; height:6px; border-radius:50%; background:#0E7A5F;"></span>Transferable</span></div>
+                <div style="text-align:right; color:#6E7885; font-size:14px;">⋯</div>
+              </div>
+              <div style="border-bottom:1px solid #EDF0F3; background:#FFFCFC;">
+                <div style="display:grid; grid-template-columns:2fr 1.2fr 1.2fr 1fr 80px; gap:16px; padding:0 20px; height:64px; align-items:center;">
+                  <div style="display:flex; align-items:center; gap:12px;"><div style="width:34px; height:34px; background:#D4DAE1; border-radius:3px; flex:none;"></div><div><div style="font-size:13.5px; font-weight:500;">Corso Venezia 12</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#6E7885; margin-top:2px;">MIL-A · Milan</div></div></div>
+                  <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:13px; text-align:right;">40.000000</div>
+                  <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:13px; text-align:right;">€8,480.00</div>
+                  <div><span style="display:inline-flex; align-items:center; gap:7px; background:#FDECEA; border:1px solid #F5C9C3; color:#B42318; padding:3px 9px; border-radius:var(--r,4px); font-size:11.5px; font-weight:600;"><span style="font-size:10px;">✻</span>Frozen</span></div>
+                  <div style="text-align:right; color:#6E7885; font-size:14px;">⋯</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px; margin:0 20px 14px; border:1px solid #F5C9C3; background:#FDECEA; border-radius:var(--r,4px); padding:10px 14px;">
+                  <span style="color:#B42318; font-size:12px;">✻</span>
+                  <div style="flex:1; font-size:12.5px; line-height:1.5; color:#8E1B12;"><strong style="font-weight:600;">39.7 of 40 units are locked until 14 Mar 2027.</strong> This tranche has a 12-month lock-up from your subscription date. Distributions still pay out normally.</div>
+                  <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px; color:#8E1B12;">€8,420.00 frozen</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:grid; gap:16px;">
+              <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:20px 22px 22px;">
+                <div style="font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Your credentials</div>
+                <div style="display:flex; align-items:center; gap:12px; border:1px solid #B7E0D0; background:#E6F4EF; border-radius:var(--r,4px); padding:11px 14px; margin-top:14px;">
+                  <span style="width:8px; height:8px; border-radius:50%; background:#0E7A5F; flex:none;"></span>
+                  <div style="flex:1;"><div style="font-size:13px; font-weight:600; color:#0B5241;">Eligible to hold</div><div style="font-size:12px; color:#3E7060; margin-top:2px;">3 of 3 required claims valid</div></div>
+                </div>
+                <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:14px;">
+                  <span title="Issued by Northgate Trust · expires 2027-08-23" style="display:inline-flex; align-items:center; gap:6px; background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:4px 9px; border-radius:var(--r,4px); font-size:12px; font-weight:500; cursor:help;">KYC ✓</span>
+                  <span title="Issued by Chainalysis KYT · expires 2027-02-14" style="display:inline-flex; align-items:center; gap:6px; background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:4px 9px; border-radius:var(--r,4px); font-size:12px; font-weight:500; cursor:help;">AML ✓</span>
+                  <span title="Issued by Northgate Trust · Netherlands (NL)" style="display:inline-flex; align-items:center; gap:6px; background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:4px 9px; border-radius:var(--r,4px); font-size:12px; font-weight:500; cursor:help;">EU residency ✓</span>
+                  <span title="Not attested — required for some tranches" style="display:inline-flex; align-items:center; gap:6px; background:#EFF1F4; border:1px dashed #C7CED6; color:#6E7885; padding:4px 9px; border-radius:var(--r,4px); font-size:12px; font-weight:500; cursor:help;">Professional investor</span>
+                </div>
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-top:16px; padding-top:14px; border-top:1px solid #EDF0F3;">
+                  <span style="font-size:12px; color:#6E7885;">KYC renews</span>
+                  <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px;">23 Aug 2027</span>
+                </div>
+              </div>
+              <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden;">
+                <div style="padding:14px 20px; border-bottom:1px solid #EDF0F3; display:flex; align-items:center;"><span style="font-size:13px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase;">Recent activity</span><a href="#07" style="margin-left:auto; font-size:12px;">View all</a></div>
+                <div style="display:grid;">
+                  <div style="display:flex; gap:12px; padding:13px 20px; border-bottom:1px solid #F5F7F9; align-items:flex-start;"><span style="color:#0E7A5F; font-size:11px; margin-top:3px;">✓</span><div style="flex:1;"><div style="font-size:13px;">Received 240 BER-A</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#6E7885; margin-top:2px;">21 Aug · from 0x4C1a…77Bd</div></div><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; color:#0E7A5F;">+€44,208</span></div>
+                  <div style="display:flex; gap:12px; padding:13px 20px; border-bottom:1px solid #F5F7F9; align-items:flex-start;"><span style="color:#0E7A5F; font-size:11px; margin-top:3px;">✓</span><div style="flex:1;"><div style="font-size:13px;">Q2 distribution, AMS-B</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#6E7885; margin-top:2px;">30 Jun · paid in EURC</div></div><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; color:#0E7A5F;">+€1,042</span></div>
+                  <div style="display:flex; gap:12px; padding:13px 20px; border-bottom:1px solid #F5F7F9; align-items:flex-start;"><span style="color:#B42318; font-size:11px; margin-top:3px;">✕</span><div style="flex:1;"><div style="font-size:13px;">Transfer blocked, MIL-A</div><div style="font-size:11px; color:#6E7885; margin-top:2px;">18 Aug · units under lock-up</div></div><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; color:#6E7885;">40.000000</span></div>
+                  <div style="display:flex; gap:12px; padding:13px 20px; align-items:flex-start;"><span style="color:#9A6410; font-size:11px; margin-top:3px;">◷</span><div style="flex:1;"><div style="font-size:13px;">Subscription pending, MIL-A</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#6E7885; margin-top:2px;">14 Mar · awaiting settlement</div></div><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; color:#6E7885;">€8,480</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:706px 706px; gap:28px; margin-top:12px;">
+        <div data-screen-label="05a Dashboard empty" style="background:#fff; border:1px solid #C7CED6; border-radius:6px; box-shadow:0 8px 28px rgba(22,26,32,0.10); overflow:hidden; display:flex; flex-direction:column;">
+          <div style="padding:12px 22px; background:#FAFBFC; border-bottom:1px solid #DFE4E9; font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">No holdings yet</div>
+          <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:56px 40px;">
+            <div style="width:34px; height:34px; border:1px solid #C7CED6; transform:rotate(45deg); margin-bottom:24px;"></div>
+            <div style="font-size:16px; font-weight:600;">Your portfolio is empty</div>
+            <div style="font-size:13px; color:#6E7885; margin-top:8px; max-width:42ch; line-height:1.6;">You are verified and eligible for 11 of the 18 open tranches. Subscriptions settle within one business day.</div>
+            <button style="margin-top:22px; border:1px solid #0E635C; background:#0E635C; color:#fff; font-family:inherit; font-size:13px; font-weight:600; padding:10px 18px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#0B4F4A;">See what you can invest in</button>
+          </div>
+        </div>
+        <div data-screen-label="05b Dashboard error" style="background:#fff; border:1px solid #C7CED6; border-radius:6px; box-shadow:0 8px 28px rgba(22,26,32,0.10); overflow:hidden; display:flex; flex-direction:column;">
+          <div style="padding:12px 22px; background:#FAFBFC; border-bottom:1px solid #DFE4E9; font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Data unavailable</div>
+          <div style="padding:24px 26px 28px;">
+            <div style="display:flex; gap:12px; align-items:flex-start; border:1px solid #F5C9C3; background:#FDECEA; border-radius:var(--r,4px); padding:14px 16px;">
+              <span style="color:#B42318; font-size:12px; margin-top:2px;">✕</span>
+              <div style="flex:1;"><div style="font-size:13px; font-weight:600; color:#8E1B12;">We could not reach the ledger</div><div style="font-size:12.5px; color:#9E4038; margin-top:4px; line-height:1.55;">Your holdings are safe — this is a display problem on our side. Balances shown below were last confirmed at 09:02 CET.</div></div>
+              <button style="border:1px solid #B42318; background:#fff; color:#B42318; font-family:inherit; font-size:12px; font-weight:600; padding:6px 12px; border-radius:var(--r,4px); cursor:pointer; flex:none;" style-hover="background:#B42318; color:#fff;">Retry</button>
+            </div>
+            <div style="margin-top:18px; border:1px solid #DFE4E9; border-radius:var(--r,4px); opacity:0.55;">
+              <div style="display:grid; grid-template-columns:2fr 1fr 1fr; gap:16px; padding:0 18px; height:52px; align-items:center; border-bottom:1px solid #EDF0F3;"><div style="font-size:13px;">Prenzlauer Höfe</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12.5px; text-align:right;">840.000000</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12.5px; text-align:right;">€154,728.00</div></div>
+              <div style="display:grid; grid-template-columns:2fr 1fr 1fr; gap:16px; padding:0 18px; height:52px; align-items:center;"><div style="font-size:13px;">Zuidas Logistics Park</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12.5px; text-align:right;">890.000000</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12.5px; text-align:right;">€85,796.00</div></div>
+            </div>
+            <div style="font-size:12px; color:#6E7885; margin-top:12px;">Stale figures are dimmed until the connection recovers.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid; gap:16px;">
+      <div style="display:flex; align-items:baseline; gap:12px;">
+        <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; color:#0E635C;">06</span>
+        <span style="font-size:18px; font-weight:600;">Transfer</span>
+        <span style="font-size:13px; color:#6E7885;">The pre-check runs as you type, before anything is signed. Blocked is stated plainly and always offers the next step.</span>
+      </div>
+      <div style="display:grid; grid-template-columns:1440px; gap:28px;">
+
+        <div data-screen-label="06a Transfer allowed" style="width:1440px; background:#fff; border:1px solid #C7CED6; border-radius:6px; box-shadow:0 8px 28px rgba(22,26,32,0.10); overflow:hidden;">
+          <div style="display:flex; align-items:center; gap:24px; height:56px; padding:0 32px; border-bottom:1px solid #DFE4E9;">
+            <div style="display:flex; align-items:center; gap:9px;"><div style="width:14px; height:14px; border:2px solid #0E635C; transform:rotate(45deg);"></div><span style="font-size:13px; font-weight:600;">Tessera</span></div>
+            <div style="display:flex; gap:22px; font-size:13px;">
+              <span style="color:#515B67; padding:19px 0; cursor:pointer;" style-hover="color:#161A20;">Offerings</span>
+              <span style="color:#0B4F4A; font-weight:600; border-bottom:2px solid #0E635C; padding:19px 0; cursor:pointer;">Portfolio</span>
+              <span style="color:#515B67; padding:19px 0; cursor:pointer;" style-hover="color:#161A20;">Activity</span>
+            </div>
+            <div style="margin-left:auto; display:flex; align-items:center; gap:12px;">
+              <span style="display:inline-flex; align-items:center; gap:7px; background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:4px 10px; border-radius:var(--r,4px); font-size:12px; font-weight:600;"><span style="width:6px; height:6px; border-radius:50%; background:#0E7A5F;"></span>Verified</span>
+              <span style="display:inline-flex; align-items:center; gap:8px; background:#F5F7F9; border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:5px 9px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px;">0x7A3f9B…9C21 ⧉</span>
+              <div style="width:28px; height:28px; border-radius:50%; background:#0B4F4A; color:#fff; font-size:11px; font-weight:600; display:flex; align-items:center; justify-content:center;">LV</div>
+            </div>
+          </div>
+          <div style="padding:36px 32px 48px; display:grid; grid-template-columns:1fr 1fr; gap:44px; max-width:1200px;">
+            <div>
+              <div style="display:flex; align-items:center; gap:7px; font-size:12px; color:#6E7885;"><a href="#05" style="color:#6E7885;">Portfolio</a><span style="color:#C7CED6;">/</span><span style="color:#161A20; font-weight:500;">Transfer</span></div>
+              <h2 style="margin:14px 0 0; font-size:28px; font-weight:600; letter-spacing:-0.02em;">Transfer BER-A</h2>
+              <p style="margin:10px 0 0; font-size:14px; line-height:1.6; color:#515B67; max-width:52ch;">Send units to another verified wallet. We check the transfer against the tranche's rules before you sign, so nothing fails on-chain.</p>
+              <div style="margin-top:28px;">
+                <label style="display:block; font-size:12px; font-weight:600; color:#3A424D; margin-bottom:6px;">Recipient wallet</label>
+                <input type="text" value="0x4C1adE07a91b3f6D2e5804Ac91bE7f339F2477Bd" style="width:100%; box-sizing:border-box; font-family:var(--mono,'Roboto Mono'),monospace; font-size:13px; padding:11px 12px; border:1px solid #0E635C; border-radius:var(--r,4px); outline:none; box-shadow:0 0 0 3px rgba(14,99,92,0.22);">
+                <div style="display:flex; align-items:center; gap:8px; margin-top:8px;">
+                  <span style="display:inline-flex; align-items:center; gap:5px; font-size:12px; color:#0B4F4A; font-weight:500;"><span style="width:5px; height:5px; border-radius:50%; background:#0E7A5F;"></span>northgate.eth</span>
+                  <span style="font-size:12px; color:#6E7885;">· verified investor since Mar 2025</span>
+                </div>
+              </div>
+              <div style="margin-top:22px;">
+                <label style="display:block; font-size:12px; font-weight:600; color:#3A424D; margin-bottom:6px;">Amount</label>
+                <div style="display:flex; border:1px solid #C7CED6; border-radius:var(--r,4px); overflow:hidden;">
+                  <input type="text" value="120.000000" style="flex:1; min-width:0; border:none; font-family:var(--mono,'Roboto Mono'),monospace; font-size:15px; padding:11px 12px; outline:none;">
+                  <div style="display:flex; align-items:center; padding:0 12px; background:#F5F7F9; border-left:1px solid #DFE4E9; font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; color:#515B67;">BER-A</div>
+                  <button style="border:none; border-left:1px solid #DFE4E9; background:#FAFBFC; color:#0E635C; font-family:inherit; font-size:12px; font-weight:600; padding:0 14px; cursor:pointer;" style-hover="background:#EDF0F3;">Max</button>
+                </div>
+                <div style="display:flex; justify-content:space-between; font-size:12px; color:#6E7885; margin-top:8px;"><span>≈ €22,104.00 at last valuation</span><span style="font-family:var(--mono,'Roboto Mono'),monospace;">Available 840.000000</span></div>
+              </div>
+              <div style="margin-top:22px; border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden;">
+                <div style="display:grid; grid-template-columns:170px 1fr;">
+                  <div style="padding:10px 18px; font-size:12px; color:#6E7885; border-bottom:1px solid #F5F7F9;">From</div>
+                  <div style="padding:10px 18px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; border-bottom:1px solid #F5F7F9;">0x7A3f9B…9C21</div>
+                  <div style="padding:10px 18px; font-size:12px; color:#6E7885; border-bottom:1px solid #F5F7F9;">Network fee</div>
+                  <div style="padding:10px 18px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; border-bottom:1px solid #F5F7F9;">≈ €0.04 · paid by Tessera</div>
+                  <div style="padding:10px 18px; font-size:12px; color:#6E7885;">Settles</div>
+                  <div style="padding:10px 18px; font-size:12px;">Immediately on confirmation</div>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:grid; gap:16px; align-content:start;">
+              <div style="background:#fff; border:1px solid #B7E0D0; border-radius:var(--r,4px); overflow:hidden;">
+                <div style="display:flex; align-items:center; gap:12px; padding:18px 22px; background:#E6F4EF; border-bottom:1px solid #B7E0D0;">
+                  <div style="width:26px; height:26px; border-radius:50%; background:#0E7A5F; color:#fff; display:flex; align-items:center; justify-content:center; font-size:13px; flex:none;">✓</div>
+                  <div style="flex:1;"><div style="font-size:16px; font-weight:600; color:#0B5241; letter-spacing:-0.01em;">This transfer is allowed</div><div style="font-size:12px; color:#3E7060; margin-top:2px;">Checked against the tranche rules just now.</div></div>
+                  <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#3E7060;">142ms</span>
+                </div>
+                <div style="padding:16px 22px 20px; display:grid; gap:9px;">
+                  <div style="display:flex; align-items:center; gap:10px; font-size:12.5px;"><span style="color:#0E7A5F;">✓</span><span style="color:#3A424D;">Recipient is a verified investor</span></div>
+                  <div style="display:flex; align-items:center; gap:10px; font-size:12.5px;"><span style="color:#0E7A5F;">✓</span><span style="color:#3A424D;">Recipient's country is accepted — Luxembourg</span></div>
+                  <div style="display:flex; align-items:center; gap:10px; font-size:12.5px;"><span style="color:#0E7A5F;">✓</span><span style="color:#3A424D;">Holder count stays within the 199 cap</span></div>
+                  <div style="display:flex; align-items:center; gap:10px; font-size:12.5px;"><span style="color:#0E7A5F;">✓</span><span style="color:#3A424D;">None of your units are locked or frozen</span></div>
+                </div>
+              </div>
+              <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:20px 22px 22px;">
+                <div style="font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">You are sending</div>
+                <div style="display:flex; align-items:baseline; gap:10px; margin-top:10px;"><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:26px;">120.000000</span><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:13px; color:#6E7885;">BER-A</span></div>
+                <div style="font-size:13px; color:#515B67; margin-top:6px;">to northgate.eth · <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px;">0x4C1a…77Bd</span></div>
+                <div style="display:flex; align-items:center; gap:10px; margin-top:16px; padding-top:14px; border-top:1px solid #EDF0F3;"><span style="font-size:12px; color:#6E7885;">Your balance after</span><span style="margin-left:auto; font-family:var(--mono,'Roboto Mono'),monospace; font-size:13px;">720.000000 BER-A</span></div>
+                <button style="width:100%; margin-top:18px; border:1px solid #0E635C; background:#0E635C; color:#fff; font-family:inherit; font-size:14px; font-weight:600; padding:13px 20px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#0B4F4A;">Confirm and sign</button>
+                <button style="width:100%; margin-top:8px; border:1px solid transparent; background:transparent; color:#515B67; font-family:inherit; font-size:13px; font-weight:600; padding:9px 16px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div data-screen-label="06b Transfer blocked" style="width:1440px; background:#fff; border:1px solid #C7CED6; border-radius:6px; box-shadow:0 8px 28px rgba(22,26,32,0.10); overflow:hidden;">
+          <div style="display:flex; align-items:center; gap:24px; height:56px; padding:0 32px; border-bottom:1px solid #DFE4E9;">
+            <div style="display:flex; align-items:center; gap:9px;"><div style="width:14px; height:14px; border:2px solid #0E635C; transform:rotate(45deg);"></div><span style="font-size:13px; font-weight:600;">Tessera</span></div>
+            <div style="display:flex; gap:22px; font-size:13px;">
+              <span style="color:#515B67; padding:19px 0; cursor:pointer;" style-hover="color:#161A20;">Offerings</span>
+              <span style="color:#0B4F4A; font-weight:600; border-bottom:2px solid #0E635C; padding:19px 0; cursor:pointer;">Portfolio</span>
+              <span style="color:#515B67; padding:19px 0; cursor:pointer;" style-hover="color:#161A20;">Activity</span>
+            </div>
+            <div style="margin-left:auto; display:flex; align-items:center; gap:12px;">
+              <span style="display:inline-flex; align-items:center; gap:7px; background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:4px 10px; border-radius:var(--r,4px); font-size:12px; font-weight:600;"><span style="width:6px; height:6px; border-radius:50%; background:#0E7A5F;"></span>Verified</span>
+              <span style="display:inline-flex; align-items:center; gap:8px; background:#F5F7F9; border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:5px 9px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px;">0x7A3f9B…9C21 ⧉</span>
+              <div style="width:28px; height:28px; border-radius:50%; background:#0B4F4A; color:#fff; font-size:11px; font-weight:600; display:flex; align-items:center; justify-content:center;">LV</div>
+            </div>
+          </div>
+          <div style="padding:36px 32px 48px; display:grid; grid-template-columns:1fr 1fr; gap:44px; max-width:1200px;">
+            <div>
+              <div style="display:flex; align-items:center; gap:7px; font-size:12px; color:#6E7885;"><a href="#05" style="color:#6E7885;">Portfolio</a><span style="color:#C7CED6;">/</span><span style="color:#161A20; font-weight:500;">Transfer</span></div>
+              <h2 style="margin:14px 0 0; font-size:28px; font-weight:600; letter-spacing:-0.02em;">Transfer BER-A</h2>
+              <p style="margin:10px 0 0; font-size:14px; line-height:1.6; color:#515B67; max-width:52ch;">Send units to another verified wallet. We check the transfer against the tranche's rules before you sign, so nothing fails on-chain.</p>
+              <div style="margin-top:28px;">
+                <label style="display:block; font-size:12px; font-weight:600; color:#3A424D; margin-bottom:6px;">Recipient wallet</label>
+                <input type="text" value="0x9dC401b7f2A845Ee0913cB6a4f81De2205a37b13" style="width:100%; box-sizing:border-box; font-family:var(--mono,'Roboto Mono'),monospace; font-size:13px; padding:11px 12px; border:1px solid #C7CED6; border-radius:var(--r,4px); outline:none;">
+                <div style="display:flex; align-items:center; gap:8px; margin-top:8px;">
+                  <span style="display:inline-flex; align-items:center; gap:5px; font-size:12px; color:#9A6410; font-weight:500;"><span style="width:5px; height:5px; border-radius:50%; background:#9A6410;"></span>Not in the investor register</span>
+                </div>
+              </div>
+              <div style="margin-top:22px;">
+                <label style="display:block; font-size:12px; font-weight:600; color:#3A424D; margin-bottom:6px;">Amount</label>
+                <div style="display:flex; border:1px solid #C7CED6; border-radius:var(--r,4px); overflow:hidden;">
+                  <input type="text" value="120.000000" style="flex:1; min-width:0; border:none; font-family:var(--mono,'Roboto Mono'),monospace; font-size:15px; padding:11px 12px; outline:none;">
+                  <div style="display:flex; align-items:center; padding:0 12px; background:#F5F7F9; border-left:1px solid #DFE4E9; font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; color:#515B67;">BER-A</div>
+                  <button style="border:none; border-left:1px solid #DFE4E9; background:#FAFBFC; color:#0E635C; font-family:inherit; font-size:12px; font-weight:600; padding:0 14px; cursor:pointer;" style-hover="background:#EDF0F3;">Max</button>
+                </div>
+                <div style="display:flex; justify-content:space-between; font-size:12px; color:#6E7885; margin-top:8px;"><span>≈ €22,104.00 at last valuation</span><span style="font-family:var(--mono,'Roboto Mono'),monospace;">Available 840.000000</span></div>
+              </div>
+              <div style="margin-top:22px; display:flex; align-items:center; gap:10px; border:1px solid #DFE4E9; background:#FAFBFC; border-radius:var(--r,4px); padding:12px 14px;">
+                <span style="width:12px; height:12px; border:2px solid #DFE4E9; border-top-color:#6E7885; border-radius:50%; animation:spin 0.8s linear infinite; display:inline-block;"></span>
+                <span style="font-size:12.5px; color:#515B67;">Re-checking as you type — the result on the right updates automatically.</span>
+              </div>
+            </div>
+
+            <div style="display:grid; gap:16px; align-content:start;">
+              <div style="background:#fff; border:1px solid #F5C9C3; border-radius:var(--r,4px); overflow:hidden;">
+                <div style="display:flex; align-items:center; gap:12px; padding:18px 22px; background:#FDECEA; border-bottom:1px solid #F5C9C3;">
+                  <div style="width:26px; height:26px; border-radius:50%; background:#B42318; color:#fff; display:flex; align-items:center; justify-content:center; font-size:13px; flex:none;">✕</div>
+                  <div style="flex:1;"><div style="font-size:16px; font-weight:600; color:#8E1B12; letter-spacing:-0.01em;">This transfer cannot go through yet</div><div style="font-size:12.5px; color:#9E4038; margin-top:3px;">The recipient has not completed identity verification.</div></div>
+                  <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#9E4038;">138ms</span>
+                </div>
+                <div style="padding:18px 22px 20px;">
+                  <div style="font-size:13px; line-height:1.65; color:#3A424D; max-width:52ch;">Only wallets on this tranche's investor register can receive units. Nothing has been sent and no fee was charged — the check runs before signing for exactly this reason.</div>
+                  <div style="display:grid; gap:9px; margin-top:18px; padding-top:16px; border-top:1px solid #EDF0F3;">
+                    <div style="display:flex; align-items:center; gap:10px; font-size:12.5px;"><span style="color:#B42318;">✕</span><span style="color:#8E1B12; font-weight:500;">Recipient is not verified</span><span style="margin-left:auto; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#9AA4AF;">IDENTITY_NOT_REGISTERED</span></div>
+                    <div style="display:flex; align-items:center; gap:10px; font-size:12.5px;"><span style="color:#0E7A5F;">✓</span><span style="color:#3A424D;">Your units are free to move</span></div>
+                    <div style="display:flex; align-items:center; gap:10px; font-size:12.5px;"><span style="color:#0E7A5F;">✓</span><span style="color:#3A424D;">Holder count stays within the 199 cap</span></div>
+                    <div style="display:flex; align-items:center; gap:10px; font-size:12.5px;"><span style="color:#0E7A5F;">✓</span><span style="color:#3A424D;">Trading is open on this tranche</span></div>
+                  </div>
+                  <div style="display:flex; gap:10px; margin-top:20px; padding-top:16px; border-top:1px solid #EDF0F3;">
+                    <button style="border:1px solid #0E635C; background:#0E635C; color:#fff; font-family:inherit; font-size:13px; font-weight:600; padding:10px 16px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#0B4F4A;">Invite them to verify</button>
+                    <button style="border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:13px; font-weight:600; padding:10px 16px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">Use a different wallet</button>
+                  </div>
+                </div>
+              </div>
+              <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:18px 22px 20px;">
+                <div style="font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Other reasons a transfer can be blocked</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px;">
+                  <div style="border:1px solid #DFE4E9; border-left:3px solid #B42318; border-radius:var(--r,4px); padding:11px 13px;"><div style="font-size:12.5px; font-weight:600; color:#8E1B12;">Would exceed max holders (199)</div><div style="font-size:11.5px; color:#6E7885; margin-top:4px; line-height:1.45;">The tranche is full. Join the waitlist or send to an existing holder.</div></div>
+                  <div style="border:1px solid #DFE4E9; border-left:3px solid #B42318; border-radius:var(--r,4px); padding:11px 13px;"><div style="font-size:12.5px; font-weight:600; color:#8E1B12;">Country restricted</div><div style="font-size:11.5px; color:#6E7885; margin-top:4px; line-height:1.45;">This tranche accepts EU/EEA, CH and UK residents only.</div></div>
+                  <div style="border:1px solid #DFE4E9; border-left:3px solid #5A6472; border-radius:var(--r,4px); padding:11px 13px;"><div style="font-size:12.5px; font-weight:600; color:#3A424D;">Token is paused</div><div style="font-size:11.5px; color:#6E7885; margin-top:4px; line-height:1.45;">The issuer has halted transfers. Holdings and income are unaffected.</div></div>
+                  <div style="border:1px solid #DFE4E9; border-left:3px solid #B42318; border-radius:var(--r,4px); padding:11px 13px;"><div style="font-size:12.5px; font-weight:600; color:#8E1B12;">Your units are locked</div><div style="font-size:11.5px; color:#6E7885; margin-top:4px; line-height:1.45;">Lock-up runs to 14 Mar 2027 on this tranche.</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid; gap:16px;">
+      <div style="display:flex; align-items:baseline; gap:12px;">
+        <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; color:#0E635C;">07</span>
+        <span style="font-size:18px; font-weight:600;">Activity</span>
+        <span style="font-size:13px; color:#6E7885;">Every movement, with the hash available but never in the way.</span>
+      </div>
+      <div data-screen-label="07 Activity" style="width:1440px; background:#fff; border:1px solid #C7CED6; border-radius:6px; box-shadow:0 8px 28px rgba(22,26,32,0.10); overflow:hidden;">
+        <div style="display:flex; align-items:center; gap:24px; height:56px; padding:0 32px; border-bottom:1px solid #DFE4E9;">
+          <div style="display:flex; align-items:center; gap:9px;"><div style="width:14px; height:14px; border:2px solid #0E635C; transform:rotate(45deg);"></div><span style="font-size:13px; font-weight:600;">Tessera</span></div>
+          <div style="display:flex; gap:22px; font-size:13px;">
+            <span style="color:#515B67; padding:19px 0; cursor:pointer;" style-hover="color:#161A20;">Offerings</span>
+            <span style="color:#515B67; padding:19px 0; cursor:pointer;" style-hover="color:#161A20;">Portfolio</span>
+            <span style="color:#0B4F4A; font-weight:600; border-bottom:2px solid #0E635C; padding:19px 0; cursor:pointer;">Activity</span>
+          </div>
+          <div style="margin-left:auto; display:flex; align-items:center; gap:12px;">
+            <span style="display:inline-flex; align-items:center; gap:7px; background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:4px 10px; border-radius:var(--r,4px); font-size:12px; font-weight:600;"><span style="width:6px; height:6px; border-radius:50%; background:#0E7A5F;"></span>Verified</span>
+            <span style="display:inline-flex; align-items:center; gap:8px; background:#F5F7F9; border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:5px 9px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px;">0x7A3f9B…9C21 ⧉</span>
+            <div style="width:28px; height:28px; border-radius:50%; background:#0B4F4A; color:#fff; font-size:11px; font-weight:600; display:flex; align-items:center; justify-content:center;">LV</div>
+          </div>
+        </div>
+        <div style="padding:36px 32px 44px;">
+          <div style="display:flex; align-items:flex-end;">
+            <div><h2 style="margin:0; font-size:28px; font-weight:600; letter-spacing:-0.02em;">Activity</h2><p style="margin:8px 0 0; font-size:14px; color:#515B67;">All transfers, subscriptions and distributions on your wallet.</p></div>
+            <div style="margin-left:auto; display:flex; gap:8px; align-items:center;">
+              <div style="display:flex; align-items:center; gap:8px; border:1px solid #C7CED6; border-radius:var(--r,4px); padding:7px 11px; background:#fff; width:220px;"><span style="color:#9AA4AF; font-size:12px;">⌕</span><input type="text" placeholder="Search hash or address" style="flex:1; min-width:0; border:none; outline:none; font-family:inherit; font-size:13px;"></div>
+              <select style="font-family:inherit; font-size:13px; padding:8px 11px; border:1px solid #C7CED6; border-radius:var(--r,4px); background:#fff; appearance:none;"><option>All types</option><option>Transfers</option><option>Distributions</option></select>
+              <button style="border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:13px; font-weight:600; padding:8px 14px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">Export</button>
+            </div>
+          </div>
+
+          <div style="margin-top:24px; border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden;">
+            <div style="display:grid; grid-template-columns:130px 1.1fr 1.3fr 1.1fr 1fr 1.1fr; gap:16px; padding:0 20px; height:40px; align-items:center; background:#FAFBFC; border-bottom:1px solid #DFE4E9; font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">
+              <div>Date</div><div>Type</div><div>Counterparty</div><div style="text-align:right;">Amount</div><div>Status</div><div>Transaction</div>
+            </div>
+            <div style="display:grid; grid-template-columns:130px 1.1fr 1.3fr 1.1fr 1fr 1.1fr; gap:16px; padding:0 20px; height:56px; align-items:center; border-bottom:1px solid #EDF0F3; font-size:13px;" style-hover="background:#FAFBFC;">
+              <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; color:#515B67;">21 Aug 2026</div>
+              <div>Received</div>
+              <div><span style="display:inline-flex; align-items:center; gap:8px; background:#F5F7F9; border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:4px 9px;"><span style="display:inline-flex; align-items:center; gap:5px; font-size:12px; color:#0B4F4A;"><span style="width:5px; height:5px; border-radius:50%; background:#0E7A5F;"></span>northgate.eth</span><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#6E7885;">0x4C1a…77Bd</span></span></div>
+              <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12.5px; text-align:right; color:#0E7A5F;">+240.000000 BER-A</div>
+              <div><span style="display:inline-flex; align-items:center; gap:7px; background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:3px 9px; border-radius:var(--r,4px); font-size:11.5px; font-weight:600;"><span style="width:6px; height:6px; border-radius:50%; background:#0E7A5F;"></span>Settled</span></div>
+              <div><a href="#07" style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px;">0x9f2c…4Ab1 ↗</a></div>
+            </div>
+            <div style="display:grid; grid-template-columns:130px 1.1fr 1.3fr 1.1fr 1fr 1.1fr; gap:16px; padding:0 20px; height:56px; align-items:center; border-bottom:1px solid #EDF0F3; font-size:13px;" style-hover="background:#FAFBFC;">
+              <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; color:#515B67;">18 Aug 2026</div>
+              <div>Sent</div>
+              <div><span style="display:inline-flex; align-items:center; gap:8px; background:#FDECEA; border:1px solid #F5C9C3; border-radius:var(--r,4px); padding:4px 9px;"><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px; color:#B42318;">0x9dC4…7b13</span></span></div>
+              <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12.5px; text-align:right; color:#6E7885;">40.000000 MIL-A</div>
+              <div><span style="display:inline-flex; align-items:center; gap:7px; background:#FDECEA; border:1px solid #F5C9C3; color:#B42318; padding:3px 9px; border-radius:var(--r,4px); font-size:11.5px; font-weight:600;"><span style="width:6px; height:6px; border-radius:50%; background:#B42318;"></span>Blocked</span></div>
+              <div style="font-size:12px; color:#9AA4AF;">Not submitted</div>
+            </div>
+            <div style="display:grid; grid-template-columns:130px 1.1fr 1.3fr 1.1fr 1fr 1.1fr; gap:16px; padding:0 20px; height:56px; align-items:center; border-bottom:1px solid #EDF0F3; font-size:13px;" style-hover="background:#FAFBFC;">
+              <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; color:#515B67;">04 Aug 2026</div>
+              <div>Sent</div>
+              <div><span style="display:inline-flex; align-items:center; gap:8px; background:#F5F7F9; border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:4px 9px;"><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px;">0x2E88c1…04Fa</span></span></div>
+              <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12.5px; text-align:right;">−60.000000 AMS-B</div>
+              <div><span style="display:inline-flex; align-items:center; gap:7px; background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:3px 9px; border-radius:var(--r,4px); font-size:11.5px; font-weight:600;"><span style="width:6px; height:6px; border-radius:50%; background:#0E7A5F;"></span>Settled</span></div>
+              <div><a href="#07" style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px;">0x31bE…0C7f ↗</a></div>
+            </div>
+            <div style="display:grid; grid-template-columns:130px 1.1fr 1.3fr 1.1fr 1fr 1.1fr; gap:16px; padding:0 20px; height:56px; align-items:center; border-bottom:1px solid #EDF0F3; font-size:13px;" style-hover="background:#FAFBFC;">
+              <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; color:#515B67;">30 Jun 2026</div>
+              <div>Distribution</div>
+              <div style="font-size:12.5px; color:#515B67;">Tessera Amsterdam Propco</div>
+              <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12.5px; text-align:right; color:#0E7A5F;">+1,042.00 EURC</div>
+              <div><span style="display:inline-flex; align-items:center; gap:7px; background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:3px 9px; border-radius:var(--r,4px); font-size:11.5px; font-weight:600;"><span style="width:6px; height:6px; border-radius:50%; background:#0E7A5F;"></span>Settled</span></div>
+              <div><a href="#07" style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px;">0xC08a…19dE ↗</a></div>
+            </div>
+            <div style="display:grid; grid-template-columns:130px 1.1fr 1.3fr 1.1fr 1fr 1.1fr; gap:16px; padding:0 20px; height:56px; align-items:center; border-bottom:1px solid #EDF0F3; font-size:13px;" style-hover="background:#FAFBFC;">
+              <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; color:#515B67;">14 Mar 2026</div>
+              <div>Subscription</div>
+              <div style="font-size:12.5px; color:#515B67;">Tessera Milan Propco</div>
+              <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12.5px; text-align:right;">+40.000000 MIL-A</div>
+              <div><span style="display:inline-flex; align-items:center; gap:7px; background:#FDF3E0; border:1px solid #F0DCAE; color:#9A6410; padding:3px 9px; border-radius:var(--r,4px); font-size:11.5px; font-weight:600;"><span style="width:6px; height:6px; border-radius:50%; background:#9A6410;"></span>Pending</span></div>
+              <div><a href="#07" style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px;">0x77aF…3B90 ↗</a></div>
+            </div>
+            <div style="display:flex; align-items:center; padding:14px 20px; background:#FAFBFC;">
+              <span style="font-size:12px; color:#6E7885;">1–5 of 42</span>
+              <div style="margin-left:auto; display:flex; gap:4px;">
+                <button style="border:1px solid #DFE4E9; background:#fff; color:#C7CED6; font-family:inherit; font-size:12px; width:28px; height:28px; border-radius:var(--r,4px); cursor:not-allowed;">‹</button>
+                <button style="border:1px solid #0E635C; background:#0E635C; color:#fff; font-family:inherit; font-size:12px; width:28px; height:28px; border-radius:var(--r,4px); cursor:pointer;">1</button>
+                <button style="border:1px solid #DFE4E9; background:#fff; color:#3A424D; font-family:inherit; font-size:12px; width:28px; height:28px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">2</button>
+                <button style="border:1px solid #DFE4E9; background:#fff; color:#3A424D; font-family:inherit; font-size:12px; width:28px; height:28px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">9</button>
+                <button style="border:1px solid #DFE4E9; background:#fff; color:#3A424D; font-family:inherit; font-size:12px; width:28px; height:28px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">›</button>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:24px;">
+            <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden;">
+              <div style="padding:12px 20px; background:#FAFBFC; border-bottom:1px solid #DFE4E9; font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Loading</div>
+              <div style="padding:6px 20px 14px;">
+                <div style="display:grid; grid-template-columns:100px 1fr 1fr 80px; gap:16px; height:48px; align-items:center; border-bottom:1px solid #EDF0F3;">
+                  <div style="height:10px; border-radius:2px; background:linear-gradient(90deg,#EDF0F3 0%,#F7F9FA 40%,#EDF0F3 80%); background-size:340px 100%; animation:shimmer 1.4s linear infinite;"></div>
+                  <div style="height:10px; border-radius:2px; background:linear-gradient(90deg,#EDF0F3 0%,#F7F9FA 40%,#EDF0F3 80%); background-size:340px 100%; animation:shimmer 1.4s linear infinite;"></div>
+                  <div style="height:10px; border-radius:2px; background:#EDF0F3;"></div>
+                  <div style="height:18px; border-radius:3px; background:#EDF0F3;"></div>
+                </div>
+                <div style="display:grid; grid-template-columns:100px 1fr 1fr 80px; gap:16px; height:48px; align-items:center; border-bottom:1px solid #EDF0F3;">
+                  <div style="height:10px; border-radius:2px; background:linear-gradient(90deg,#EDF0F3 0%,#F7F9FA 40%,#EDF0F3 80%); background-size:340px 100%; animation:shimmer 1.4s linear infinite;"></div>
+                  <div style="height:10px; width:75%; border-radius:2px; background:linear-gradient(90deg,#EDF0F3 0%,#F7F9FA 40%,#EDF0F3 80%); background-size:340px 100%; animation:shimmer 1.4s linear infinite;"></div>
+                  <div style="height:10px; border-radius:2px; background:#EDF0F3;"></div>
+                  <div style="height:18px; border-radius:3px; background:#EDF0F3;"></div>
+                </div>
+                <div style="display:grid; grid-template-columns:100px 1fr 1fr 80px; gap:16px; height:48px; align-items:center;">
+                  <div style="height:10px; border-radius:2px; background:linear-gradient(90deg,#EDF0F3 0%,#F7F9FA 40%,#EDF0F3 80%); background-size:340px 100%; animation:shimmer 1.4s linear infinite;"></div>
+                  <div style="height:10px; width:60%; border-radius:2px; background:linear-gradient(90deg,#EDF0F3 0%,#F7F9FA 40%,#EDF0F3 80%); background-size:340px 100%; animation:shimmer 1.4s linear infinite;"></div>
+                  <div style="height:10px; border-radius:2px; background:#EDF0F3;"></div>
+                  <div style="height:18px; border-radius:3px; background:#EDF0F3;"></div>
+                </div>
+              </div>
+            </div>
+            <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden; display:flex; flex-direction:column;">
+              <div style="padding:12px 20px; background:#FAFBFC; border-bottom:1px solid #DFE4E9; font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Empty</div>
+              <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:44px 32px;">
+                <div style="width:30px; height:30px; border:1px solid #C7CED6; transform:rotate(45deg); margin-bottom:20px;"></div>
+                <div style="font-size:15px; font-weight:600;">No activity yet</div>
+                <div style="font-size:13px; color:#6E7885; margin-top:6px; max-width:36ch; line-height:1.55;">Transfers, subscriptions and quarterly distributions will appear here.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#0E635C&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#0E635C&quot;,&quot;#123C6B&quot;,&quot;#1B3A5C&quot;],&quot;section&quot;:&quot;Theme&quot;},&quot;radius&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:4,&quot;min&quot;:0,&quot;max&quot;:8,&quot;step&quot;:2,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Theme&quot;},&quot;monoFace&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Roboto Mono&quot;,&quot;options&quot;:[&quot;Roboto Mono&quot;,&quot;IBM Plex Mono&quot;,&quot;JetBrains Mono&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Theme&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      accent: this.props.accent ?? "#0E635C",
+      radius: (this.props.radius ?? 4) + "px",
+      monoFace: this.props.monoFace ?? "Roboto Mono"
+    };
+  }
+}
+</script>
+</body>
+</html>

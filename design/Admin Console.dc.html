@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#E7EBEF; font-family:"Space Grotesk", system-ui, sans-serif; -webkit-font-smoothing:antialiased; }
+  a { color:#0E635C; text-decoration:none; }
+  a:hover { color:#0B4F4A; text-decoration:underline; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  @keyframes shimmer { 0% { background-position:-340px 0; } 100% { background-position:340px 0; } }
+</style>
+</helmet>
+
+<div style="padding:64px 64px 140px; background:#E7EBEF; color:#161A20; --accent:{{ accent }}; --r:{{ radius }}; --mono:{{ monoFace }};">
+
+  <div style="max-width:1440px; margin:0 auto 56px;">
+    <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#0E635C;">Tessera · Agent console</div>
+    <h1 style="margin:16px 0 0; font-size:44px; font-weight:600; letter-spacing:-0.03em;">Admin screens</h1>
+    <p style="margin:14px 0 0; max-width:66ch; font-size:15px; line-height:1.65; color:#515B67; text-wrap:pretty;">The operator side of the same platform. Density over comfort, every privileged action behind a typed confirmation, and an audit entry attached to everything that touches the chain. Destructive variants are reserved for freeze, pause and forced transfer.</p>
+  </div>
+
+  <div style="display:grid; gap:80px; justify-items:start;">
+
+    <div style="display:grid; gap:16px;">
+      <div style="display:flex; align-items:baseline; gap:12px;">
+        <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; color:#0E635C;">01</span>
+        <span style="font-size:18px; font-weight:600;">Sign in</span>
+        <span style="font-size:13px; color:#6E7885;">SIWE, then an on-chain role check. Wallets without the agent role are told exactly what is missing.</span>
+      </div>
+      <div style="display:grid; grid-template-columns:706px 706px; gap:28px;">
+        <div data-screen-label="01a Agent sign in" style="box-sizing:border-box; width:706px; height:520px; background:#0D1015; border:1px solid #262E39; border-radius:6px; box-shadow:0 8px 28px rgba(22,26,32,0.18); overflow:hidden; padding:48px 52px; display:flex; flex-direction:column; justify-content:center;">
+          <div style="display:flex; align-items:center; gap:10px;"><div style="width:14px; height:14px; border:2px solid #3FA396; transform:rotate(45deg);"></div><span style="font-size:13px; font-weight:600; color:#fff;">Tessera</span><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase; color:#8792A2;">Agent console</span></div>
+          <h2 style="margin:32px 0 0; font-size:24px; font-weight:600; color:#E6EAEF; letter-spacing:-0.02em;">Operator sign in</h2>
+          <p style="margin:10px 0 0; font-size:13.5px; line-height:1.6; color:#98A2B0; max-width:48ch;">Connect the wallet registered as an agent on the token contract, then sign to open a session. Sessions expire after 30 minutes of inactivity.</p>
+          <button style="margin-top:26px; display:flex; align-items:center; gap:12px; border:1px solid #3FA396; background:#3FA396; color:#06302E; font-family:inherit; font-size:14px; font-weight:600; padding:13px 18px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#57B5A8;">Connect operator wallet<span style="margin-left:auto; font-size:13px;">→</span></button>
+          <div style="margin-top:18px; border:1px solid #262E39; background:#14181F; border-radius:var(--r,4px); padding:14px 16px;">
+            <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; line-height:1.75; color:#98A2B0;">
+              agent-console.tessera.io requests a signature.<br>
+              Address &nbsp;0x3B77aC…0d42<br>
+              Chain &nbsp;&nbsp;&nbsp;Base · 8453<br>
+              Nonce &nbsp;&nbsp;&nbsp;K2p9Wm41 · expires in 5 min
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px; margin-top:16px; font-size:12px; color:#8792A2;"><span style="width:12px; height:12px; border:2px solid #262E39; border-top-color:#3FA396; border-radius:50%; animation:spin 0.8s linear infinite; display:inline-block;"></span>Waiting for signature in your wallet</div>
+        </div>
+
+        <div data-screen-label="01b Role required" style="box-sizing:border-box; width:706px; height:520px; background:#0D1015; border:1px solid #262E39; border-radius:6px; box-shadow:0 8px 28px rgba(22,26,32,0.18); overflow:hidden; padding:48px 52px; display:flex; flex-direction:column; justify-content:center;">
+          <div style="display:flex; align-items:center; gap:10px;"><div style="width:14px; height:14px; border:2px solid #3FA396; transform:rotate(45deg);"></div><span style="font-size:13px; font-weight:600; color:#fff;">Tessera</span><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase; color:#8792A2;">Agent console</span></div>
+          <div style="margin-top:32px; display:flex; align-items:center; gap:10px;">
+            <span style="display:inline-flex; align-items:center; gap:7px; background:#331614; border:1px solid #5E2723; color:#F0736A; padding:4px 10px; border-radius:var(--r,4px); font-size:12px; font-weight:600;">▲ Access denied</span>
+          </div>
+          <h2 style="margin:18px 0 0; font-size:24px; font-weight:600; color:#E6EAEF; letter-spacing:-0.02em;">Agent role required</h2>
+          <p style="margin:10px 0 0; font-size:13.5px; line-height:1.65; color:#98A2B0; max-width:50ch;">Your signature is valid, but this wallet does not hold the <span style="font-family:var(--mono,'Roboto Mono'),monospace; color:#C6D0DB;">AGENT_ROLE</span> on any token in this deployment. Only an owner can grant it.</p>
+          <div style="margin-top:22px; border:1px solid #262E39; background:#14181F; border-radius:var(--r,4px); overflow:hidden;">
+            <div style="display:grid; grid-template-columns:150px 1fr;">
+              <div style="padding:10px 16px; font-size:12px; color:#8792A2; border-bottom:1px solid #1B212A;">Wallet</div>
+              <div style="padding:10px 16px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; color:#E6EAEF; border-bottom:1px solid #1B212A;">0x9dC401…7b13 ⧉</div>
+              <div style="padding:10px 16px; font-size:12px; color:#8792A2; border-bottom:1px solid #1B212A;">Roles found</div>
+              <div style="padding:10px 16px; font-size:12px; color:#8792A2; border-bottom:1px solid #1B212A;">None</div>
+              <div style="padding:10px 16px; font-size:12px; color:#8792A2;">Checked</div>
+              <div style="padding:10px 16px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; color:#E6EAEF;">3 tokens · block 21,884,109</div>
+            </div>
+          </div>
+          <div style="display:flex; gap:10px; margin-top:22px;">
+            <button style="border:1px solid #37414F; background:#1B212A; color:#E6EAEF; font-family:inherit; font-size:13px; font-weight:600; padding:10px 16px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#262E39;">Request access from owner</button>
+            <button style="border:1px solid transparent; background:transparent; color:#8792A2; font-family:inherit; font-size:13px; font-weight:600; padding:10px 14px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#1B212A;">Switch wallet</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid; gap:16px;">
+      <div style="display:flex; align-items:baseline; gap:12px;">
+        <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; color:#0E635C;">02</span>
+        <span style="font-size:18px; font-weight:600;">Dashboard</span>
+        <span style="font-size:13px; color:#6E7885;">Per-token supply, holders, frozen total and pause state, with the admin-action feed beside it.</span>
+      </div>
+      <div data-screen-label="02 Dashboard" style="width:1440px; background:#fff; border:1px solid #C7CED6; border-radius:6px; box-shadow:0 8px 28px rgba(22,26,32,0.10); overflow:hidden;">
+        <div style="display:flex; align-items:center; gap:18px; height:48px; padding:0 20px; background:#161A20;">
+          <div style="display:flex; align-items:center; gap:9px;"><div style="width:13px; height:13px; border:2px solid #3FA396; transform:rotate(45deg);"></div><span style="font-size:12.5px; font-weight:600; color:#fff;">Tessera</span><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#8792A2;">Agent</span></div>
+          <div style="display:flex; align-items:center; gap:8px; border:1px solid #37414F; border-radius:var(--r,4px); padding:4px 9px; font-size:12px; color:#E6EAEF;"><span style="width:6px; height:6px; border-radius:50%; background:#34C48E;"></span>Vestry Row Fund I<span style="color:#8792A2;">▾</span></div>
+          <div style="margin-left:auto; display:flex; align-items:center; gap:14px;">
+            <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#8792A2;">Base · block 21,884,109</span>
+            <span style="display:inline-flex; align-items:center; gap:6px; border:1px solid #37414F; border-radius:var(--r,4px); padding:4px 9px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#E6EAEF;">0x3B77aC…0d42</span>
+            <span style="display:inline-flex; align-items:center; gap:6px; background:#10322F; border:1px solid #1E4A3B; color:#3FA396; padding:3px 8px; border-radius:3px; font-size:10.5px; font-weight:600; letter-spacing:0.04em;">AGENT</span>
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns:208px 1fr;">
+          <div style="border-right:1px solid #DFE4E9; background:#FAFBFC; padding:14px 10px; min-height:820px;">
+            <div style="font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:#9AA4AF; padding:0 10px 7px;">Operate</div>
+            <div style="display:grid; gap:1px;">
+              <div style="display:flex; align-items:center; gap:9px; padding:7px 10px; border-radius:var(--r,4px); font-size:12.5px; font-weight:600; color:#0B4F4A; background:#E3F0EE; cursor:pointer;"><span style="width:4px; height:4px; background:#0E635C;"></span>Dashboard</div>
+              <div style="display:flex; align-items:center; gap:9px; padding:7px 10px; border-radius:var(--r,4px); font-size:12.5px; color:#515B67; cursor:pointer;" style-hover="background:#EDF0F3; color:#161A20;"><span style="width:4px; height:4px; background:#C7CED6;"></span>Investors<span style="margin-left:auto; font-family:var(--mono,'Roboto Mono'),monospace; font-size:10px; color:#6E7885;">248</span></div>
+              <div style="display:flex; align-items:center; gap:9px; padding:7px 10px; border-radius:var(--r,4px); font-size:12.5px; color:#515B67; cursor:pointer;" style-hover="background:#EDF0F3; color:#161A20;"><span style="width:4px; height:4px; background:#C7CED6;"></span>Token controls</div>
+              <div style="display:flex; align-items:center; gap:9px; padding:7px 10px; border-radius:var(--r,4px); font-size:12.5px; color:#515B67; cursor:pointer;" style-hover="background:#EDF0F3; color:#161A20;"><span style="width:4px; height:4px; background:#C7CED6;"></span>Transfers<span style="margin-left:auto; display:inline-flex; background:#FDF3E0; border:1px solid #F0DCAE; color:#9A6410; font-size:10px; font-weight:600; padding:0 5px; border-radius:3px;">7</span></div>
+            </div>
+            <div style="font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:#9AA4AF; padding:16px 10px 7px;">Control</div>
+            <div style="display:grid; gap:1px;">
+              <div style="display:flex; align-items:center; gap:9px; padding:7px 10px; border-radius:var(--r,4px); font-size:12.5px; color:#515B67; cursor:pointer;" style-hover="background:#EDF0F3; color:#161A20;"><span style="width:4px; height:4px; background:#C7CED6;"></span>Compliance rules</div>
+              <div style="display:flex; align-items:center; gap:9px; padding:7px 10px; border-radius:var(--r,4px); font-size:12.5px; color:#515B67; cursor:pointer;" style-hover="background:#EDF0F3; color:#161A20;"><span style="width:4px; height:4px; background:#C7CED6;"></span>Claim issuers</div>
+              <div style="display:flex; align-items:center; gap:9px; padding:7px 10px; border-radius:var(--r,4px); font-size:12.5px; color:#515B67; cursor:pointer;" style-hover="background:#EDF0F3; color:#161A20;"><span style="width:4px; height:4px; background:#C7CED6;"></span>Providers</div>
+              <div style="display:flex; align-items:center; gap:9px; padding:7px 10px; border-radius:var(--r,4px); font-size:12.5px; color:#515B67; cursor:pointer;" style-hover="background:#EDF0F3; color:#161A20;"><span style="width:4px; height:4px; background:#C7CED6;"></span>Audit log</div>
+            </div>
+            <div style="margin-top:20px; border-top:1px solid #EDF0F3; padding:14px 10px 0;">
+              <div style="font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:#9AA4AF; margin-bottom:8px;">Session</div>
+              <div style="font-size:11.5px; color:#6E7885; line-height:1.6;">Expires in 24 min<br><span style="font-family:var(--mono,'Roboto Mono'),monospace;">2 of 2 signatures</span></div>
+            </div>
+          </div>
+
+          <div style="padding:22px 24px 30px;">
+            <div style="display:flex; align-items:center; gap:14px;">
+              <h2 style="margin:0; font-size:20px; font-weight:600; letter-spacing:-0.015em;">Token overview</h2>
+              <span style="font-size:12px; color:#6E7885;">3 tokens · 1 paused</span>
+              <div style="margin-left:auto; display:flex; gap:8px;">
+                <button style="border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:12px; font-weight:600; padding:6px 12px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">Export register</button>
+                <button style="border:1px solid #0E635C; background:#0E635C; color:#fff; font-family:inherit; font-size:12px; font-weight:600; padding:6px 12px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#0B4F4A;">Mint / distribute</button>
+              </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:18px;">
+              <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:12px 14px 14px;"><div style="font-size:10.5px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Total supply</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:20px; margin-top:6px;">543,244.000000</div><div style="font-size:11.5px; color:#6E7885; margin-top:3px;">across 3 tranches</div></div>
+              <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:12px 14px 14px;"><div style="font-size:10.5px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Holders</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:20px; margin-top:6px;">248</div><div style="font-size:11.5px; color:#9A6410; margin-top:3px;">MIL-A at 197 / 199</div></div>
+              <div style="border:1px solid #F5C9C3; background:#FFFCFC; border-radius:var(--r,4px); padding:12px 14px 14px;"><div style="font-size:10.5px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#B42318;">Frozen</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:20px; margin-top:6px; color:#B42318;">21,940.000000</div><div style="font-size:11.5px; color:#B42318; margin-top:3px;">3 addresses · 1 partial</div></div>
+              <div style="border:1px solid #D8DDE4; background:#FAFBFC; border-radius:var(--r,4px); padding:12px 14px 14px;"><div style="font-size:10.5px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#5A6472;">Paused tokens</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:20px; margin-top:6px; color:#3A424D;">1</div><div style="font-size:11.5px; color:#5A6472; margin-top:3px;">CPH-A since 19 Aug</div></div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 380px; gap:20px; margin-top:20px; align-items:start;">
+              <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden;">
+                <div style="display:flex; align-items:center; padding:10px 16px; border-bottom:1px solid #DFE4E9; background:#FAFBFC;">
+                  <span style="font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Tokens</span>
+                  <span style="margin-left:auto; font-size:11.5px; color:#6E7885;">Synced 40s ago</span>
+                </div>
+                <div style="display:grid; grid-template-columns:1.5fr 1.2fr 0.8fr 1.1fr 0.9fr 80px; gap:12px; padding:0 16px; height:34px; align-items:center; background:#FAFBFC; border-bottom:1px solid #DFE4E9; font-size:10.5px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">
+                  <div>Token</div><div style="text-align:right;">Supply</div><div style="text-align:right;">Holders</div><div style="text-align:right;">Frozen</div><div>State</div><div></div>
+                </div>
+                <div style="display:grid; grid-template-columns:1.5fr 1.2fr 0.8fr 1.1fr 0.9fr 80px; gap:12px; padding:0 16px; height:46px; align-items:center; border-bottom:1px solid #EDF0F3; font-size:12.5px;" style-hover="background:#FAFBFC;">
+                  <div><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-weight:600; color:#0B4F4A;">BER-A</span> <span style="color:#515B67;">Prenzlauer Höfe</span></div>
+                  <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; text-align:right;">271,444.000000</div>
+                  <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; text-align:right;">148</div>
+                  <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; text-align:right; color:#9AA4AF;">0.000000</div>
+                  <div><span style="display:inline-flex; align-items:center; gap:6px; background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:2px 8px; border-radius:3px; font-size:10.5px; font-weight:600;">ACTIVE</span></div>
+                  <div style="text-align:right; color:#6E7885;">⋯</div>
+                </div>
+                <div style="display:grid; grid-template-columns:1.5fr 1.2fr 0.8fr 1.1fr 0.9fr 80px; gap:12px; padding:0 16px; height:46px; align-items:center; border-bottom:1px solid #EDF0F3; font-size:12.5px;" style-hover="background:#FAFBFC;">
+                  <div><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-weight:600; color:#0B4F4A;">AMS-B</span> <span style="color:#515B67;">Zuidas Logistics</span></div>
+                  <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; text-align:right;">295,643.000000</div>
+                  <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; text-align:right;">92</div>
+                  <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; text-align:right; color:#B42318;">13,520.000000</div>
+                  <div><span style="display:inline-flex; align-items:center; gap:6px; background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:2px 8px; border-radius:3px; font-size:10.5px; font-weight:600;">ACTIVE</span></div>
+                  <div style="text-align:right; color:#6E7885;">⋯</div>
+                </div>
+                <div style="display:grid; grid-template-columns:1.5fr 1.2fr 0.8fr 1.1fr 0.9fr 80px; gap:12px; padding:0 16px; height:46px; align-items:center; border-bottom:1px solid #EDF0F3; font-size:12.5px; background:#FAFBFC;" style-hover="background:#F5F7F9;">
+                  <div><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-weight:600; color:#0B4F4A;">CPH-A</span> <span style="color:#515B67;">Nordhavn Block 7</span></div>
+                  <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; text-align:right;">76,157.000000</div>
+                  <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; text-align:right;">120</div>
+                  <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; text-align:right; color:#B42318;">8,420.000000</div>
+                  <div><span style="display:inline-flex; align-items:center; gap:6px; background:#EFF1F4; border:1px solid #D8DDE4; color:#5A6472; padding:2px 8px; border-radius:3px; font-size:10.5px; font-weight:600;">PAUSED</span></div>
+                  <div style="text-align:right; color:#6E7885;">⋯</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px; padding:11px 16px; background:#FAFBFC; border-top:1px solid #EDF0F3;">
+                  <span style="color:#5A6472; font-size:12px;">✻</span>
+                  <span style="font-size:12px; color:#3A424D;"><strong style="font-weight:600;">CPH-A transfers are paused.</strong> Paused by 0x3B77aC…0d42 on 19 Aug, 14:22 — pending valuation dispute.</span>
+                  <button style="margin-left:auto; border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:11.5px; font-weight:600; padding:5px 11px; border-radius:var(--r,4px); cursor:pointer; flex:none;" style-hover="background:#EDF0F3;">Unpause</button>
+                </div>
+              </div>
+
+              <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden;">
+                <div style="display:flex; align-items:center; padding:10px 16px; border-bottom:1px solid #DFE4E9; background:#FAFBFC;">
+                  <span style="font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Recent admin actions</span>
+                  <a href="#07" style="margin-left:auto; font-size:11.5px;">Audit log</a>
+                </div>
+                <div style="display:grid;">
+                  <div style="display:flex; gap:10px; padding:11px 16px; border-bottom:1px solid #F5F7F9; align-items:flex-start;">
+                    <span style="color:#B42318; font-size:11px; margin-top:3px;">▲</span>
+                    <div style="flex:1;"><div style="font-size:12.5px;"><strong style="font-weight:600;">Partial freeze</strong> · 8,420.000000 CPH-A</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#6E7885; margin-top:2px;">0x00De…41F0 · by 0x3B77aC…0d42</div></div>
+                    <span style="font-size:10.5px; color:#9AA4AF; flex:none;">2h ago</span>
+                  </div>
+                  <div style="display:flex; gap:10px; padding:11px 16px; border-bottom:1px solid #F5F7F9; align-items:flex-start;">
+                    <span style="color:#5A6472; font-size:11px; margin-top:3px;">✻</span>
+                    <div style="flex:1;"><div style="font-size:12.5px;"><strong style="font-weight:600;">Token paused</strong> · CPH-A</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#6E7885; margin-top:2px;">by 0x3B77aC…0d42</div></div>
+                    <span style="font-size:10.5px; color:#9AA4AF; flex:none;">4d ago</span>
+                  </div>
+                  <div style="display:flex; gap:10px; padding:11px 16px; border-bottom:1px solid #F5F7F9; align-items:flex-start;">
+                    <span style="color:#0E7A5F; font-size:11px; margin-top:3px;">✓</span>
+                    <div style="flex:1;"><div style="font-size:12.5px;"><strong style="font-weight:600;">Claim issued</strong> · AML to 0x2E88…04Fa</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#6E7885; margin-top:2px;">issuer Chainalysis KYT</div></div>
+                    <span style="font-size:10.5px; color:#9AA4AF; flex:none;">4d ago</span>
+                  </div>
+                  <div style="display:flex; gap:10px; padding:11px 16px; border-bottom:1px solid #F5F7F9; align-items:flex-start;">
+                    <span style="color:#0E635C; font-size:11px; margin-top:3px;">◆</span>
+                    <div style="flex:1;"><div style="font-size:12.5px;"><strong style="font-weight:600;">Rule changed</strong> · max holders 180 → 199</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#6E7885; margin-top:2px;">BER-A · by 0x51aa…88C3</div></div>
+                    <span style="font-size:10.5px; color:#9AA4AF; flex:none;">6d ago</span>
+                  </div>
+                  <div style="display:flex; gap:10px; padding:11px 16px; align-items:flex-start;">
+                    <span style="color:#B42318; font-size:11px; margin-top:3px;">▲</span>
+                    <div style="flex:1;"><div style="font-size:12.5px;"><strong style="font-weight:600;">Forced transfer</strong> · 12,500.000000 AMS-B</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#6E7885; margin-top:2px;">court order NL-2026-1184</div></div>
+                    <span style="font-size:10.5px; color:#9AA4AF; flex:none;">8d ago</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-top:20px;">
+              <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden;">
+                <div style="padding:9px 14px; background:#FAFBFC; border-bottom:1px solid #DFE4E9; font-size:10.5px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Loading</div>
+                <div style="padding:6px 14px 12px;">
+                  <div style="display:grid; grid-template-columns:1.4fr 1fr 60px; gap:12px; height:40px; align-items:center; border-bottom:1px solid #EDF0F3;"><div style="height:9px; border-radius:2px; background:linear-gradient(90deg,#EDF0F3 0%,#F7F9FA 40%,#EDF0F3 80%); background-size:340px 100%; animation:shimmer 1.4s linear infinite;"></div><div style="height:9px; border-radius:2px; background:#EDF0F3;"></div><div style="height:16px; border-radius:3px; background:#EDF0F3;"></div></div>
+                  <div style="display:grid; grid-template-columns:1.4fr 1fr 60px; gap:12px; height:40px; align-items:center; border-bottom:1px solid #EDF0F3;"><div style="height:9px; width:75%; border-radius:2px; background:linear-gradient(90deg,#EDF0F3 0%,#F7F9FA 40%,#EDF0F3 80%); background-size:340px 100%; animation:shimmer 1.4s linear infinite;"></div><div style="height:9px; border-radius:2px; background:#EDF0F3;"></div><div style="height:16px; border-radius:3px; background:#EDF0F3;"></div></div>
+                  <div style="display:grid; grid-template-columns:1.4fr 1fr 60px; gap:12px; height:40px; align-items:center;"><div style="height:9px; width:60%; border-radius:2px; background:linear-gradient(90deg,#EDF0F3 0%,#F7F9FA 40%,#EDF0F3 80%); background-size:340px 100%; animation:shimmer 1.4s linear infinite;"></div><div style="height:9px; border-radius:2px; background:#EDF0F3;"></div><div style="height:16px; border-radius:3px; background:#EDF0F3;"></div></div>
+                </div>
+              </div>
+              <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden; display:flex; flex-direction:column;">
+                <div style="padding:9px 14px; background:#FAFBFC; border-bottom:1px solid #DFE4E9; font-size:10.5px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Empty</div>
+                <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:32px 24px;">
+                  <div style="width:26px; height:26px; border:1px solid #C7CED6; transform:rotate(45deg); margin-bottom:16px;"></div>
+                  <div style="font-size:13.5px; font-weight:600;">No tokens deployed</div>
+                  <div style="font-size:12px; color:#6E7885; margin-top:5px; max-width:30ch; line-height:1.5;">Deploy a tranche to begin issuing.</div>
+                  <button style="margin-top:14px; border:1px solid #0E635C; background:#0E635C; color:#fff; font-family:inherit; font-size:12px; font-weight:600; padding:7px 13px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#0B4F4A;">Deploy token</button>
+                </div>
+              </div>
+              <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden;">
+                <div style="padding:9px 14px; background:#FAFBFC; border-bottom:1px solid #DFE4E9; font-size:10.5px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">RPC error</div>
+                <div style="padding:14px;">
+                  <div style="display:flex; gap:10px; align-items:flex-start; border:1px solid #F5C9C3; background:#FDECEA; border-radius:var(--r,4px); padding:11px 13px;">
+                    <span style="color:#B42318; font-size:11px; margin-top:2px;">✕</span>
+                    <div style="flex:1;"><div style="font-size:12.5px; font-weight:600; color:#8E1B12;">RPC endpoint unreachable</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#9E4038; margin-top:4px; line-height:1.5;">base-mainnet.tessera.io<br>ETIMEDOUT after 3 retries</div></div>
+                  </div>
+                  <div style="font-size:11.5px; color:#6E7885; margin-top:11px; line-height:1.55;">Writes are disabled until the connection recovers. Read data below is from block 21,883,904.</div>
+                  <button style="margin-top:11px; border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:11.5px; font-weight:600; padding:6px 12px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">Retry connection</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid; gap:16px;">
+      <div style="display:flex; align-items:baseline; gap:12px;">
+        <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; color:#0E635C;">03</span>
+        <span style="font-size:18px; font-weight:600;">Investors</span>
+        <span style="font-size:13px; color:#6E7885;">Register, then the detail view where claims are issued and revoked.</span>
+      </div>
+
+      <div data-screen-label="03 Investor register" style="width:1440px; background:#fff; border:1px solid #C7CED6; border-radius:6px; box-shadow:0 8px 28px rgba(22,26,32,0.10); overflow:hidden;">
+        <div style="display:flex; align-items:center; gap:18px; height:48px; padding:0 20px; background:#161A20;">
+          <div style="display:flex; align-items:center; gap:9px;"><div style="width:13px; height:13px; border:2px solid #3FA396; transform:rotate(45deg);"></div><span style="font-size:12.5px; font-weight:600; color:#fff;">Tessera</span><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#8792A2;">Agent</span></div>
+          <div style="display:flex; align-items:center; gap:8px; border:1px solid #37414F; border-radius:var(--r,4px); padding:4px 9px; font-size:12px; color:#E6EAEF;"><span style="width:6px; height:6px; border-radius:50%; background:#34C48E;"></span>Vestry Row Fund I<span style="color:#8792A2;">▾</span></div>
+          <div style="margin-left:auto; display:flex; align-items:center; gap:14px;">
+            <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#8792A2;">Base · block 21,884,109</span>
+            <span style="display:inline-flex; align-items:center; gap:6px; border:1px solid #37414F; border-radius:var(--r,4px); padding:4px 9px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#E6EAEF;">0x3B77aC…0d42</span>
+            <span style="display:inline-flex; background:#10322F; border:1px solid #1E4A3B; color:#3FA396; padding:3px 8px; border-radius:3px; font-size:10.5px; font-weight:600; letter-spacing:0.04em;">AGENT</span>
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns:208px 1fr;">
+          <div style="border-right:1px solid #DFE4E9; background:#FAFBFC; padding:14px 10px; min-height:640px;">
+            <div style="font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:#9AA4AF; padding:0 10px 7px;">Operate</div>
+            <div style="display:grid; gap:1px;">
+              <div style="display:flex; align-items:center; gap:9px; padding:7px 10px; border-radius:var(--r,4px); font-size:12.5px; color:#515B67; cursor:pointer;" style-hover="background:#EDF0F3; color:#161A20;"><span style="width:4px; height:4px; background:#C7CED6;"></span>Dashboard</div>
+              <div style="display:flex; align-items:center; gap:9px; padding:7px 10px; border-radius:var(--r,4px); font-size:12.5px; font-weight:600; color:#0B4F4A; background:#E3F0EE; cursor:pointer;"><span style="width:4px; height:4px; background:#0E635C;"></span>Investors<span style="margin-left:auto; font-family:var(--mono,'Roboto Mono'),monospace; font-size:10px; color:#0E635C;">248</span></div>
+              <div style="display:flex; align-items:center; gap:9px; padding:7px 10px; border-radius:var(--r,4px); font-size:12.5px; color:#515B67; cursor:pointer;" style-hover="background:#EDF0F3; color:#161A20;"><span style="width:4px; height:4px; background:#C7CED6;"></span>Token controls</div>
+              <div style="display:flex; align-items:center; gap:9px; padding:7px 10px; border-radius:var(--r,4px); font-size:12.5px; color:#515B67; cursor:pointer;" style-hover="background:#EDF0F3; color:#161A20;"><span style="width:4px; height:4px; background:#C7CED6;"></span>Transfers</div>
+            </div>
+            <div style="font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:#9AA4AF; padding:16px 10px 7px;">Control</div>
+            <div style="display:grid; gap:1px;">
+              <div style="display:flex; align-items:center; gap:9px; padding:7px 10px; border-radius:var(--r,4px); font-size:12.5px; color:#515B67; cursor:pointer;" style-hover="background:#EDF0F3; color:#161A20;"><span style="width:4px; height:4px; background:#C7CED6;"></span>Compliance rules</div>
+              <div style="display:flex; align-items:center; gap:9px; padding:7px 10px; border-radius:var(--r,4px); font-size:12.5px; color:#515B67; cursor:pointer;" style-hover="background:#EDF0F3; color:#161A20;"><span style="width:4px; height:4px; background:#C7CED6;"></span>Claim issuers</div>
+              <div style="display:flex; align-items:center; gap:9px; padding:7px 10px; border-radius:var(--r,4px); font-size:12.5px; color:#515B67; cursor:pointer;" style-hover="background:#EDF0F3; color:#161A20;"><span style="width:4px; height:4px; background:#C7CED6;"></span>Providers</div>
+              <div style="display:flex; align-items:center; gap:9px; padding:7px 10px; border-radius:var(--r,4px); font-size:12.5px; color:#515B67; cursor:pointer;" style-hover="background:#EDF0F3; color:#161A20;"><span style="width:4px; height:4px; background:#C7CED6;"></span>Audit log</div>
+            </div>
+          </div>
+          <div style="padding:20px 24px 26px;">
+            <div style="display:flex; align-items:center; gap:12px;">
+              <h2 style="margin:0; font-size:20px; font-weight:600; letter-spacing:-0.015em;">Investors</h2>
+              <span style="font-size:12px; color:#6E7885;">248 registered · 14 in review · 3 frozen</span>
+              <div style="margin-left:auto; display:flex; gap:8px; align-items:center;">
+                <div style="display:flex; align-items:center; gap:7px; border:1px solid #C7CED6; border-radius:var(--r,4px); padding:5px 10px; width:250px;"><span style="color:#9AA4AF; font-size:12px;">⌕</span><input type="text" placeholder="Address, name or claim reference" style="flex:1; min-width:0; border:none; outline:none; font-family:inherit; font-size:12px;"></div>
+                <select style="font-family:inherit; font-size:12px; padding:6px 10px; border:1px solid #C7CED6; border-radius:var(--r,4px); background:#fff; appearance:none;"><option>All statuses</option><option>Verified</option><option>Pending</option><option>Rejected</option></select>
+                <button style="border:1px solid #0E635C; background:#0E635C; color:#fff; font-family:inherit; font-size:12px; font-weight:600; padding:6px 12px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#0B4F4A;">Register investor</button>
+              </div>
+            </div>
+            <div style="display:flex; gap:6px; margin-top:14px;">
+              <span style="background:#E3F0EE; border:1px solid #B9D8D3; color:#0B4F4A; padding:4px 10px; border-radius:999px; font-size:11.5px; font-weight:600; cursor:pointer;">All 248</span>
+              <span style="background:#fff; border:1px solid #DFE4E9; color:#515B67; padding:4px 10px; border-radius:999px; font-size:11.5px; cursor:pointer;" style-hover="border-color:#9AA4AF; color:#161A20;">In review 14</span>
+              <span style="background:#fff; border:1px solid #DFE4E9; color:#515B67; padding:4px 10px; border-radius:999px; font-size:11.5px; cursor:pointer;" style-hover="border-color:#9AA4AF; color:#161A20;">Frozen 3</span>
+              <span style="background:#fff; border:1px solid #DFE4E9; color:#515B67; padding:4px 10px; border-radius:999px; font-size:11.5px; cursor:pointer;" style-hover="border-color:#9AA4AF; color:#161A20;">Claims expiring 9</span>
+            </div>
+            <div style="margin-top:16px; border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden;">
+              <div style="display:grid; grid-template-columns:26px 1.5fr 1.4fr 0.8fr 1.5fr 1.1fr 1fr 60px; gap:12px; padding:0 14px; height:34px; align-items:center; background:#FAFBFC; border-bottom:1px solid #DFE4E9; font-size:10.5px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">
+                <div><div style="width:13px; height:13px; border:1px solid #C7CED6; border-radius:2px; background:#fff;"></div></div>
+                <div>Investor</div><div>Wallet</div><div>Country</div><div>Claims</div><div>Status</div><div style="text-align:right;">Balance</div><div></div>
+              </div>
+              <div style="display:grid; grid-template-columns:26px 1.5fr 1.4fr 0.8fr 1.5fr 1.1fr 1fr 60px; gap:12px; padding:0 14px; height:44px; align-items:center; border-bottom:1px solid #EDF0F3; font-size:12.5px;" style-hover="background:#FAFBFC;">
+                <div><div style="width:13px; height:13px; border:1px solid #C7CED6; border-radius:2px; background:#fff;"></div></div>
+                <div style="font-weight:500;">Halvorsen Capital AG</div>
+                <div><span style="display:inline-flex; align-items:center; gap:7px; background:#F5F7F9; border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:3px 8px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px;">0x7A3f9B…9C21 ⧉</span></div>
+                <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px;">CH</div>
+                <div style="display:flex; gap:4px;"><span style="background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:1px 6px; border-radius:3px; font-size:10.5px; font-weight:500;">KYC</span><span style="background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:1px 6px; border-radius:3px; font-size:10.5px; font-weight:500;">AML</span><span style="background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:1px 6px; border-radius:3px; font-size:10.5px; font-weight:500;">PRO</span></div>
+                <div><span style="display:inline-flex; align-items:center; gap:6px; background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:2px 8px; border-radius:3px; font-size:10.5px; font-weight:600;">VERIFIED</span></div>
+                <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px; text-align:right;">42,500.000000</div>
+                <div style="text-align:right; color:#6E7885;">⋯</div>
+              </div>
+              <div style="display:grid; grid-template-columns:26px 1.5fr 1.4fr 0.8fr 1.5fr 1.1fr 1fr 60px; gap:12px; padding:0 14px; height:44px; align-items:center; border-bottom:1px solid #EDF0F3; font-size:12.5px;" style-hover="background:#FAFBFC;">
+                <div><div style="width:13px; height:13px; border:1px solid #C7CED6; border-radius:2px; background:#fff;"></div></div>
+                <div style="font-weight:500;">Brightmoor Pension</div>
+                <div><span style="display:inline-flex; align-items:center; gap:7px; background:#F5F7F9; border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:3px 8px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px;">0x2E88c1…04Fa ⧉</span></div>
+                <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px;">NL</div>
+                <div style="display:flex; gap:4px;"><span style="background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:1px 6px; border-radius:3px; font-size:10.5px; font-weight:500;">KYC</span><span style="background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:1px 6px; border-radius:3px; font-size:10.5px; font-weight:500;">AML</span><span style="background:#FDF3E0; border:1px solid #F0DCAE; color:#9A6410; padding:1px 6px; border-radius:3px; font-size:10.5px; font-weight:500;">PRO</span></div>
+                <div><span style="display:inline-flex; align-items:center; gap:6px; background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:2px 8px; border-radius:3px; font-size:10.5px; font-weight:600;">VERIFIED</span></div>
+                <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px; text-align:right;">31,200.000000</div>
+                <div style="text-align:right; color:#6E7885;">⋯</div>
+              </div>
+              <div style="display:grid; grid-template-columns:26px 1.5fr 1.4fr 0.8fr 1.5fr 1.1fr 1fr 60px; gap:12px; padding:0 14px; height:44px; align-items:center; border-bottom:1px solid #EDF0F3; font-size:12.5px;" style-hover="background:#FAFBFC;">
+                <div><div style="width:13px; height:13px; border:1px solid #C7CED6; border-radius:2px; background:#fff;"></div></div>
+                <div style="font-weight:500;">K. Adeyemi</div>
+                <div><span style="display:inline-flex; align-items:center; gap:7px; background:#F5F7F9; border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:3px 8px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px;">0x9dC401…7b13 ⧉</span></div>
+                <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px; color:#9AA4AF;">—</div>
+                <div style="display:flex; gap:4px;"><span style="background:#FDF3E0; border:1px solid #F0DCAE; color:#9A6410; padding:1px 6px; border-radius:3px; font-size:10.5px; font-weight:500;">KYC</span><span style="background:#EFF1F4; border:1px dashed #C7CED6; color:#6E7885; padding:1px 6px; border-radius:3px; font-size:10.5px; font-weight:500;">AML</span></div>
+                <div><span style="display:inline-flex; align-items:center; gap:6px; background:#FDF3E0; border:1px solid #F0DCAE; color:#9A6410; padding:2px 8px; border-radius:3px; font-size:10.5px; font-weight:600;">PENDING</span></div>
+                <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px; text-align:right; color:#9AA4AF;">0.000000</div>
+                <div style="text-align:right; color:#6E7885;">⋯</div>
+              </div>
+              <div style="display:grid; grid-template-columns:26px 1.5fr 1.4fr 0.8fr 1.5fr 1.1fr 1fr 60px; gap:12px; padding:0 14px; height:44px; align-items:center; border-bottom:1px solid #EDF0F3; font-size:12.5px; background:#FFFCFC;" style-hover="background:#FDF7F6;">
+                <div><div style="width:13px; height:13px; border:1px solid #C7CED6; border-radius:2px; background:#fff;"></div></div>
+                <div style="font-weight:500;">Orbis Family Office</div>
+                <div><span style="display:inline-flex; align-items:center; gap:7px; background:#FDECEA; border:1px solid #F5C9C3; border-radius:var(--r,4px); padding:3px 8px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#B42318;">0x00De55…41F0 ⧉</span></div>
+                <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px;">KY</div>
+                <div style="display:flex; gap:4px;"><span style="background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:1px 6px; border-radius:3px; font-size:10.5px; font-weight:500;">KYC</span><span style="background:#FDECEA; border:1px solid #F5C9C3; color:#B42318; padding:1px 6px; border-radius:3px; font-size:10.5px; font-weight:500;">AML ✕</span></div>
+                <div><span style="display:inline-flex; align-items:center; gap:6px; background:#FDECEA; border:1px solid #F5C9C3; color:#B42318; padding:2px 8px; border-radius:3px; font-size:10.5px; font-weight:600;">FROZEN</span></div>
+                <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px; text-align:right;">18,750.000000</div>
+                <div style="text-align:right; color:#6E7885;">⋯</div>
+              </div>
+              <div style="display:grid; grid-template-columns:26px 1.5fr 1.4fr 0.8fr 1.5fr 1.1fr 1fr 60px; gap:12px; padding:0 14px; height:44px; align-items:center; border-bottom:1px solid #EDF0F3; font-size:12.5px;" style-hover="background:#FAFBFC;">
+                <div><div style="width:13px; height:13px; border:1px solid #C7CED6; border-radius:2px; background:#fff;"></div></div>
+                <div style="font-weight:500;">Sable Ridge Partners</div>
+                <div><span style="display:inline-flex; align-items:center; gap:7px; background:#F5F7F9; border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:3px 8px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px;">0xB412a9…5D2c ⧉</span></div>
+                <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px;">LU</div>
+                <div style="display:flex; gap:4px;"><span style="background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:1px 6px; border-radius:3px; font-size:10.5px; font-weight:500;">KYC</span><span style="background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:1px 6px; border-radius:3px; font-size:10.5px; font-weight:500;">AML</span></div>
+                <div><span style="display:inline-flex; align-items:center; gap:6px; background:#EFF1F4; border:1px solid #D8DDE4; color:#5A6472; padding:2px 8px; border-radius:3px; font-size:10.5px; font-weight:600;">PAUSED</span></div>
+                <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px; text-align:right;">9,100.000000</div>
+                <div style="text-align:right; color:#6E7885;">⋯</div>
+              </div>
+              <div style="display:flex; align-items:center; padding:11px 14px; background:#FAFBFC;">
+                <span style="font-size:11.5px; color:#6E7885;">1–5 of 248</span>
+                <div style="margin-left:auto; display:flex; gap:4px;">
+                  <button style="border:1px solid #DFE4E9; background:#fff; color:#C7CED6; font-family:inherit; font-size:11.5px; width:26px; height:26px; border-radius:var(--r,4px); cursor:not-allowed;">‹</button>
+                  <button style="border:1px solid #0E635C; background:#0E635C; color:#fff; font-family:inherit; font-size:11.5px; width:26px; height:26px; border-radius:var(--r,4px); cursor:pointer;">1</button>
+                  <button style="border:1px solid #DFE4E9; background:#fff; color:#3A424D; font-family:inherit; font-size:11.5px; width:26px; height:26px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">2</button>
+                  <button style="border:1px solid #DFE4E9; background:#fff; color:#3A424D; font-family:inherit; font-size:11.5px; width:26px; height:26px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">50</button>
+                  <button style="border:1px solid #DFE4E9; background:#fff; color:#3A424D; font-family:inherit; font-size:11.5px; width:26px; height:26px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">›</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-screen-label="03a Investor detail" style="width:1440px; background:#fff; border:1px solid #C7CED6; border-radius:6px; box-shadow:0 8px 28px rgba(22,26,32,0.10); overflow:hidden;">
+        <div style="display:flex; align-items:center; gap:18px; height:48px; padding:0 20px; background:#161A20;">
+          <div style="display:flex; align-items:center; gap:9px;"><div style="width:13px; height:13px; border:2px solid #3FA396; transform:rotate(45deg);"></div><span style="font-size:12.5px; font-weight:600; color:#fff;">Tessera</span><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#8792A2;">Agent</span></div>
+          <div style="margin-left:auto; display:flex; align-items:center; gap:14px;">
+            <span style="display:inline-flex; align-items:center; gap:6px; border:1px solid #37414F; border-radius:var(--r,4px); padding:4px 9px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#E6EAEF;">0x3B77aC…0d42</span>
+            <span style="display:inline-flex; background:#10322F; border:1px solid #1E4A3B; color:#3FA396; padding:3px 8px; border-radius:3px; font-size:10.5px; font-weight:600; letter-spacing:0.04em;">AGENT</span>
+          </div>
+        </div>
+        <div style="padding:20px 24px 30px;">
+          <div style="display:flex; align-items:center; gap:7px; font-size:11.5px; color:#6E7885;"><a href="#03" style="color:#6E7885;">Investors</a><span style="color:#C7CED6;">/</span><span style="color:#161A20; font-weight:500;">Halvorsen Capital AG</span></div>
+          <div style="display:flex; align-items:flex-start; gap:16px; margin-top:12px;">
+            <div>
+              <div style="display:flex; align-items:center; gap:10px;">
+                <h2 style="margin:0; font-size:22px; font-weight:600; letter-spacing:-0.015em;">Halvorsen Capital AG</h2>
+                <span style="display:inline-flex; align-items:center; gap:7px; background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:3px 9px; border-radius:var(--r,4px); font-size:11.5px; font-weight:600;"><span style="width:6px; height:6px; border-radius:50%; background:#0E7A5F;"></span>Verified</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px; margin-top:9px;">
+                <span style="display:inline-flex; align-items:center; gap:8px; background:#F5F7F9; border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:4px 9px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px;">0x7A3f9B2c41Ee…19C2149 ⧉</span>
+                <span style="font-size:11.5px; color:#6E7885;">Registered 14 Mar 2025 · Institutional</span>
+              </div>
+            </div>
+            <div style="margin-left:auto; display:flex; gap:8px;">
+              <button style="border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:12px; font-weight:600; padding:7px 13px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">Mint / distribute</button>
+              <button style="display:inline-flex; align-items:center; gap:6px; border:1px solid #B42318; background:#fff; color:#B42318; font-family:inherit; font-size:12px; font-weight:600; padding:7px 13px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#B42318; color:#fff;"><span style="font-size:10px;">▲</span>Freeze address</button>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:12px; margin-top:20px;">
+            <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:11px 14px 13px;"><div style="font-size:10.5px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Balance</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:17px; margin-top:6px;">42,500.000000</div><div style="font-size:11px; color:#6E7885; margin-top:3px;">BER-A · 17.0% of supply</div></div>
+            <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:11px 14px 13px;"><div style="font-size:10.5px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Frozen</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:17px; margin-top:6px; color:#9AA4AF;">0.000000</div><div style="font-size:11px; color:#6E7885; margin-top:3px;">No restrictions</div></div>
+            <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:11px 14px 13px;"><div style="font-size:10.5px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Country</div><div style="display:flex; align-items:center; gap:8px; margin-top:6px;"><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:17px;">CH · 756</span></div><div style="font-size:11px; color:#6E7885; margin-top:3px;">Set 14 Mar 2025</div></div>
+            <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:11px 14px 13px;"><div style="font-size:10.5px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Identity contract</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:13px; margin-top:8px; color:#0E635C;">0x8fA1c3…6b02 ⧉</div><div style="font-size:11px; color:#6E7885; margin-top:3px;">ONCHAINID · registered</div></div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:20px; align-items:start;">
+            <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden;">
+              <div style="display:flex; align-items:center; padding:10px 16px; background:#FAFBFC; border-bottom:1px solid #DFE4E9;">
+                <span style="font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">On-chain claims</span>
+                <button style="margin-left:auto; border:1px solid #0E635C; background:#0E635C; color:#fff; font-family:inherit; font-size:11.5px; font-weight:600; padding:5px 11px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#0B4F4A;">Issue claim</button>
+              </div>
+              <div style="display:grid; grid-template-columns:0.9fr 1.3fr 1fr 0.9fr 100px; gap:12px; padding:0 16px; height:32px; align-items:center; background:#FAFBFC; border-bottom:1px solid #DFE4E9; font-size:10.5px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">
+                <div>Topic</div><div>Issuer</div><div>Expires</div><div>State</div><div></div>
+              </div>
+              <div style="display:grid; grid-template-columns:0.9fr 1.3fr 1fr 0.9fr 100px; gap:12px; padding:0 16px; height:42px; align-items:center; border-bottom:1px solid #EDF0F3; font-size:12.5px;" style-hover="background:#FAFBFC;">
+                <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px;">1 · KYC</div>
+                <div style="font-size:12px;">Northgate Trust</div>
+                <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px;">2027-04-11</div>
+                <div><span style="background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:1px 7px; border-radius:3px; font-size:10.5px; font-weight:600;">VALID</span></div>
+                <div style="text-align:right;"><button style="border:1px solid #F5C9C3; background:#fff; color:#B42318; font-family:inherit; font-size:11px; font-weight:600; padding:4px 9px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#B42318; color:#fff; border-color:#B42318;">Revoke</button></div>
+              </div>
+              <div style="display:grid; grid-template-columns:0.9fr 1.3fr 1fr 0.9fr 100px; gap:12px; padding:0 16px; height:42px; align-items:center; border-bottom:1px solid #EDF0F3; font-size:12.5px;" style-hover="background:#FAFBFC;">
+                <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px;">2 · AML</div>
+                <div style="font-size:12px;">Chainalysis KYT</div>
+                <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px;">2026-11-02</div>
+                <div><span style="background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:1px 7px; border-radius:3px; font-size:10.5px; font-weight:600;">VALID</span></div>
+                <div style="text-align:right;"><button style="border:1px solid #F5C9C3; background:#fff; color:#B42318; font-family:inherit; font-size:11px; font-weight:600; padding:4px 9px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#B42318; color:#fff; border-color:#B42318;">Revoke</button></div>
+              </div>
+              <div style="display:grid; grid-template-columns:0.9fr 1.3fr 1fr 0.9fr 100px; gap:12px; padding:0 16px; height:42px; align-items:center; border-bottom:1px solid #EDF0F3; font-size:12.5px;" style-hover="background:#FAFBFC;">
+                <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px;">7 · PRO</div>
+                <div style="font-size:12px;">Meridian Verify</div>
+                <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px; color:#9A6410;">2026-09-30</div>
+                <div><span style="background:#FDF3E0; border:1px solid #F0DCAE; color:#9A6410; padding:1px 7px; border-radius:3px; font-size:10.5px; font-weight:600;">38 DAYS</span></div>
+                <div style="text-align:right;"><button style="border:1px solid #F5C9C3; background:#fff; color:#B42318; font-family:inherit; font-size:11px; font-weight:600; padding:4px 9px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#B42318; color:#fff; border-color:#B42318;">Revoke</button></div>
+              </div>
+              <div style="display:grid; grid-template-columns:0.9fr 1.3fr 1fr 0.9fr 100px; gap:12px; padding:0 16px; height:42px; align-items:center; font-size:12.5px; background:#FAFBFC;">
+                <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px; color:#6E7885;">4 · TAX</div>
+                <div style="font-size:12px; color:#9AA4AF;">Not attested</div>
+                <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px; color:#9AA4AF;">—</div>
+                <div><span style="background:#EFF1F4; border:1px dashed #C7CED6; color:#6E7885; padding:1px 7px; border-radius:3px; font-size:10.5px; font-weight:600;">MISSING</span></div>
+                <div style="text-align:right;"><button style="border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:11px; font-weight:600; padding:4px 9px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#EDF0F3;">Issue</button></div>
+              </div>
+            </div>
+
+            <div style="display:grid; gap:16px;">
+              <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px) ; overflow:hidden;">
+                <div style="padding:10px 16px; background:#FAFBFC; border-bottom:1px solid #DFE4E9; font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Provider results</div>
+                <div style="padding:14px 16px 16px; display:grid; gap:10px;">
+                  <div style="display:flex; align-items:center; gap:11px; border:1px solid #B7E0D0; background:#E6F4EF; border-radius:var(--r,4px); padding:10px 13px;">
+                    <span style="color:#0E7A5F; font-size:12px;">✓</span>
+                    <div style="flex:1;"><div style="font-size:12.5px; font-weight:600; color:#0B5241;">KYC passed · Persona</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#3E7060; margin-top:3px;">inq_9Kb2 · 14 Mar 2025, 11:04 · doc CHE passport</div></div>
+                    <a href="#03a" style="font-size:11.5px; color:#0B5241; flex:none;">Report ↗</a>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:11px; border:1px solid #B7E0D0; background:#E6F4EF; border-radius:var(--r,4px); padding:10px 13px;">
+                    <span style="color:#0E7A5F; font-size:12px;">✓</span>
+                    <div style="flex:1;"><div style="font-size:12.5px; font-weight:600; color:#0B5241;">AML clear · OpenSanctions</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#3E7060; margin-top:3px;">0 hits across 41 lists · rescreened 22 Aug 2026</div></div>
+                    <a href="#03a" style="font-size:11.5px; color:#0B5241; flex:none;">Report ↗</a>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:11px; border:1px solid #DFE4E9; background:#FAFBFC; border-radius:var(--r,4px); padding:10px 13px;">
+                    <span style="color:#6E7885; font-size:12px;">◷</span>
+                    <div style="flex:1;"><div style="font-size:12.5px; font-weight:600;">Next scheduled rescreen</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#6E7885; margin-top:3px;">22 Sep 2026 · monthly</div></div>
+                    <button style="border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:11px; font-weight:600; padding:4px 10px; border-radius:var(--r,4px); cursor:pointer; flex:none;" style-hover="background:#EDF0F3;">Run now</button>
+                  </div>
+                </div>
+              </div>
+              <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:16px 18px 18px;">
+                <div style="font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Identity &amp; country</div>
+                <div style="display:grid; grid-template-columns:1fr 140px auto; gap:10px; align-items:end; margin-top:14px;">
+                  <div>
+                    <label style="display:block; font-size:11.5px; font-weight:600; color:#3A424D; margin-bottom:5px;">Identity contract</label>
+                    <input type="text" value="0x8fA1c3B0447e29aC8b71D5e2Ff094c6b02" style="width:100%; box-sizing:border-box; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px; padding:7px 10px; border:1px solid #C7CED6; border-radius:var(--r,4px); outline:none;">
+                  </div>
+                  <div>
+                    <label style="display:block; font-size:11.5px; font-weight:600; color:#3A424D; margin-bottom:5px;">Country</label>
+                    <select style="width:100%; font-family:inherit; font-size:12px; padding:7px 10px; border:1px solid #C7CED6; border-radius:var(--r,4px); background:#fff; appearance:none;"><option>CH · 756</option><option>LU · 442</option><option>NL · 528</option></select>
+                  </div>
+                  <button style="border:1px solid #0E635C; background:#0E635C; color:#fff; font-family:inherit; font-size:12px; font-weight:600; padding:8px 14px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#0B4F4A;">Update</button>
+                </div>
+                <div style="font-size:11.5px; color:#6E7885; margin-top:10px; line-height:1.5;">Updating either field writes to the identity registry and creates an audit entry attributed to your operator key.</div>
+              </div>
+              <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden;">
+                <div style="padding:10px 16px; background:#FAFBFC; border-bottom:1px solid #DFE4E9; font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Actions on this investor</div>
+                <div style="display:grid;">
+                  <div style="display:flex; gap:10px; padding:9px 16px; border-bottom:1px solid #F5F7F9; align-items:center; font-size:12px;"><span style="color:#0E7A5F; font-size:11px;">✓</span><span style="flex:1;">Claim issued · AML</span><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#6E7885;">22 Aug · 0x4d1c…9F2a ↗</span></div>
+                  <div style="display:flex; gap:10px; padding:9px 16px; border-bottom:1px solid #F5F7F9; align-items:center; font-size:12px;"><span style="color:#0E635C; font-size:11px;">◆</span><span style="flex:1;">Country set · CH</span><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#6E7885;">14 Mar 2025 · 0x0aB4…71cE ↗</span></div>
+                  <div style="display:flex; gap:10px; padding:9px 16px; align-items:center; font-size:12px;"><span style="color:#0E635C; font-size:11px;">◆</span><span style="flex:1;">Identity registered</span><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#6E7885;">14 Mar 2025 · 0x77aF…3B90 ↗</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:706px 706px; gap:28px;">
+        <div data-screen-label="03b Rejected investor" style="width:706px; background:#fff; border:1px solid #C7CED6; border-radius:6px; box-shadow:0 8px 28px rgba(22,26,32,0.10); overflow:hidden;">
+          <div style="padding:10px 20px; background:#FAFBFC; border-bottom:1px solid #DFE4E9; font-size:10.5px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Unverified / rejected investor</div>
+          <div style="padding:20px 22px 24px;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <h3 style="margin:0; font-size:17px; font-weight:600;">Orbis Family Office</h3>
+              <span style="display:inline-flex; align-items:center; gap:7px; background:#FDECEA; border:1px solid #F5C9C3; color:#B42318; padding:3px 9px; border-radius:var(--r,4px); font-size:11.5px; font-weight:600;"><span style="font-size:10px;">✻</span>Frozen</span>
+              <span style="display:inline-flex; align-items:center; gap:7px; background:#FDECEA; border:1px solid #F5C9C3; color:#B42318; padding:3px 9px; border-radius:var(--r,4px); font-size:11.5px; font-weight:600;">Not eligible</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; margin-top:10px;">
+              <span style="display:inline-flex; align-items:center; gap:8px; background:#FDECEA; border:1px solid #F5C9C3; border-radius:var(--r,4px); padding:4px 9px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px; color:#B42318;">0x00De55…41F0 ⧉</span>
+              <span style="font-size:11.5px; color:#6E7885;">KY · Cayman Islands</span>
+            </div>
+            <div style="margin-top:16px; border:1px solid #F5C9C3; background:#FDECEA; border-radius:var(--r,4px); padding:13px 15px;">
+              <div style="font-size:10.5px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#B42318;">Rejection reason</div>
+              <div style="font-size:12.5px; line-height:1.55; color:#8E1B12; margin-top:8px;">OpenSanctions returned a 94% name match against an OFAC SDN entry on 21 Aug 2026. The AML claim was revoked automatically and the full balance frozen pending manual adjudication.</div>
+              <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#9E4038; margin-top:10px; line-height:1.7;">match &nbsp;OFAC-SDN-27714 · score 0.94<br>action &nbsp;auto-freeze · 18,750.000000 BER-A<br>tx &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0x5c2E…88aD ↗</div>
+            </div>
+            <div style="display:flex; gap:6px; margin-top:14px;">
+              <span style="background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:3px 9px; border-radius:var(--r,4px); font-size:11.5px; font-weight:500;">KYC ✓</span>
+              <span style="background:#FDECEA; border:1px solid #F5C9C3; color:#B42318; padding:3px 9px; border-radius:var(--r,4px); font-size:11.5px; font-weight:500;">AML ✕ revoked</span>
+              <span style="background:#EFF1F4; border:1px dashed #C7CED6; color:#6E7885; padding:3px 9px; border-radius:var(--r,4px); font-size:11.5px; font-weight:500;">EU residency</span>
+            </div>
+            <div style="display:flex; gap:8px; margin-top:18px; padding-top:16px; border-top:1px solid #EDF0F3;">
+              <button style="border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:12px; font-weight:600; padding:8px 14px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">Mark as false positive</button>
+              <button style="border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:12px; font-weight:600; padding:8px 14px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">Request documents</button>
+              <button style="display:inline-flex; align-items:center; gap:6px; margin-left:auto; border:1px solid #B42318; background:#fff; color:#B42318; font-family:inherit; font-size:12px; font-weight:600; padding:8px 14px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#B42318; color:#fff;"><span style="font-size:10px;">▲</span>Forced transfer out</button>
+            </div>
+          </div>
+        </div>
+
+        <div data-screen-label="03c Register states" style="width:706px; display:grid; gap:20px; align-content:start;">
+          <div style="background:#fff; border:1px solid #C7CED6; border-radius:6px; box-shadow:0 8px 28px rgba(22,26,32,0.10); overflow:hidden;">
+            <div style="padding:10px 20px; background:#FAFBFC; border-bottom:1px solid #DFE4E9; font-size:10.5px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Loading register</div>
+            <div style="padding:4px 20px 14px;">
+              <div style="display:grid; grid-template-columns:1.3fr 1.3fr 0.9fr 70px; gap:12px; height:42px; align-items:center; border-bottom:1px solid #EDF0F3;"><div style="height:9px; border-radius:2px; background:linear-gradient(90deg,#EDF0F3 0%,#F7F9FA 40%,#EDF0F3 80%); background-size:340px 100%; animation:shimmer 1.4s linear infinite;"></div><div style="height:18px; border-radius:3px; background:linear-gradient(90deg,#EDF0F3 0%,#F7F9FA 40%,#EDF0F3 80%); background-size:340px 100%; animation:shimmer 1.4s linear infinite;"></div><div style="height:16px; border-radius:3px; background:#EDF0F3;"></div><div style="height:9px; border-radius:2px; background:#EDF0F3;"></div></div>
+              <div style="display:grid; grid-template-columns:1.3fr 1.3fr 0.9fr 70px; gap:12px; height:42px; align-items:center; border-bottom:1px solid #EDF0F3;"><div style="height:9px; width:70%; border-radius:2px; background:linear-gradient(90deg,#EDF0F3 0%,#F7F9FA 40%,#EDF0F3 80%); background-size:340px 100%; animation:shimmer 1.4s linear infinite;"></div><div style="height:18px; border-radius:3px; background:linear-gradient(90deg,#EDF0F3 0%,#F7F9FA 40%,#EDF0F3 80%); background-size:340px 100%; animation:shimmer 1.4s linear infinite;"></div><div style="height:16px; border-radius:3px; background:#EDF0F3;"></div><div style="height:9px; border-radius:2px; background:#EDF0F3;"></div></div>
+              <div style="display:grid; grid-template-columns:1.3fr 1.3fr 0.9fr 70px; gap:12px; height:42px; align-items:center;"><div style="height:9px; width:85%; border-radius:2px; background:linear-gradient(90deg,#EDF0F3 0%,#F7F9FA 40%,#EDF0F3 80%); background-size:340px 100%; animation:shimmer 1.4s linear infinite;"></div><div style="height:18px; border-radius:3px; background:linear-gradient(90deg,#EDF0F3 0%,#F7F9FA 40%,#EDF0F3 80%); background-size:340px 100%; animation:shimmer 1.4s linear infinite;"></div><div style="height:16px; border-radius:3px; background:#EDF0F3;"></div><div style="height:9px; border-radius:2px; background:#EDF0F3;"></div></div>
+            </div>
+          </div>
+          <div style="background:#fff; border:1px solid #C7CED6; border-radius:6px; box-shadow:0 8px 28px rgba(22,26,32,0.10); overflow:hidden;">
+            <div style="padding:10px 20px; background:#FAFBFC; border-bottom:1px solid #DFE4E9; font-size:10.5px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">No results</div>
+            <div style="display:flex; flex-direction:column; align-items:center; text-align:center; padding:38px 32px 42px;">
+              <div style="width:28px; height:28px; border:1px solid #C7CED6; transform:rotate(45deg); margin-bottom:18px;"></div>
+              <div style="font-size:14.5px; font-weight:600;">No investor matches “0x00aa”</div>
+              <div style="font-size:12.5px; color:#6E7885; margin-top:6px; max-width:40ch; line-height:1.55;">Search accepts a full address, an ONCHAINID contract, a claim reference or an investor name.</div>
+              <button style="margin-top:16px; border:1px solid #0E635C; background:#0E635C; color:#fff; font-family:inherit; font-size:12px; font-weight:600; padding:8px 14px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#0B4F4A;">Register this address</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid; gap:16px;">
+      <div style="display:flex; align-items:baseline; gap:12px;">
+        <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; color:#0E635C;">04</span>
+        <span style="font-size:18px; font-weight:600;">Compliance configuration</span>
+        <span style="font-size:13px; color:#6E7885;">Edits stage into a pending-changes panel and are committed as one reviewed transaction.</span>
+      </div>
+      <div data-screen-label="04 Compliance config" style="width:1440px; background:#fff; border:1px solid #C7CED6; border-radius:6px; box-shadow:0 8px 28px rgba(22,26,32,0.10); overflow:hidden;">
+        <div style="display:flex; align-items:center; gap:18px; height:48px; padding:0 20px; background:#161A20;">
+          <div style="display:flex; align-items:center; gap:9px;"><div style="width:13px; height:13px; border:2px solid #3FA396; transform:rotate(45deg);"></div><span style="font-size:12.5px; font-weight:600; color:#fff;">Tessera</span><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#8792A2;">Agent</span></div>
+          <div style="display:flex; align-items:center; gap:8px; border:1px solid #37414F; border-radius:var(--r,4px); padding:4px 9px; font-size:12px; color:#E6EAEF;"><span style="width:6px; height:6px; border-radius:50%; background:#34C48E;"></span>BER-A · Prenzlauer Höfe<span style="color:#8792A2;">▾</span></div>
+          <div style="margin-left:auto; display:flex; align-items:center; gap:14px;">
+            <span style="display:inline-flex; align-items:center; gap:6px; border:1px solid #37414F; border-radius:var(--r,4px); padding:4px 9px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#E6EAEF;">0x3B77aC…0d42</span>
+            <span style="display:inline-flex; background:#10322F; border:1px solid #1E4A3B; color:#3FA396; padding:3px 8px; border-radius:3px; font-size:10.5px; font-weight:600; letter-spacing:0.04em;">AGENT</span>
+          </div>
+        </div>
+        <div style="padding:20px 24px 30px;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <h2 style="margin:0; font-size:20px; font-weight:600; letter-spacing:-0.015em;">Compliance rules</h2>
+            <span style="font-size:12px; color:#6E7885;">BER-A · last changed 17 Aug by 0x51aa…88C3</span>
+            <span style="margin-left:auto; display:inline-flex; align-items:center; gap:7px; background:#FDF3E0; border:1px solid #F0DCAE; color:#9A6410; padding:4px 10px; border-radius:var(--r,4px); font-size:11.5px; font-weight:600;">3 unsaved changes</span>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 360px; gap:20px; margin-top:18px; align-items:start;">
+            <div style="display:grid; gap:16px;">
+
+              <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden;">
+                <div style="display:flex; align-items:center; padding:10px 16px; background:#FAFBFC; border-bottom:1px solid #DFE4E9;">
+                  <span style="font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Required claim topics</span>
+                  <span style="margin-left:auto; font-size:11.5px; color:#6E7885;">A wallet must hold every topic below to receive units.</span>
+                </div>
+                <div style="display:grid; grid-template-columns:0.7fr 1fr 2fr 1fr 90px; gap:12px; padding:0 16px; height:32px; align-items:center; background:#FAFBFC; border-bottom:1px solid #DFE4E9; font-size:10.5px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">
+                  <div>Topic ID</div><div>Name</div><div>Accepted issuers</div><div>Holders passing</div><div></div>
+                </div>
+                <div style="display:grid; grid-template-columns:0.7fr 1fr 2fr 1fr 90px; gap:12px; padding:0 16px; height:44px; align-items:center; border-bottom:1px solid #EDF0F3; font-size:12.5px;" style-hover="background:#FAFBFC;">
+                  <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px;">1</div>
+                  <div style="font-weight:500;">KYC</div>
+                  <div style="font-size:12px; color:#515B67;">Northgate Trust, Persona EU</div>
+                  <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px;">148 / 148</div>
+                  <div style="text-align:right;"><button style="border:1px solid #F5C9C3; background:#fff; color:#B42318; font-family:inherit; font-size:11px; font-weight:600; padding:4px 9px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#B42318; color:#fff; border-color:#B42318;">Remove</button></div>
+                </div>
+                <div style="display:grid; grid-template-columns:0.7fr 1fr 2fr 1fr 90px; gap:12px; padding:0 16px; height:44px; align-items:center; border-bottom:1px solid #EDF0F3; font-size:12.5px;" style-hover="background:#FAFBFC;">
+                  <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px;">2</div>
+                  <div style="font-weight:500;">AML</div>
+                  <div style="font-size:12px; color:#515B67;">Chainalysis KYT, OpenSanctions</div>
+                  <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px;">147 / 148</div>
+                  <div style="text-align:right;"><button style="border:1px solid #F5C9C3; background:#fff; color:#B42318; font-family:inherit; font-size:11px; font-weight:600; padding:4px 9px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#B42318; color:#fff; border-color:#B42318;">Remove</button></div>
+                </div>
+                <div style="display:grid; grid-template-columns:0.7fr 1fr 2fr 1fr 90px; gap:12px; padding:0 16px; height:44px; align-items:center; border-bottom:1px solid #EDF0F3; font-size:12.5px; background:#F6FBFA;">
+                  <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px;">5</div>
+                  <div style="font-weight:500;">EU residency <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10px; color:#0E635C; background:#E3F0EE; border:1px solid #B9D8D3; padding:0 5px; border-radius:3px;">NEW</span></div>
+                  <div style="font-size:12px; color:#515B67;">Northgate Trust</div>
+                  <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px; color:#9A6410;">131 / 148</div>
+                  <div style="text-align:right;"><button style="border:1px solid #C7CED6; background:#fff; color:#515B67; font-family:inherit; font-size:11px; font-weight:600; padding:4px 9px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#EDF0F3;">Undo</button></div>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px; padding:11px 16px; background:#FDF3E0; border-top:1px solid #F0DCAE;">
+                  <span style="color:#9A6410; font-size:11px;">◷</span>
+                  <span style="font-size:12px; color:#7C4F0B;"><strong style="font-weight:600;">17 current holders do not hold the EU residency claim.</strong> They keep their units but cannot receive more until the claim is issued.</span>
+                  <button style="margin-left:auto; border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:11.5px; font-weight:600; padding:5px 11px; border-radius:var(--r,4px); cursor:pointer; flex:none;" style-hover="background:#F5F7F9;">Review the 17</button>
+                </div>
+                <div style="padding:11px 16px;"><button style="border:1px dashed #C7CED6; background:#fff; color:#0E635C; font-family:inherit; font-size:11.5px; font-weight:600; padding:6px 12px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F2F8F7;">+ Add required topic</button></div>
+              </div>
+
+              <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden;">
+                <div style="padding:10px 16px; background:#FAFBFC; border-bottom:1px solid #DFE4E9; font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Trusted issuers</div>
+                <div style="display:grid; grid-template-columns:1.4fr 1.6fr 1.2fr 0.9fr 90px; gap:12px; padding:0 16px; height:32px; align-items:center; background:#FAFBFC; border-bottom:1px solid #DFE4E9; font-size:10.5px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">
+                  <div>Issuer</div><div>Contract</div><div>Topics</div><div>State</div><div></div>
+                </div>
+                <div style="display:grid; grid-template-columns:1.4fr 1.6fr 1.2fr 0.9fr 90px; gap:12px; padding:0 16px; height:42px; align-items:center; border-bottom:1px solid #EDF0F3; font-size:12.5px;" style-hover="background:#FAFBFC;">
+                  <div style="font-weight:500;">Northgate Trust</div>
+                  <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#515B67;">0x4C1adE07…77Bd ⧉</div>
+                  <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px;">1, 5</div>
+                  <div><span style="background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:1px 7px; border-radius:3px; font-size:10.5px; font-weight:600;">TRUSTED</span></div>
+                  <div style="text-align:right;"><button style="border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:11px; font-weight:600; padding:4px 9px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#EDF0F3;">Edit</button></div>
+                </div>
+                <div style="display:grid; grid-template-columns:1.4fr 1.6fr 1.2fr 0.9fr 90px; gap:12px; padding:0 16px; height:42px; align-items:center; border-bottom:1px solid #EDF0F3; font-size:12.5px;" style-hover="background:#FAFBFC;">
+                  <div style="font-weight:500;">Chainalysis KYT</div>
+                  <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#515B67;">0x91Bd2fA4…03e1 ⧉</div>
+                  <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px;">2</div>
+                  <div><span style="background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:1px 7px; border-radius:3px; font-size:10.5px; font-weight:600;">TRUSTED</span></div>
+                  <div style="text-align:right;"><button style="border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:11px; font-weight:600; padding:4px 9px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#EDF0F3;">Edit</button></div>
+                </div>
+                <div style="display:grid; grid-template-columns:1.4fr 1.6fr 1.2fr 0.9fr 90px; gap:12px; padding:0 16px; height:42px; align-items:center; font-size:12.5px; background:#FAFBFC;">
+                  <div style="font-weight:500; color:#6E7885;">Meridian Verify</div>
+                  <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#9AA4AF;">0x2C90bB18…5a7F ⧉</div>
+                  <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#9AA4AF;">7</div>
+                  <div><span style="background:#EFF1F4; border:1px solid #D8DDE4; color:#5A6472; padding:1px 7px; border-radius:3px; font-size:10.5px; font-weight:600;">DISABLED</span></div>
+                  <div style="text-align:right;"><button style="border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:11px; font-weight:600; padding:4px 9px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#EDF0F3;">Enable</button></div>
+                </div>
+              </div>
+
+              <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden;">
+                <div style="padding:10px 16px; background:#FAFBFC; border-bottom:1px solid #DFE4E9; font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Compliance modules</div>
+                <div style="padding:16px; display:grid; gap:14px;">
+
+                  <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:14px 16px;">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                      <span style="width:6px; height:6px; border-radius:50%; background:#0E7A5F;"></span>
+                      <span style="font-size:13px; font-weight:600;">CountryRestrictModule</span>
+                      <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#6E7885;">0x6f31Ac…9e04</span>
+                      <div style="margin-left:auto; width:34px; height:20px; border-radius:999px; background:#0E635C; position:relative; cursor:pointer;"><div style="position:absolute; top:3px; left:17px; width:14px; height:14px; border-radius:50%; background:#fff;"></div></div>
+                    </div>
+                    <div style="font-size:11.5px; color:#6E7885; margin-top:8px;">Allow list — only these ISO-3166 codes may hold units.</div>
+                    <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:10px;">
+                      <span style="display:inline-flex; align-items:center; gap:6px; background:#E3F0EE; border:1px solid #B9D8D3; color:#0B4F4A; padding:3px 9px; border-radius:var(--r,4px); font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px;">DE ✕</span>
+                      <span style="display:inline-flex; align-items:center; gap:6px; background:#E3F0EE; border:1px solid #B9D8D3; color:#0B4F4A; padding:3px 9px; border-radius:var(--r,4px); font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px;">NL ✕</span>
+                      <span style="display:inline-flex; align-items:center; gap:6px; background:#E3F0EE; border:1px solid #B9D8D3; color:#0B4F4A; padding:3px 9px; border-radius:var(--r,4px); font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px;">LU ✕</span>
+                      <span style="display:inline-flex; align-items:center; gap:6px; background:#E3F0EE; border:1px solid #B9D8D3; color:#0B4F4A; padding:3px 9px; border-radius:var(--r,4px); font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px;">FR ✕</span>
+                      <span style="display:inline-flex; align-items:center; gap:6px; background:#E3F0EE; border:1px solid #B9D8D3; color:#0B4F4A; padding:3px 9px; border-radius:var(--r,4px); font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px;">CH ✕</span>
+                      <span style="display:inline-flex; align-items:center; gap:6px; background:#FDECEA; border:1px solid #F5C9C3; color:#B42318; padding:3px 9px; border-radius:var(--r,4px); font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; text-decoration:line-through;">KY</span>
+                      <span style="display:inline-flex; align-items:center; gap:6px; background:#fff; border:1px dashed #C7CED6; color:#0E635C; padding:3px 9px; border-radius:var(--r,4px); font-size:11px; font-weight:600; cursor:pointer;" style-hover="background:#F2F8F7;">+ Add country</span>
+                    </div>
+                    <div style="font-size:11.5px; color:#B42318; margin-top:10px;">KY removed — 1 current holder becomes non-compliant and will be unable to receive units.</div>
+                  </div>
+
+                  <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:14px 16px;">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                      <span style="width:6px; height:6px; border-radius:50%; background:#0E7A5F;"></span>
+                      <span style="font-size:13px; font-weight:600;">MaxBalanceModule</span>
+                      <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#6E7885;">0xAa17C4…2b88</span>
+                      <div style="margin-left:auto; width:34px; height:20px; border-radius:999px; background:#0E635C; position:relative; cursor:pointer;"><div style="position:absolute; top:3px; left:17px; width:14px; height:14px; border-radius:50%; background:#fff;"></div></div>
+                    </div>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:12px;">
+                      <div>
+                        <label style="display:block; font-size:11.5px; font-weight:600; color:#3A424D; margin-bottom:5px;">Max balance per holder</label>
+                        <div style="display:flex; border:1px solid #0E635C; border-radius:var(--r,4px); overflow:hidden; box-shadow:0 0 0 3px rgba(14,99,92,0.22);">
+                          <input type="text" value="50,000.000000" style="flex:1; min-width:0; border:none; font-family:var(--mono,'Roboto Mono'),monospace; font-size:12.5px; padding:8px 10px; outline:none;">
+                          <div style="display:flex; align-items:center; padding:0 10px; background:#F5F7F9; border-left:1px solid #DFE4E9; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#515B67;">BER-A</div>
+                        </div>
+                        <div style="font-size:11px; color:#0E635C; margin-top:6px;">Was 40,000.000000 · 1 holder currently above the old cap</div>
+                      </div>
+                      <div>
+                        <label style="display:block; font-size:11.5px; font-weight:600; color:#3A424D; margin-bottom:5px;">Applies to</label>
+                        <select style="width:100%; font-family:inherit; font-size:12px; padding:8px 10px; border:1px solid #C7CED6; border-radius:var(--r,4px); background:#fff; appearance:none;"><option>All holders</option><option>Retail only</option></select>
+                        <div style="font-size:11px; color:#6E7885; margin-top:6px;">Professional investors are exempt by prospectus.</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:14px 16px;">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                      <span style="width:6px; height:6px; border-radius:50%; background:#0E7A5F;"></span>
+                      <span style="font-size:13px; font-weight:600;">MaxInvestorsModule</span>
+                      <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#6E7885;">0xD402fE…71a9</span>
+                      <div style="margin-left:auto; width:34px; height:20px; border-radius:999px; background:#0E635C; position:relative; cursor:pointer;"><div style="position:absolute; top:3px; left:17px; width:14px; height:14px; border-radius:50%; background:#fff;"></div></div>
+                    </div>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:12px;">
+                      <div>
+                        <label style="display:block; font-size:11.5px; font-weight:600; color:#3A424D; margin-bottom:5px;">Holder cap</label>
+                        <input type="text" value="199" style="width:100%; box-sizing:border-box; font-family:var(--mono,'Roboto Mono'),monospace; font-size:12.5px; padding:8px 10px; border:1px solid #C7CED6; border-radius:var(--r,4px); outline:none;">
+                        <div style="font-size:11px; color:#6E7885; margin-top:6px;">148 in use · 51 places free</div>
+                      </div>
+                      <div>
+                        <label style="display:block; font-size:11.5px; font-weight:600; color:#3A424D; margin-bottom:5px;">Per-country cap</label>
+                        <input type="text" value="Not set" disabled="disabled" style="width:100%; box-sizing:border-box; font-family:inherit; font-size:12.5px; padding:8px 10px; border:1px solid #EDF0F3; background:#F5F7F9; color:#9AA4AF; border-radius:var(--r,4px); cursor:not-allowed;">
+                        <div style="font-size:11px; color:#9AA4AF; margin-top:6px;">Requires the country module to be enabled first.</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:14px 16px; background:#FAFBFC;">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                      <span style="width:6px; height:6px; border-radius:50%; background:#C7CED6;"></span>
+                      <span style="font-size:13px; font-weight:600; color:#6E7885;">TransferFeeModule</span>
+                      <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#9AA4AF;">0x1E77bB…c320</span>
+                      <span style="background:#EFF1F4; border:1px solid #D8DDE4; color:#5A6472; padding:1px 7px; border-radius:3px; font-size:10.5px; font-weight:600;">DISABLED</span>
+                      <div style="margin-left:auto; width:34px; height:20px; border-radius:999px; background:#DFE4E9; position:relative; cursor:pointer;"><div style="position:absolute; top:3px; left:3px; width:14px; height:14px; border-radius:50%; background:#fff;"></div></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:grid; gap:16px; align-content:start; position:sticky; top:0;">
+              <div style="border:1px solid #F0DCAE; background:#FFFDF8; border-radius:var(--r,4px); overflow:hidden;">
+                <div style="padding:11px 16px; background:#FDF3E0; border-bottom:1px solid #F0DCAE; display:flex; align-items:center;">
+                  <span style="font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#7C4F0B;">Pending changes</span>
+                  <span style="margin-left:auto; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#7C4F0B;">3</span>
+                </div>
+                <div style="display:grid;">
+                  <div style="padding:12px 16px; border-bottom:1px solid #F5EFE0;">
+                    <div style="font-size:12.5px; font-weight:600;">Add required topic</div>
+                    <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#515B67; margin-top:5px; line-height:1.6;">topic 5 · EU residency<br>issuer Northgate Trust</div>
+                    <div style="font-size:11.5px; color:#9A6410; margin-top:6px;">17 holders become ineligible to receive</div>
+                  </div>
+                  <div style="padding:12px 16px; border-bottom:1px solid #F5EFE0;">
+                    <div style="font-size:12.5px; font-weight:600;">Remove country</div>
+                    <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#515B67; margin-top:5px; line-height:1.6;">KY · Cayman Islands</div>
+                    <div style="font-size:11.5px; color:#B42318; margin-top:6px;">1 holder becomes non-compliant</div>
+                  </div>
+                  <div style="padding:12px 16px;">
+                    <div style="font-size:12.5px; font-weight:600;">Max balance per holder</div>
+                    <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#515B67; margin-top:5px; line-height:1.6;">40,000.000000 → 50,000.000000</div>
+                    <div style="font-size:11.5px; color:#6E7885; margin-top:6px;">No holder affected</div>
+                  </div>
+                </div>
+                <div style="padding:14px 16px; border-top:1px solid #F0DCAE; background:#FDF3E0;">
+                  <div style="font-size:11.5px; color:#7C4F0B; line-height:1.55;">Committed as one transaction. Two operator signatures are required for rule changes.</div>
+                  <div style="display:flex; gap:8px; margin-top:12px;">
+                    <button style="flex:1; border:1px solid #0E635C; background:#0E635C; color:#fff; font-family:inherit; font-size:12.5px; font-weight:600; padding:9px 14px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#0B4F4A;">Review and commit</button>
+                    <button style="border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:12.5px; font-weight:600; padding:9px 14px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">Discard</button>
+                  </div>
+                </div>
+              </div>
+              <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:16px 18px 18px;">
+                <div style="font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Simulated impact</div>
+                <div style="display:grid; gap:9px; margin-top:12px; font-size:12.5px;">
+                  <div style="display:flex;"><span style="color:#515B67;">Holders passing all rules</span><span style="margin-left:auto; font-family:var(--mono,'Roboto Mono'),monospace;">130 / 148</span></div>
+                  <div style="display:flex;"><span style="color:#515B67;">Blocked from receiving</span><span style="margin-left:auto; font-family:var(--mono,'Roboto Mono'),monospace; color:#B42318;">18</span></div>
+                  <div style="display:flex;"><span style="color:#515B67;">Forced to divest</span><span style="margin-left:auto; font-family:var(--mono,'Roboto Mono'),monospace;">0</span></div>
+                  <div style="display:flex;"><span style="color:#515B67;">Estimated gas</span><span style="margin-left:auto; font-family:var(--mono,'Roboto Mono'),monospace;">≈ 0.0031 ETH</span></div>
+                </div>
+                <div style="font-size:11.5px; color:#6E7885; margin-top:12px; line-height:1.55;">Simulated against block 21,884,109. Existing balances are never clawed back by a rule change.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid; gap:16px;">
+      <div style="display:flex; align-items:baseline; gap:12px;">
+        <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; color:#0E635C;">05</span>
+        <span style="font-size:18px; font-weight:600;">Token controls</span>
+        <span style="font-size:13px; color:#6E7885;">Privileged actions, the paused banner, and the typed confirmations that gate each one.</span>
+      </div>
+      <div data-screen-label="05 Token controls" style="width:1440px; background:#fff; border:1px solid #C7CED6; border-radius:6px; box-shadow:0 8px 28px rgba(22,26,32,0.10); overflow:hidden;">
+        <div style="display:flex; align-items:center; gap:18px; height:48px; padding:0 20px; background:#161A20;">
+          <div style="display:flex; align-items:center; gap:9px;"><div style="width:13px; height:13px; border:2px solid #3FA396; transform:rotate(45deg);"></div><span style="font-size:12.5px; font-weight:600; color:#fff;">Tessera</span><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#8792A2;">Agent</span></div>
+          <div style="display:flex; align-items:center; gap:8px; border:1px solid #37414F; border-radius:var(--r,4px); padding:4px 9px; font-size:12px; color:#E6EAEF;"><span style="width:6px; height:6px; border-radius:50%; background:#8792A2;"></span>CPH-A · Nordhavn Block 7<span style="color:#8792A2;">▾</span></div>
+          <div style="margin-left:auto; display:flex; align-items:center; gap:14px;">
+            <span style="display:inline-flex; align-items:center; gap:6px; border:1px solid #37414F; border-radius:var(--r,4px); padding:4px 9px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#E6EAEF;">0x3B77aC…0d42</span>
+            <span style="display:inline-flex; background:#10322F; border:1px solid #1E4A3B; color:#3FA396; padding:3px 8px; border-radius:3px; font-size:10.5px; font-weight:600; letter-spacing:0.04em;">AGENT</span>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:12px; padding:11px 24px; background:#EFF1F4; border-bottom:1px solid #D8DDE4;">
+          <span style="color:#5A6472; font-size:12px;">✻</span>
+          <span style="font-size:12.5px; color:#3A424D;"><strong style="font-weight:600;">This token is paused.</strong> All transfers are rejected on-chain. Minting, freezing and forced transfers remain available to agents.</span>
+          <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#5A6472;">since 19 Aug 14:22 · 0x3B77aC…0d42 · tx 0x8b0F…21cA ↗</span>
+          <button style="margin-left:auto; border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:12px; font-weight:600; padding:6px 13px; border-radius:var(--r,4px); cursor:pointer; flex:none;" style-hover="background:#fff; border-color:#9AA4AF;">Unpause token</button>
+        </div>
+        <div style="padding:22px 24px 30px;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <h2 style="margin:0; font-size:20px; font-weight:600; letter-spacing:-0.015em;">Token controls</h2>
+            <span style="font-size:12px; color:#6E7885;">Every action below writes an audit entry attributed to your operator key.</span>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px;">
+
+            <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:16px 18px 18px;">
+              <div style="display:flex; align-items:center; gap:10px;"><span style="font-size:13px; font-weight:600;">Mint &amp; distribute</span><span style="margin-left:auto; font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#6E7885;">mint(address,uint256)</span></div>
+              <div style="font-size:11.5px; color:#6E7885; margin-top:7px; line-height:1.5;">Issues new units to a registered investor. Recipient must pass every compliance rule.</div>
+              <div style="display:grid; gap:10px; margin-top:14px;">
+                <div>
+                  <label style="display:block; font-size:11.5px; font-weight:600; color:#3A424D; margin-bottom:5px;">Recipient</label>
+                  <input type="text" value="0x2E88c1a4B7f09Dd3e5417Ac82bB9046f04Fa" style="width:100%; box-sizing:border-box; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px; padding:8px 10px; border:1px solid #C7CED6; border-radius:var(--r,4px); outline:none;">
+                  <div style="display:flex; align-items:center; gap:7px; margin-top:6px;"><span style="width:5px; height:5px; border-radius:50%; background:#0E7A5F;"></span><span style="font-size:11.5px; color:#0B4F4A;">Brightmoor Pension · verified · NL</span></div>
+                </div>
+                <div>
+                  <label style="display:block; font-size:11.5px; font-weight:600; color:#3A424D; margin-bottom:5px;">Amount</label>
+                  <div style="display:flex; border:1px solid #C7CED6; border-radius:var(--r,4px); overflow:hidden;">
+                    <input type="text" value="5,000.000000" style="flex:1; min-width:0; border:none; font-family:var(--mono,'Roboto Mono'),monospace; font-size:12.5px; padding:8px 10px; outline:none;">
+                    <div style="display:flex; align-items:center; padding:0 10px; background:#F5F7F9; border-left:1px solid #DFE4E9; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#515B67;">CPH-A</div>
+                  </div>
+                  <div style="font-size:11.5px; color:#6E7885; margin-top:6px;">Supply after mint 81,157.000000 · cap not set</div>
+                </div>
+              </div>
+              <button style="width:100%; margin-top:14px; border:1px solid #0E635C; background:#0E635C; color:#fff; font-family:inherit; font-size:12.5px; font-weight:600; padding:9px 14px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#0B4F4A;">Mint to investor</button>
+            </div>
+
+            <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:16px 18px 18px;">
+              <div style="display:flex; align-items:center; gap:10px;"><span style="font-size:13px; font-weight:600;">Pause state</span><span style="margin-left:auto; font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#6E7885;">pause() / unpause()</span></div>
+              <div style="font-size:11.5px; color:#6E7885; margin-top:7px; line-height:1.5;">Halts or resumes every transfer on this token. Balances and distributions are unaffected.</div>
+              <div style="display:flex; align-items:center; gap:11px; margin-top:14px; border:1px solid #D8DDE4; background:#EFF1F4; border-radius:var(--r,4px); padding:12px 14px;">
+                <span style="color:#5A6472; font-size:12px;">✻</span>
+                <div style="flex:1;"><div style="font-size:12.5px; font-weight:600; color:#3A424D;">Currently paused</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#5A6472; margin-top:3px;">4 days 19 hours · 47 transfers rejected</div></div>
+              </div>
+              <div style="display:flex; gap:8px; margin-top:14px;">
+                <button style="flex:1; border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:12.5px; font-weight:600; padding:9px 14px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">Unpause token</button>
+                <button disabled="disabled" style="flex:1; display:inline-flex; align-items:center; justify-content:center; gap:6px; border:1px solid #F0DAD7; background:#FDF7F6; color:#DBA9A3; font-family:inherit; font-size:12.5px; font-weight:600; padding:9px 14px; border-radius:var(--r,4px); cursor:not-allowed;"><span style="font-size:10px;">▲</span>Pause token</button>
+              </div>
+              <div style="font-size:11.5px; color:#6E7885; margin-top:9px;">Pause is unavailable while the token is already paused.</div>
+            </div>
+
+            <div style="border:1px solid #F5C9C3; border-radius:var(--r,4px); padding:16px 18px 18px; background:#FFFCFC;">
+              <div style="display:flex; align-items:center; gap:10px;"><span style="font-size:13px; font-weight:600; color:#8E1B12;">Freeze address</span><span style="margin-left:auto; font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#9E4038;">setAddressFrozen(address,bool)</span></div>
+              <div style="font-size:11.5px; color:#9E4038; margin-top:7px; line-height:1.5;">Blocks all movement in and out of one wallet. Used for sanctions hits and court orders.</div>
+              <div style="margin-top:14px;">
+                <label style="display:block; font-size:11.5px; font-weight:600; color:#3A424D; margin-bottom:5px;">Address</label>
+                <input type="text" value="0x00De5537c4Ba91e07f2Ac8841c09b7Fd41F0" style="width:100%; box-sizing:border-box; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px; padding:8px 10px; border:1px solid #C7CED6; border-radius:var(--r,4px); outline:none; background:#fff;">
+                <div style="display:flex; align-items:center; gap:7px; margin-top:6px;"><span style="width:5px; height:5px; border-radius:50%; background:#B42318;"></span><span style="font-size:11.5px; color:#8E1B12;">Orbis Family Office · balance 18,750.000000</span></div>
+              </div>
+              <div style="margin-top:12px;">
+                <label style="display:block; font-size:11.5px; font-weight:600; color:#3A424D; margin-bottom:5px;">Reason (recorded in the audit log)</label>
+                <input type="text" value="OFAC SDN match 0.94 — ref NGT-2026-084419" style="width:100%; box-sizing:border-box; font-family:inherit; font-size:12px; padding:8px 10px; border:1px solid #C7CED6; border-radius:var(--r,4px); outline:none; background:#fff;">
+              </div>
+              <button style="width:100%; margin-top:14px; display:inline-flex; align-items:center; justify-content:center; gap:7px; border:1px solid #B42318; background:#fff; color:#B42318; font-family:inherit; font-size:12.5px; font-weight:600; padding:9px 14px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#B42318; color:#fff;"><span style="font-size:10px;">▲</span>Freeze this address</button>
+            </div>
+
+            <div style="border:1px solid #F5C9C3; border-radius:var(--r,4px); padding:16px 18px 18px; background:#FFFCFC;">
+              <div style="display:flex; align-items:center; gap:10px;"><span style="font-size:13px; font-weight:600; color:#8E1B12;">Partial freeze</span><span style="margin-left:auto; font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#9E4038;">freezePartialTokens(address,uint256)</span></div>
+              <div style="font-size:11.5px; color:#9E4038; margin-top:7px; line-height:1.5;">Locks a specific amount of one holder's balance. The remainder stays transferable.</div>
+              <div style="display:grid; grid-template-columns:1.4fr 1fr; gap:10px; margin-top:14px;">
+                <div>
+                  <label style="display:block; font-size:11.5px; font-weight:600; color:#3A424D; margin-bottom:5px;">Holder</label>
+                  <input type="text" value="0xB412a9…5D2c" style="width:100%; box-sizing:border-box; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px; padding:8px 10px; border:1px solid #C7CED6; border-radius:var(--r,4px); outline:none; background:#fff;">
+                </div>
+                <div>
+                  <label style="display:block; font-size:11.5px; font-weight:600; color:#3A424D; margin-bottom:5px;">Amount to lock</label>
+                  <input type="text" value="4,000.000000" style="width:100%; box-sizing:border-box; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px; padding:8px 10px; border:1px solid #C7CED6; border-radius:var(--r,4px); outline:none; background:#fff;">
+                </div>
+              </div>
+              <div style="margin-top:12px; border:1px solid #F5C9C3; background:#FDECEA; border-radius:var(--r,4px); padding:11px 13px;">
+                <div style="display:flex; font-size:11.5px; color:#8E1B12;"><span>Balance</span><span style="margin-left:auto; font-family:var(--mono,'Roboto Mono'),monospace;">9,100.000000</span></div>
+                <div style="display:flex; font-size:11.5px; color:#8E1B12; margin-top:5px;"><span>Locked after this action</span><span style="margin-left:auto; font-family:var(--mono,'Roboto Mono'),monospace; font-weight:600;">4,000.000000</span></div>
+                <div style="display:flex; font-size:11.5px; color:#8E1B12; margin-top:5px;"><span>Remains transferable</span><span style="margin-left:auto; font-family:var(--mono,'Roboto Mono'),monospace;">5,100.000000</span></div>
+              </div>
+              <button style="width:100%; margin-top:14px; display:inline-flex; align-items:center; justify-content:center; gap:7px; border:1px solid #B42318; background:#fff; color:#B42318; font-family:inherit; font-size:12.5px; font-weight:600; padding:9px 14px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#B42318; color:#fff;"><span style="font-size:10px;">▲</span>Freeze 4,000.000000</button>
+            </div>
+          </div>
+
+          <div style="border:1px solid #F5C9C3; border-radius:var(--r,4px); padding:16px 18px 18px; background:#FFFCFC; margin-top:16px;">
+            <div style="display:flex; align-items:center; gap:10px;"><span style="font-size:13px; font-weight:600; color:#8E1B12;">Forced transfer</span><span style="font-size:11.5px; color:#9E4038;">Moves units between wallets without the holder's consent. Requires a legal reference.</span><span style="margin-left:auto; font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#9E4038;">forcedTransfer(address,address,uint256)</span></div>
+            <div style="display:grid; grid-template-columns:1.3fr 1.3fr 1fr 1.4fr; gap:12px; margin-top:14px;">
+              <div><label style="display:block; font-size:11.5px; font-weight:600; color:#3A424D; margin-bottom:5px;">From</label><input type="text" value="0x00De55…41F0" style="width:100%; box-sizing:border-box; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px; padding:8px 10px; border:1px solid #C7CED6; border-radius:var(--r,4px); outline:none; background:#fff;"></div>
+              <div><label style="display:block; font-size:11.5px; font-weight:600; color:#3A424D; margin-bottom:5px;">To</label><input type="text" value="0x51aa38F7…88C3" style="width:100%; box-sizing:border-box; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px; padding:8px 10px; border:1px solid #C7CED6; border-radius:var(--r,4px); outline:none; background:#fff;"></div>
+              <div><label style="display:block; font-size:11.5px; font-weight:600; color:#3A424D; margin-bottom:5px;">Amount</label><input type="text" value="18,750.000000" style="width:100%; box-sizing:border-box; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px; padding:8px 10px; border:1px solid #C7CED6; border-radius:var(--r,4px); outline:none; background:#fff;"></div>
+              <div><label style="display:block; font-size:11.5px; font-weight:600; color:#3A424D; margin-bottom:5px;">Legal reference</label><input type="text" value="DK-2026-0447 · court order" style="width:100%; box-sizing:border-box; font-family:inherit; font-size:12px; padding:8px 10px; border:1px solid #C7CED6; border-radius:var(--r,4px); outline:none; background:#fff;"></div>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px; margin-top:14px;">
+              <span style="font-size:11.5px; color:#9E4038; max-width:70ch; line-height:1.5;">The recipient must be a registered investor. Compliance modules are bypassed — the forced transfer will succeed even if the destination would normally be blocked.</span>
+              <button style="margin-left:auto; display:inline-flex; align-items:center; gap:7px; border:1px solid #B42318; background:#B42318; color:#fff; font-family:inherit; font-size:12.5px; font-weight:600; padding:9px 16px; border-radius:var(--r,4px); cursor:pointer; flex:none;" style-hover="background:#8E1B12;"><span style="font-size:10px;">▲</span>Execute forced transfer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:706px 706px; gap:28px;">
+        <div data-screen-label="05a Confirm forced transfer" style="box-sizing:border-box; width:706px; background:#EDF0F3; border:1px solid #C7CED6; border-radius:6px; box-shadow:0 8px 28px rgba(22,26,32,0.10); padding:34px;">
+          <div style="font-size:10.5px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#6E7885; margin-bottom:18px;">Confirm dangerous action</div>
+          <div style="background:#fff; border:1px solid #C7CED6; border-radius:var(--r,4px); box-shadow:0 16px 40px rgba(22,26,32,0.16); overflow:hidden;">
+            <div style="height:3px; background:#B42318;"></div>
+            <div style="padding:22px 24px 0;">
+              <div style="display:flex; align-items:center; gap:10px;"><span style="color:#B42318; font-size:12px;">▲</span><h4 style="margin:0; font-size:16px; font-weight:600;">Forced transfer of 18,750.000000 CPH-A</h4></div>
+              <p style="margin:11px 0 0; font-size:12.5px; line-height:1.6; color:#515B67;">You are moving units out of a holder's wallet without their consent. This executes immediately and cannot be reversed.</p>
+              <div style="margin-top:16px; border:1px solid #F5C9C3; background:#FDECEA; border-radius:var(--r,4px); padding:13px 15px;">
+                <div style="font-size:10.5px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#B42318; margin-bottom:9px;">Consequences</div>
+                <div style="display:grid; gap:6px; font-size:12px; color:#7A1B12; line-height:1.5;">
+                  <div style="display:flex; gap:8px;"><span>—</span><span>Debits <span style="font-family:var(--mono,'Roboto Mono'),monospace;">0x00De55…41F0</span> — the holder receives no prompt</span></div>
+                  <div style="display:flex; gap:8px;"><span>—</span><span>All compliance modules are bypassed for this transfer</span></div>
+                  <div style="display:flex; gap:8px;"><span>—</span><span>Recipient's balance rises to 31,220.000000, above the 50,000 per-holder cap check</span></div>
+                  <div style="display:flex; gap:8px;"><span>—</span><span>Writes an immutable audit entry under <span style="font-family:var(--mono,'Roboto Mono'),monospace;">0x3B77aC…0d42</span> with reference DK-2026-0447</span></div>
+                </div>
+              </div>
+              <div style="margin-top:16px; border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden;">
+                <div style="display:grid; grid-template-columns:110px 1fr;">
+                  <div style="padding:8px 14px; font-size:11.5px; color:#6E7885; border-bottom:1px solid #F5F7F9;">Method</div>
+                  <div style="padding:8px 14px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; border-bottom:1px solid #F5F7F9;">forcedTransfer</div>
+                  <div style="padding:8px 14px; font-size:11.5px; color:#6E7885; border-bottom:1px solid #F5F7F9;">Est. gas</div>
+                  <div style="padding:8px 14px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; border-bottom:1px solid #F5F7F9;">0.0009 ETH</div>
+                  <div style="padding:8px 14px; font-size:11.5px; color:#6E7885;">Signatures</div>
+                  <div style="padding:8px 14px; font-size:11.5px;">2 of 2 required · 1 collected</div>
+                </div>
+              </div>
+              <div style="margin-top:16px;">
+                <label style="display:block; font-size:11.5px; font-weight:600; color:#3A424D; margin-bottom:5px;">Type FORCED TRANSFER to confirm</label>
+                <input type="text" placeholder="FORCED TRANSFER" style="width:100%; box-sizing:border-box; font-family:var(--mono,'Roboto Mono'),monospace; font-size:12.5px; padding:8px 10px; border:1px solid #C7CED6; border-radius:var(--r,4px); outline:none;" style-focus="border-color:#B42318; box-shadow:0 0 0 3px rgba(180,35,24,0.2);">
+              </div>
+            </div>
+            <div style="display:flex; gap:9px; justify-content:flex-end; padding:18px 24px 20px; margin-top:20px; border-top:1px solid #EDF0F3; background:#FAFBFC;">
+              <button style="border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:12.5px; font-weight:600; padding:9px 15px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">Cancel</button>
+              <button disabled="disabled" style="border:1px solid #F0DAD7; background:#FDF7F6; color:#DBA9A3; font-family:inherit; font-size:12.5px; font-weight:600; padding:9px 15px; border-radius:var(--r,4px); cursor:not-allowed;">Execute forced transfer</button>
+            </div>
+          </div>
+        </div>
+
+        <div data-screen-label="05b Confirm + result" style="width:706px; display:grid; gap:20px; align-content:start;">
+          <div style="background:#EDF0F3; border:1px solid #C7CED6; border-radius:6px; box-shadow:0 8px 28px rgba(22,26,32,0.10); padding:26px;">
+            <div style="font-size:10.5px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#6E7885; margin-bottom:16px;">Confirm pause</div>
+            <div style="background:#fff; border:1px solid #C7CED6; border-radius:var(--r,4px); box-shadow:0 16px 40px rgba(22,26,32,0.14); overflow:hidden;">
+              <div style="height:3px; background:#5A6472;"></div>
+              <div style="padding:20px 22px 0;">
+                <div style="display:flex; align-items:center; gap:10px;"><span style="color:#5A6472; font-size:12px;">✻</span><h4 style="margin:0; font-size:15.5px; font-weight:600;">Pause all BER-A transfers</h4></div>
+                <p style="margin:10px 0 0; font-size:12.5px; line-height:1.6; color:#515B67;">Trading stops for all 148 holders until an agent unpauses the token.</p>
+                <div style="margin-top:14px; border:1px solid #D8DDE4; background:#EFF1F4; border-radius:var(--r,4px); padding:12px 14px;">
+                  <div style="font-size:10.5px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#5A6472; margin-bottom:8px;">Consequences</div>
+                  <div style="display:grid; gap:6px; font-size:12px; color:#3A424D; line-height:1.5;">
+                    <div style="display:flex; gap:8px;"><span>—</span><span>Every transfer reverts with <span style="font-family:var(--mono,'Roboto Mono'),monospace;">TOKEN_PAUSED</span></span></div>
+                    <div style="display:flex; gap:8px;"><span>—</span><span>Pending investor transfers (3) will fail their pre-check</span></div>
+                    <div style="display:flex; gap:8px;"><span>—</span><span>Distributions and balances are unaffected</span></div>
+                  </div>
+                </div>
+                <div style="margin-top:14px;">
+                  <label style="display:block; font-size:11.5px; font-weight:600; color:#3A424D; margin-bottom:5px;">Reason for the audit log</label>
+                  <input type="text" value="Valuation dispute — pending JLL re-issue" style="width:100%; box-sizing:border-box; font-family:inherit; font-size:12px; padding:8px 10px; border:1px solid #C7CED6; border-radius:var(--r,4px); outline:none;">
+                </div>
+              </div>
+              <div style="display:flex; gap:9px; justify-content:flex-end; padding:16px 22px 18px; margin-top:18px; border-top:1px solid #EDF0F3; background:#FAFBFC;">
+                <button style="border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:12.5px; font-weight:600; padding:8px 14px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">Cancel</button>
+                <button style="display:inline-flex; align-items:center; gap:7px; border:1px solid #B42318; background:#B42318; color:#fff; font-family:inherit; font-size:12.5px; font-weight:600; padding:8px 14px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#8E1B12;"><span style="font-size:10px;">▲</span>Pause token</button>
+              </div>
+            </div>
+          </div>
+
+          <div style="background:#fff; border:1px solid #C7CED6; border-radius:6px; box-shadow:0 8px 28px rgba(22,26,32,0.10); overflow:hidden;">
+            <div style="padding:10px 20px; background:#FAFBFC; border-bottom:1px solid #DFE4E9; font-size:10.5px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Result &amp; audit entry</div>
+            <div style="padding:18px 20px 20px;">
+              <div style="display:flex; gap:11px; align-items:flex-start; border:1px solid #B7E0D0; background:#E6F4EF; border-radius:var(--r,4px); padding:12px 14px;">
+                <span style="color:#0E7A5F; font-size:12px; margin-top:1px;">✓</span>
+                <div style="flex:1;"><div style="font-size:12.5px; font-weight:600; color:#0B5241;">Partial freeze confirmed</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#3E7060; margin-top:4px; line-height:1.6;">tx 0x5c2E7f19…88aD ↗<br>block 21,884,112 · 2 confirmations</div></div>
+              </div>
+              <div style="margin-top:14px; border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden;">
+                <div style="padding:9px 14px; background:#FAFBFC; border-bottom:1px solid #DFE4E9; font-size:10.5px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Audit entry written</div>
+                <div style="display:grid; grid-template-columns:110px 1fr;">
+                  <div style="padding:8px 14px; font-size:11.5px; color:#6E7885; border-bottom:1px solid #F5F7F9;">Actor</div>
+                  <div style="padding:8px 14px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; border-bottom:1px solid #F5F7F9;">0x3B77aC…0d42 · AGENT</div>
+                  <div style="padding:8px 14px; font-size:11.5px; color:#6E7885; border-bottom:1px solid #F5F7F9;">Action</div>
+                  <div style="padding:8px 14px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; border-bottom:1px solid #F5F7F9;">freezePartialTokens</div>
+                  <div style="padding:8px 14px; font-size:11.5px; color:#6E7885; border-bottom:1px solid #F5F7F9;">Target</div>
+                  <div style="padding:8px 14px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; border-bottom:1px solid #F5F7F9;">0xB412a9…5D2c</div>
+                  <div style="padding:8px 14px; font-size:11.5px; color:#6E7885; border-bottom:1px solid #F5F7F9;">Parameters</div>
+                  <div style="padding:8px 14px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; border-bottom:1px solid #F5F7F9;">amount 4,000.000000</div>
+                  <div style="padding:8px 14px; font-size:11.5px; color:#6E7885;">Timestamp</div>
+                  <div style="padding:8px 14px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px;">2026-08-23T09:41:18Z</div>
+                </div>
+              </div>
+              <div style="display:flex; gap:11px; align-items:flex-start; border:1px solid #F5C9C3; background:#FDECEA; border-radius:var(--r,4px); padding:12px 14px; margin-top:14px;">
+                <span style="color:#B42318; font-size:12px; margin-top:1px;">✕</span>
+                <div style="flex:1;"><div style="font-size:12.5px; font-weight:600; color:#8E1B12;">Transaction reverted</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#9E4038; margin-top:4px; line-height:1.6;">AGENT_ROLE required · nothing was written<br>tx 0x1a09bC…774f ↗</div></div>
+                <button style="border:1px solid #B42318; background:#fff; color:#B42318; font-family:inherit; font-size:11.5px; font-weight:600; padding:5px 11px; border-radius:var(--r,4px); cursor:pointer; flex:none;" style-hover="background:#B42318; color:#fff;">Retry</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid; gap:16px;">
+      <div style="display:flex; align-items:baseline; gap:12px;">
+        <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; color:#0E635C;">06</span>
+        <span style="font-size:18px; font-weight:600;">Provider settings</span>
+        <span style="font-size:13px; color:#6E7885;">KYC, AML and identity providers, with keys masked once saved.</span>
+      </div>
+      <div data-screen-label="06 Providers" style="width:1440px; background:#fff; border:1px solid #C7CED6; border-radius:6px; box-shadow:0 8px 28px rgba(22,26,32,0.10); overflow:hidden;">
+        <div style="display:flex; align-items:center; gap:18px; height:48px; padding:0 20px; background:#161A20;">
+          <div style="display:flex; align-items:center; gap:9px;"><div style="width:13px; height:13px; border:2px solid #3FA396; transform:rotate(45deg);"></div><span style="font-size:12.5px; font-weight:600; color:#fff;">Tessera</span><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#8792A2;">Agent</span></div>
+          <div style="margin-left:auto; display:flex; align-items:center; gap:14px;">
+            <span style="display:inline-flex; align-items:center; gap:6px; border:1px solid #37414F; border-radius:var(--r,4px); padding:4px 9px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#E6EAEF;">0x3B77aC…0d42</span>
+            <span style="display:inline-flex; background:#10322F; border:1px solid #1E4A3B; color:#3FA396; padding:3px 8px; border-radius:3px; font-size:10.5px; font-weight:600; letter-spacing:0.04em;">AGENT</span>
+          </div>
+        </div>
+        <div style="padding:22px 24px 32px;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <h2 style="margin:0; font-size:20px; font-weight:600; letter-spacing:-0.015em;">Providers</h2>
+            <span style="font-size:12px; color:#6E7885;">Keys are stored encrypted and shown masked. Changing a provider does not re-screen existing investors.</span>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:20px; align-items:start;">
+
+            <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden;">
+              <div style="display:flex; align-items:center; gap:10px; padding:11px 16px; background:#FAFBFC; border-bottom:1px solid #DFE4E9;">
+                <span style="font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">KYC provider</span>
+                <span style="margin-left:auto; display:inline-flex; align-items:center; gap:6px; background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:2px 8px; border-radius:3px; font-size:10.5px; font-weight:600;">ENABLED</span>
+              </div>
+              <div style="padding:16px; display:grid; gap:12px;">
+                <div style="display:grid; gap:8px;">
+                  <div style="display:flex; align-items:center; gap:11px; border:1px solid #0E635C; background:#F2F8F7; border-radius:var(--r,4px); padding:11px 13px; cursor:pointer;">
+                    <div style="width:14px; height:14px; border-radius:50%; border:4px solid #0E635C; background:#fff; box-sizing:border-box; flex:none;"></div>
+                    <div style="flex:1;"><div style="font-size:12.5px; font-weight:600;">Persona</div><div style="font-size:11px; color:#3E7060; margin-top:2px;">Document + selfie, 41 countries</div></div>
+                    <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#0B4F4A;">live</span>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:11px; border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:11px 13px; cursor:pointer;" style-hover="border-color:#9AA4AF;">
+                    <div style="width:14px; height:14px; border-radius:50%; border:1px solid #C7CED6; background:#fff; box-sizing:border-box; flex:none;"></div>
+                    <div style="flex:1;"><div style="font-size:12.5px; font-weight:600;">Mock provider</div><div style="font-size:11px; color:#6E7885; margin-top:2px;">Auto-approves — testnet only</div></div>
+                    <span style="background:#FDF3E0; border:1px solid #F0DCAE; color:#9A6410; padding:1px 6px; border-radius:3px; font-size:10px; font-weight:600;">TEST</span>
+                  </div>
+                </div>
+                <div>
+                  <label style="display:block; font-size:11.5px; font-weight:600; color:#3A424D; margin-bottom:5px;">API key</label>
+                  <div style="display:flex; border:1px solid #C7CED6; border-radius:var(--r,4px); overflow:hidden;">
+                    <input type="text" value="persona_live_••••••••••••4f9C" style="flex:1; min-width:0; border:none; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px; padding:8px 10px; outline:none; color:#515B67;">
+                    <button style="border:none; border-left:1px solid #DFE4E9; background:#FAFBFC; color:#0E635C; font-family:inherit; font-size:11px; font-weight:600; padding:0 11px; cursor:pointer;" style-hover="background:#EDF0F3;">Replace</button>
+                  </div>
+                  <div style="font-size:11px; color:#6E7885; margin-top:6px;">Rotated 12 Jun 2026 · last call 4 min ago</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:9px; border-top:1px solid #EDF0F3; padding-top:12px;">
+                  <span style="width:6px; height:6px; border-radius:50%; background:#0E7A5F;"></span>
+                  <span style="font-size:11.5px; color:#3A424D;">Connection healthy · 99.98% 30d</span>
+                  <button style="margin-left:auto; border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:11px; font-weight:600; padding:5px 10px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">Test</button>
+                </div>
+              </div>
+            </div>
+
+            <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden;">
+              <div style="display:flex; align-items:center; gap:10px; padding:11px 16px; background:#FAFBFC; border-bottom:1px solid #DFE4E9;">
+                <span style="font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">AML provider</span>
+                <span style="margin-left:auto; display:inline-flex; align-items:center; gap:6px; background:#FDECEA; border:1px solid #F5C9C3; color:#B42318; padding:2px 8px; border-radius:3px; font-size:10.5px; font-weight:600;">ERROR</span>
+              </div>
+              <div style="padding:16px; display:grid; gap:12px;">
+                <div style="display:grid; gap:8px;">
+                  <div style="display:flex; align-items:center; gap:11px; border:1px solid #0E635C; background:#F2F8F7; border-radius:var(--r,4px); padding:11px 13px; cursor:pointer;">
+                    <div style="width:14px; height:14px; border-radius:50%; border:4px solid #0E635C; background:#fff; box-sizing:border-box; flex:none;"></div>
+                    <div style="flex:1;"><div style="font-size:12.5px; font-weight:600;">OpenSanctions</div><div style="font-size:11px; color:#3E7060; margin-top:2px;">41 sanctions and PEP lists</div></div>
+                    <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#0B4F4A;">live</span>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:11px; border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:11px 13px; cursor:pointer;" style-hover="border-color:#9AA4AF;">
+                    <div style="width:14px; height:14px; border-radius:50%; border:1px solid #C7CED6; background:#fff; box-sizing:border-box; flex:none;"></div>
+                    <div style="flex:1;"><div style="font-size:12.5px; font-weight:600;">Mock provider</div><div style="font-size:11px; color:#6E7885; margin-top:2px;">Returns clear for every address</div></div>
+                    <span style="background:#FDF3E0; border:1px solid #F0DCAE; color:#9A6410; padding:1px 6px; border-radius:3px; font-size:10px; font-weight:600;">TEST</span>
+                  </div>
+                </div>
+                <div>
+                  <label style="display:block; font-size:11.5px; font-weight:600; color:#B42318; margin-bottom:5px;">API key</label>
+                  <div style="display:flex; border:1px solid #B42318; border-radius:var(--r,4px); overflow:hidden; background:#FFFCFC;">
+                    <input type="text" value="os_live_••••••••••••1a02" style="flex:1; min-width:0; border:none; background:transparent; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px; padding:8px 10px; outline:none; color:#515B67;">
+                    <button style="border:none; border-left:1px solid #F5C9C3; background:#FDECEA; color:#B42318; font-family:inherit; font-size:11px; font-weight:600; padding:0 11px; cursor:pointer;">Replace</button>
+                  </div>
+                  <div style="display:flex; gap:6px; font-size:11px; color:#B42318; margin-top:6px; line-height:1.45;"><span>✕</span><span>Key rejected (HTTP 401). Rescreening is halted — 9 investors are queued.</span></div>
+                </div>
+                <div style="display:flex; align-items:center; gap:9px; border-top:1px solid #EDF0F3; padding-top:12px;">
+                  <span style="width:6px; height:6px; border-radius:50%; background:#B42318;"></span>
+                  <span style="font-size:11.5px; color:#8E1B12;">Last successful call 2 days ago</span>
+                  <button style="margin-left:auto; border:1px solid #B42318; background:#fff; color:#B42318; font-family:inherit; font-size:11px; font-weight:600; padding:5px 10px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#B42318; color:#fff;">Test</button>
+                </div>
+              </div>
+            </div>
+
+            <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden;">
+              <div style="display:flex; align-items:center; gap:10px; padding:11px 16px; background:#FAFBFC; border-bottom:1px solid #DFE4E9;">
+                <span style="font-size:11px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Identity provider</span>
+                <span style="margin-left:auto; display:inline-flex; align-items:center; gap:6px; background:#EFF1F4; border:1px solid #D8DDE4; color:#5A6472; padding:2px 8px; border-radius:3px; font-size:10.5px; font-weight:600;">DISABLED</span>
+              </div>
+              <div style="padding:16px; display:grid; gap:12px;">
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:14px;">
+                  <div><div style="font-size:12.5px; font-weight:500;">Managed ONCHAINID deployment</div><div style="font-size:11px; color:#6E7885; margin-top:2px;">Tessera deploys identity contracts on the investor's behalf</div></div>
+                  <div style="width:34px; height:20px; border-radius:999px; background:#DFE4E9; position:relative; cursor:pointer; flex:none;"><div style="position:absolute; top:3px; left:3px; width:14px; height:14px; border-radius:50%; background:#fff;"></div></div>
+                </div>
+                <div style="border-top:1px solid #EDF0F3; padding-top:12px;">
+                  <label style="display:block; font-size:11.5px; font-weight:600; color:#9AA4AF; margin-bottom:5px;">Identity factory</label>
+                  <input type="text" value="0x0000000000000000000000000000000000000000" disabled="disabled" style="width:100%; box-sizing:border-box; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px; padding:8px 10px; border:1px solid #EDF0F3; background:#F5F7F9; color:#9AA4AF; border-radius:var(--r,4px); cursor:not-allowed;">
+                  <div style="font-size:11px; color:#9AA4AF; margin-top:6px;">Investors currently deploy their own identity contracts.</div>
+                </div>
+                <div style="border-top:1px solid #EDF0F3; padding-top:12px;">
+                  <label style="display:block; font-size:11.5px; font-weight:600; color:#9AA4AF; margin-bottom:5px;">API key</label>
+                  <input type="text" placeholder="Not configured" disabled="disabled" style="width:100%; box-sizing:border-box; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11.5px; padding:8px 10px; border:1px solid #EDF0F3; background:#F5F7F9; color:#C7CED6; border-radius:var(--r,4px); cursor:not-allowed;">
+                </div>
+                <button style="border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:12px; font-weight:600; padding:8px 14px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">Enable managed identities</button>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px; margin-top:20px; padding-top:18px; border-top:1px solid #EDF0F3;">
+            <span style="font-size:11.5px; color:#6E7885;">Provider changes are recorded in the audit log but do not touch the chain.</span>
+            <button style="margin-left:auto; border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:12.5px; font-weight:600; padding:9px 15px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">Discard</button>
+            <button style="border:1px solid #0E635C; background:#0E635C; color:#fff; font-family:inherit; font-size:12.5px; font-weight:600; padding:9px 15px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#0B4F4A;">Save providers</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid; gap:16px;">
+      <div style="display:flex; align-items:baseline; gap:12px;">
+        <span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:12px; color:#0E635C;">07</span>
+        <span style="font-size:18px; font-weight:600;">Audit log</span>
+        <span style="font-size:13px; color:#6E7885;">Append-only. Actor, action, target, parameters and hash on every row.</span>
+      </div>
+      <div data-screen-label="07 Audit log" style="width:1440px; background:#fff; border:1px solid #C7CED6; border-radius:6px; box-shadow:0 8px 28px rgba(22,26,32,0.10); overflow:hidden;">
+        <div style="display:flex; align-items:center; gap:18px; height:48px; padding:0 20px; background:#161A20;">
+          <div style="display:flex; align-items:center; gap:9px;"><div style="width:13px; height:13px; border:2px solid #3FA396; transform:rotate(45deg);"></div><span style="font-size:12.5px; font-weight:600; color:#fff;">Tessera</span><span style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#8792A2;">Agent</span></div>
+          <div style="margin-left:auto; display:flex; align-items:center; gap:14px;">
+            <span style="display:inline-flex; align-items:center; gap:6px; border:1px solid #37414F; border-radius:var(--r,4px); padding:4px 9px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#E6EAEF;">0x3B77aC…0d42</span>
+            <span style="display:inline-flex; background:#10322F; border:1px solid #1E4A3B; color:#3FA396; padding:3px 8px; border-radius:3px; font-size:10.5px; font-weight:600; letter-spacing:0.04em;">AGENT</span>
+          </div>
+        </div>
+        <div style="padding:22px 24px 30px;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <h2 style="margin:0; font-size:20px; font-weight:600; letter-spacing:-0.015em;">Audit log</h2>
+            <span style="font-size:12px; color:#6E7885;">1,842 entries · append-only · retained 10 years</span>
+            <div style="margin-left:auto; display:flex; gap:8px; align-items:center;">
+              <div style="display:flex; align-items:center; gap:7px; border:1px solid #C7CED6; border-radius:var(--r,4px); padding:5px 10px; width:230px;"><span style="color:#9AA4AF; font-size:12px;">⌕</span><input type="text" placeholder="Actor, target or tx hash" style="flex:1; min-width:0; border:none; outline:none; font-family:inherit; font-size:12px;"></div>
+              <select style="font-family:inherit; font-size:12px; padding:6px 10px; border:1px solid #C7CED6; border-radius:var(--r,4px); background:#fff; appearance:none;"><option>All actions</option><option>Freeze</option><option>Forced transfer</option><option>Rule change</option></select>
+              <select style="font-family:inherit; font-size:12px; padding:6px 10px; border:1px solid #C7CED6; border-radius:var(--r,4px); background:#fff; appearance:none;"><option>All tokens</option><option>BER-A</option><option>AMS-B</option><option>CPH-A</option></select>
+              <select style="font-family:inherit; font-size:12px; padding:6px 10px; border:1px solid #C7CED6; border-radius:var(--r,4px); background:#fff; appearance:none;"><option>Last 30 days</option><option>Last 7 days</option><option>All time</option></select>
+              <button style="border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:12px; font-weight:600; padding:6px 12px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">Export CSV</button>
+            </div>
+          </div>
+          <div style="display:flex; gap:6px; margin-top:14px;">
+            <span style="background:#E3F0EE; border:1px solid #B9D8D3; color:#0B4F4A; padding:4px 10px; border-radius:999px; font-size:11.5px; font-weight:600; cursor:pointer;">All 1,842</span>
+            <span style="background:#fff; border:1px solid #F5C9C3; color:#B42318; padding:4px 10px; border-radius:999px; font-size:11.5px; cursor:pointer;" style-hover="background:#FDECEA;">Privileged 41</span>
+            <span style="background:#fff; border:1px solid #DFE4E9; color:#515B67; padding:4px 10px; border-radius:999px; font-size:11.5px; cursor:pointer;" style-hover="border-color:#9AA4AF; color:#161A20;">Rule changes 18</span>
+            <span style="background:#fff; border:1px solid #DFE4E9; color:#515B67; padding:4px 10px; border-radius:999px; font-size:11.5px; cursor:pointer;" style-hover="border-color:#9AA4AF; color:#161A20;">Reverted 6</span>
+          </div>
+
+          <div style="margin-top:16px; border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden;">
+            <div style="display:grid; grid-template-columns:150px 1.2fr 1.2fr 1.2fr 1.6fr 0.9fr 1fr; gap:12px; padding:0 16px; height:34px; align-items:center; background:#FAFBFC; border-bottom:1px solid #DFE4E9; font-size:10.5px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">
+              <div>Timestamp</div><div>Actor</div><div>Action</div><div>Target</div><div>Parameters</div><div>Result</div><div>Transaction</div>
+            </div>
+            <div style="display:grid; grid-template-columns:150px 1.2fr 1.2fr 1.2fr 1.6fr 0.9fr 1fr; gap:12px; padding:0 16px; height:46px; align-items:center; border-bottom:1px solid #EDF0F3; font-size:12px; background:#FFFCFC;" style-hover="background:#FDF7F6;">
+              <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#515B67;">2026-08-23 09:41</div>
+              <div><span style="display:inline-flex; align-items:center; gap:7px; background:#F5F7F9; border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:3px 8px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px;">0x3B77aC…0d42</span></div>
+              <div style="display:flex; align-items:center; gap:6px;"><span style="color:#B42318; font-size:10px;">▲</span><span style="font-weight:600; color:#8E1B12;">Partial freeze</span></div>
+              <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px;">0xB412a9…5D2c</div>
+              <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#515B67;">amount 4,000.000000 · CPH-A</div>
+              <div><span style="background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:1px 7px; border-radius:3px; font-size:10.5px; font-weight:600;">OK</span></div>
+              <div><a href="#07" style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px;">0x5c2E…88aD ↗</a></div>
+            </div>
+            <div style="display:grid; grid-template-columns:150px 1.2fr 1.2fr 1.2fr 1.6fr 0.9fr 1fr; gap:12px; padding:0 16px; height:46px; align-items:center; border-bottom:1px solid #EDF0F3; font-size:12px;" style-hover="background:#FAFBFC;">
+              <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#515B67;">2026-08-22 16:08</div>
+              <div><span style="display:inline-flex; align-items:center; gap:7px; background:#F5F7F9; border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:3px 8px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px;">0x51aa38…88C3</span></div>
+              <div style="display:flex; align-items:center; gap:6px;"><span style="color:#0E7A5F; font-size:10px;">✓</span><span>Claim issued</span></div>
+              <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px;">0x7A3f9B…9C21</div>
+              <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#515B67;">topic 2 · Chainalysis KYT</div>
+              <div><span style="background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:1px 7px; border-radius:3px; font-size:10.5px; font-weight:600;">OK</span></div>
+              <div><a href="#07" style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px;">0x4d1c…9F2a ↗</a></div>
+            </div>
+            <div style="display:grid; grid-template-columns:150px 1.2fr 1.2fr 1.2fr 1.6fr 0.9fr 1fr; gap:12px; padding:0 16px; height:46px; align-items:center; border-bottom:1px solid #EDF0F3; font-size:12px;" style-hover="background:#FAFBFC;">
+              <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#515B67;">2026-08-21 11:52</div>
+              <div><span style="display:inline-flex; align-items:center; gap:7px; background:#F5F7F9; border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:3px 8px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px;">system · auto</span></div>
+              <div style="display:flex; align-items:center; gap:6px;"><span style="color:#B42318; font-size:10px;">▲</span><span style="font-weight:600; color:#8E1B12;">Address frozen</span></div>
+              <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px;">0x00De55…41F0</div>
+              <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#515B67;">OFAC-SDN-27714 · score 0.94</div>
+              <div><span style="background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:1px 7px; border-radius:3px; font-size:10.5px; font-weight:600;">OK</span></div>
+              <div><a href="#07" style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px;">0x9a41…c07B ↗</a></div>
+            </div>
+            <div style="display:grid; grid-template-columns:150px 1.2fr 1.2fr 1.2fr 1.6fr 0.9fr 1fr; gap:12px; padding:0 16px; height:46px; align-items:center; border-bottom:1px solid #EDF0F3; font-size:12px;" style-hover="background:#FAFBFC;">
+              <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#515B67;">2026-08-19 14:22</div>
+              <div><span style="display:inline-flex; align-items:center; gap:7px; background:#F5F7F9; border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:3px 8px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px;">0x3B77aC…0d42</span></div>
+              <div style="display:flex; align-items:center; gap:6px;"><span style="color:#5A6472; font-size:10px;">✻</span><span style="font-weight:600;">Token paused</span></div>
+              <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px;">CPH-A</div>
+              <div style="font-size:11px; color:#515B67;">Valuation dispute — JLL re-issue</div>
+              <div><span style="background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:1px 7px; border-radius:3px; font-size:10.5px; font-weight:600;">OK</span></div>
+              <div><a href="#07" style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px;">0x8b0F…21cA ↗</a></div>
+            </div>
+            <div style="display:grid; grid-template-columns:150px 1.2fr 1.2fr 1.2fr 1.6fr 0.9fr 1fr; gap:12px; padding:0 16px; height:46px; align-items:center; border-bottom:1px solid #EDF0F3; font-size:12px;" style-hover="background:#FAFBFC;">
+              <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#515B67;">2026-08-17 10:31</div>
+              <div><span style="display:inline-flex; align-items:center; gap:7px; background:#F5F7F9; border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:3px 8px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px;">0x51aa38…88C3</span></div>
+              <div style="display:flex; align-items:center; gap:6px;"><span style="color:#0E635C; font-size:10px;">◆</span><span>Rule changed</span></div>
+              <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px;">BER-A</div>
+              <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#515B67;">maxInvestors 180 → 199</div>
+              <div><span style="background:#E6F4EF; border:1px solid #B7E0D0; color:#0E7A5F; padding:1px 7px; border-radius:3px; font-size:10.5px; font-weight:600;">OK</span></div>
+              <div><a href="#07" style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px;">0x2fD8…6e11 ↗</a></div>
+            </div>
+            <div style="display:grid; grid-template-columns:150px 1.2fr 1.2fr 1.2fr 1.6fr 0.9fr 1fr; gap:12px; padding:0 16px; height:46px; align-items:center; border-bottom:1px solid #EDF0F3; font-size:12px;" style-hover="background:#FAFBFC;">
+              <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:11px; color:#515B67;">2026-08-15 09:14</div>
+              <div><span style="display:inline-flex; align-items:center; gap:7px; background:#F5F7F9; border:1px solid #DFE4E9; border-radius:var(--r,4px); padding:3px 8px; font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px;">0x9dC401…7b13</span></div>
+              <div style="display:flex; align-items:center; gap:6px;"><span style="color:#B42318; font-size:10px;">▲</span><span style="font-weight:600; color:#8E1B12;">Forced transfer</span></div>
+              <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px;">0x2E88c1…04Fa</div>
+              <div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#515B67;">12,500.000000 AMS-B</div>
+              <div><span style="background:#FDECEA; border:1px solid #F5C9C3; color:#B42318; padding:1px 7px; border-radius:3px; font-size:10.5px; font-weight:600;">REVERTED</span></div>
+              <div><a href="#07" style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px;">0x1a09…774f ↗</a></div>
+            </div>
+            <div style="display:flex; align-items:center; padding:11px 16px; background:#FAFBFC;">
+              <span style="font-size:11.5px; color:#6E7885;">1–6 of 1,842</span>
+              <div style="margin-left:auto; display:flex; gap:4px;">
+                <button style="border:1px solid #DFE4E9; background:#fff; color:#C7CED6; font-family:inherit; font-size:11.5px; width:26px; height:26px; border-radius:var(--r,4px); cursor:not-allowed;">‹</button>
+                <button style="border:1px solid #0E635C; background:#0E635C; color:#fff; font-family:inherit; font-size:11.5px; width:26px; height:26px; border-radius:var(--r,4px); cursor:pointer;">1</button>
+                <button style="border:1px solid #DFE4E9; background:#fff; color:#3A424D; font-family:inherit; font-size:11.5px; width:26px; height:26px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">2</button>
+                <button style="border:1px solid #DFE4E9; background:#fff; color:#3A424D; font-family:inherit; font-size:11.5px; width:26px; height:26px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">307</button>
+                <button style="border:1px solid #DFE4E9; background:#fff; color:#3A424D; font-family:inherit; font-size:11.5px; width:26px; height:26px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">›</button>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-top:18px;">
+            <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden;">
+              <div style="padding:9px 14px; background:#FAFBFC; border-bottom:1px solid #DFE4E9; font-size:10.5px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Loading</div>
+              <div style="padding:4px 14px 12px;">
+                <div style="display:grid; grid-template-columns:80px 1fr 1fr 60px; gap:10px; height:40px; align-items:center; border-bottom:1px solid #EDF0F3;"><div style="height:9px; border-radius:2px; background:linear-gradient(90deg,#EDF0F3 0%,#F7F9FA 40%,#EDF0F3 80%); background-size:340px 100%; animation:shimmer 1.4s linear infinite;"></div><div style="height:16px; border-radius:3px; background:linear-gradient(90deg,#EDF0F3 0%,#F7F9FA 40%,#EDF0F3 80%); background-size:340px 100%; animation:shimmer 1.4s linear infinite;"></div><div style="height:9px; border-radius:2px; background:#EDF0F3;"></div><div style="height:14px; border-radius:3px; background:#EDF0F3;"></div></div>
+                <div style="display:grid; grid-template-columns:80px 1fr 1fr 60px; gap:10px; height:40px; align-items:center; border-bottom:1px solid #EDF0F3;"><div style="height:9px; border-radius:2px; background:linear-gradient(90deg,#EDF0F3 0%,#F7F9FA 40%,#EDF0F3 80%); background-size:340px 100%; animation:shimmer 1.4s linear infinite;"></div><div style="height:16px; border-radius:3px; background:linear-gradient(90deg,#EDF0F3 0%,#F7F9FA 40%,#EDF0F3 80%); background-size:340px 100%; animation:shimmer 1.4s linear infinite;"></div><div style="height:9px; width:70%; border-radius:2px; background:#EDF0F3;"></div><div style="height:14px; border-radius:3px; background:#EDF0F3;"></div></div>
+                <div style="display:grid; grid-template-columns:80px 1fr 1fr 60px; gap:10px; height:40px; align-items:center;"><div style="height:9px; border-radius:2px; background:linear-gradient(90deg,#EDF0F3 0%,#F7F9FA 40%,#EDF0F3 80%); background-size:340px 100%; animation:shimmer 1.4s linear infinite;"></div><div style="height:16px; border-radius:3px; background:linear-gradient(90deg,#EDF0F3 0%,#F7F9FA 40%,#EDF0F3 80%); background-size:340px 100%; animation:shimmer 1.4s linear infinite;"></div><div style="height:9px; width:55%; border-radius:2px; background:#EDF0F3;"></div><div style="height:14px; border-radius:3px; background:#EDF0F3;"></div></div>
+              </div>
+            </div>
+            <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden; display:flex; flex-direction:column;">
+              <div style="padding:9px 14px; background:#FAFBFC; border-bottom:1px solid #DFE4E9; font-size:10.5px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">No entries match</div>
+              <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:30px 24px;">
+                <div style="width:26px; height:26px; border:1px solid #C7CED6; transform:rotate(45deg); margin-bottom:16px;"></div>
+                <div style="font-size:13.5px; font-weight:600;">No privileged actions in this window</div>
+                <div style="font-size:12px; color:#6E7885; margin-top:5px; max-width:32ch; line-height:1.5;">No freeze, pause or forced transfer occurred in the last 7 days.</div>
+                <button style="margin-top:14px; border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:12px; font-weight:600; padding:7px 13px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">Widen to 30 days</button>
+              </div>
+            </div>
+            <div style="border:1px solid #DFE4E9; border-radius:var(--r,4px); overflow:hidden;">
+              <div style="padding:9px 14px; background:#FAFBFC; border-bottom:1px solid #DFE4E9; font-size:10.5px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:#6E7885;">Indexer error</div>
+              <div style="padding:14px;">
+                <div style="display:flex; gap:10px; align-items:flex-start; border:1px solid #F5C9C3; background:#FDECEA; border-radius:var(--r,4px); padding:11px 13px;">
+                  <span style="color:#B42318; font-size:11px; margin-top:2px;">✕</span>
+                  <div style="flex:1;"><div style="font-size:12.5px; font-weight:600; color:#8E1B12;">Log indexer is 412 blocks behind</div><div style="font-family:var(--mono,'Roboto Mono'),monospace; font-size:10.5px; color:#9E4038; margin-top:4px; line-height:1.5;">last indexed 21,883,697<br>chain head 21,884,109</div></div>
+                </div>
+                <div style="font-size:11.5px; color:#6E7885; margin-top:11px; line-height:1.55;">Recent actions may be missing from this view. On-chain records are unaffected — read the contract events directly if you need certainty now.</div>
+                <div style="display:flex; gap:8px; margin-top:11px;">
+                  <button style="border:1px solid #C7CED6; background:#fff; color:#262C35; font-family:inherit; font-size:11.5px; font-weight:600; padding:6px 12px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F5F7F9;">Reindex</button>
+                  <button style="border:1px solid transparent; background:transparent; color:#0E635C; font-family:inherit; font-size:11.5px; font-weight:600; padding:6px 10px; border-radius:var(--r,4px); cursor:pointer;" style-hover="background:#F2F8F7;">Open explorer</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#0E635C&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#0E635C&quot;,&quot;#123C6B&quot;,&quot;#1B3A5C&quot;],&quot;section&quot;:&quot;Theme&quot;},&quot;radius&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:4,&quot;min&quot;:0,&quot;max&quot;:8,&quot;step&quot;:2,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Theme&quot;},&quot;monoFace&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Roboto Mono&quot;,&quot;options&quot;:[&quot;Roboto Mono&quot;,&quot;IBM Plex Mono&quot;,&quot;JetBrains Mono&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Theme&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      accent: this.props.accent ?? "#0E635C",
+      radius: (this.props.radius ?? 4) + "px",
+      monoFace: this.props.monoFace ?? "Roboto Mono"
+    };
+  }
+}
+</script>
+</body>
+</html>

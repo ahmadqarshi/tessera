@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* next/font sets --font-sans / --font-mono on <html>; the tokens reference them. */
+html {
+  font-family: var(--font-sans), "Space Grotesk", system-ui, sans-serif;
+}

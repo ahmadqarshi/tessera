@@ -1,0 +1,17 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+
+# Dependency build scripts are blocked by default; approve only what we need.
+# esbuild powers vitest/tsx; the Prisma packages fetch the query engine.
+# Optional native add-ons (sharp, ws natives, keccak) fall back to JS — left off.
+allowBuilds:
+  esbuild: true
+  prisma: true
+  "@prisma/client": true
+  "@prisma/engines": true
+  "@nestjs/core": false
+  bufferutil: false
+  keccak: false
+  sharp: false
+  utf-8-validate: false

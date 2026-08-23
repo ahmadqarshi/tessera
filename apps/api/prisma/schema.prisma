@@ -1,0 +1,36 @@
+// Tessera database schema.
+//
+// Scaffold pass: only the indexer infrastructure tables that prove the headline subsystem's
+// guarantees (persisted cursor, hash-tracked blocks). Domain and derived read-model tables
+// (holdings, transfers, admin_actions, offerings, …) are added in later phases — see
+// apps/indexer/CLAUDE.md and docs/TASKS.md.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// Single-row-per-chain cursor so the indexer resumes exactly where it stopped (no gaps).
+model IndexerCheckpoint {
+  chainId       Int      @id
+  lastBlock     BigInt
+  lastBlockHash String
+  updatedAt     DateTime @updatedAt
+
+  @@map("indexer_checkpoint")
+}
+
+/// Block hashes tracked per processed block to detect reorgs (hash mismatch -> rollback).
+model IndexedBlock {
+  chainId     Int
+  blockNumber BigInt
+  blockHash   String
+  createdAt   DateTime @default(now())
+
+  @@id([chainId, blockNumber])
+  @@map("indexed_blocks")
+}

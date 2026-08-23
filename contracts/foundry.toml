@@ -1,0 +1,33 @@
+# Foundry configuration for the Tessera contracts workspace.
+# T-REX (ERC-3643 reference impl, maintained at github.com/ERC-3643/ERC-3643, tag 4.1.3)
+# and ONCHAINID 2.1.0 both pin solc 0.8.17 — we match it exactly so the vendored, audited
+# submodules compile unmodified. The upstream TokenySolutions/T-REX repo is deprecated and
+# now redirects here; 4.1.3 is byte-identical in the core contracts to Tokeny's 4.1.6.
+# Do not bump solc without re-checking the submodule pragmas (see contracts/CLAUDE.md).
+
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+test = "test"
+script = "script"
+solc = "0.8.17"
+evm_version = "paris"
+optimizer = true
+optimizer_runs = 200
+# Remappings are declared in remappings.txt so both forge and editor tooling read one source.
+fs_permissions = [{ access = "read", path = "./" }]
+gas_reports = ["*"]
+
+[profile.ci]
+verbosity = 3
+fuzz = { runs = 512 }
+invariant = { runs = 256, depth = 32 }
+
+[fmt]
+line_length = 100
+tab_width = 4
+bracket_spacing = true
+int_types = "long"
+
+# See https://book.getfoundry.sh/reference/config/ for more options.

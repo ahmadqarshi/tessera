@@ -1,0 +1,13 @@
+{
+  "extends": "@tessera/config/tsconfig.base.json",
+  "compilerOptions": {
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "outDir": "dist",
+    "rootDir": "src",
+    "noEmit": false,
+    "composite": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}

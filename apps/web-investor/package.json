@@ -1,0 +1,40 @@
+{
+  "name": "@tessera/web-investor",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Tessera investor portal (Next.js App Router).",
+  "license": "MIT",
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^3.9.1",
+    "@rainbow-me/rainbowkit": "2.2.3",
+    "@tanstack/react-query": "^5.62.11",
+    "@tessera/shared": "workspace:*",
+    "next": "^15.1.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-hook-form": "^7.54.2",
+    "viem": "^2.21.55",
+    "wagmi": "2.14.6",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@tessera/config": "workspace:*",
+    "@types/node": "^22.10.5",
+    "@types/react": "^19.0.4",
+    "@types/react-dom": "^19.0.2",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.18.0",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.3",
+    "vitest": "^2.1.8"
+  }
+}
