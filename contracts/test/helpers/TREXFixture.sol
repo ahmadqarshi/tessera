@@ -4,10 +4,13 @@ pragma solidity 0.8.17;
 import { Test } from "forge-std/Test.sol";
 
 import { IdentityRegistry } from "@erc-3643/contracts/registry/implementation/IdentityRegistry.sol";
+import { ModularCompliance } from "@erc-3643/contracts/compliance/modular/ModularCompliance.sol";
 import { Token } from "@erc-3643/contracts/token/Token.sol";
 import { Identity } from "@onchain-id/solidity/contracts/Identity.sol";
 import { IdFactory } from "@onchain-id/solidity/contracts/factory/IdFactory.sol";
 import { ClaimIssuer } from "@onchain-id/solidity/contracts/ClaimIssuer.sol";
+
+import { MaxInvestorsModule } from "../../src/modules/MaxInvestorsModule.sol";
 
 import { Deploy } from "../../script/Deploy.s.sol";
 import { Seed } from "../../script/Seed.s.sol";
@@ -46,7 +49,8 @@ import { Seed } from "../../script/Seed.s.sol";
 abstract contract TREXFixture is Test, Deploy, Seed {
     // The standard Foundry/Anvil test mnemonic (see .env.example ANVIL_MNEMONIC). Keeping the
     // keys here rather than reading env makes the fixture deterministic and clone-and-run.
-    string internal constant MNEMONIC = "test test test test test test test test test test test junk";
+    string internal constant MNEMONIC =
+        "test test test test test test test test test test test junk";
 
     // Investor D's country. Irrelevant to the assertion D exercises — D fails verification on its
     // MISSING claims, not its jurisdiction — so any valid ISO 3166-1 code works. 40 = Austria.
@@ -55,6 +59,8 @@ abstract contract TREXFixture is Test, Deploy, Seed {
     // Live suite handles, resolved once in setUp.
     Token internal token;
     IdentityRegistry internal identityRegistry;
+    ModularCompliance internal compliance;
+    MaxInvestorsModule internal maxInvestorsModule;
     ClaimIssuer internal claimIssuer;
     IdFactory internal idFactory;
 
@@ -77,6 +83,16 @@ abstract contract TREXFixture is Test, Deploy, Seed {
     ///      is intentionally empty and never called.
     function run() external override(Deploy, Seed) { }
 
+    /// @dev The distinct-holder cap this fixture deploys with. Defaults to the production value
+    ///      ({Deploy.DEFAULT_MAX_INVESTORS} == 199), which is deliberately UNREACHABLE in a unit
+    ///      test — no cap-triggered path would ever fire, so the default fixture behaves exactly
+    ///      like the real deployment. Cap-sensitive tests (holder-cap enforcement, forced-transfer
+    ///      breach) OVERRIDE this to a small number like 3 that they can actually drive to the
+    ///      limit. Kept as a hook rather than a hardcoded constant so no test has to reach 199.
+    function _maxInvestors() internal view virtual returns (uint256) {
+        return DEFAULT_MAX_INVESTORS;
+    }
+
     function setUp() public virtual {
         // ── Keys (deployer #0 also owns the ClaimIssuer management key) ─────────────────────
         uint256 deployerPk = vm.deriveKey(MNEMONIC, 0);
@@ -88,9 +104,13 @@ abstract contract TREXFixture is Test, Deploy, Seed {
 
         // ── Deploy + wire the full suite via the production path ─────────────────────────────
         // claimIssuerManagement == deployer, as {Deploy} requires for the single-key manual path.
-        Deployed memory d = _deployAndWire(deployerPk, deployer, agent, deployer, signer);
+        // The cap comes from _maxInvestors() so a subclass can shrink it to a reachable value.
+        Deployed memory d =
+            _deployAndWire(deployerPk, deployer, agent, deployer, signer, _maxInvestors());
         token = d.token;
         identityRegistry = d.identityRegistry;
+        compliance = d.compliance;
+        maxInvestorsModule = d.maxInvestorsModule;
         claimIssuer = d.claimIssuer;
         idFactory = d.idFactory;
 
@@ -117,10 +137,12 @@ abstract contract TREXFixture is Test, Deploy, Seed {
         });
 
         // A and B: fully verified (identity + KYC + AML), same salts/countries as the seed.
-        (investorA, identityA) =
-            _onboardVerifiedInvestor(c, vm.deriveKey(MNEMONIC, 3), "halvorsen-capital-ag", COUNTRY_DE);
-        (investorB, identityB) =
-            _onboardVerifiedInvestor(c, vm.deriveKey(MNEMONIC, 4), "orbis-family-office", COUNTRY_LU);
+        (investorA, identityA) = _onboardVerifiedInvestor(
+            c, vm.deriveKey(MNEMONIC, 3), "halvorsen-capital-ag", COUNTRY_DE
+        );
+        (investorB, identityB) = _onboardVerifiedInvestor(
+            c, vm.deriveKey(MNEMONIC, 4), "orbis-family-office", COUNTRY_LU
+        );
 
         // C: a bare wallet, never given an identity — the seed's negative fixture.
         investorC = vm.addr(vm.deriveKey(MNEMONIC, 5));

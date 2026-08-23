@@ -27,6 +27,9 @@ import { IdFactory } from "@onchain-id/solidity/contracts/factory/IdFactory.sol"
 import { ClaimIssuer } from "@onchain-id/solidity/contracts/ClaimIssuer.sol";
 import { IClaimIssuer } from "@onchain-id/solidity/contracts/interface/IClaimIssuer.sol";
 
+// --- Our one custom compliance module (extends IModule; the audited core is never forked) ---
+import { MaxInvestorsModule } from "../src/modules/MaxInvestorsModule.sol";
+
 import { TREXConstants } from "./TREXConstants.sol";
 
 /**
@@ -65,6 +68,11 @@ contract Deploy is Script, TREXConstants {
     string internal constant TOKEN_SYMBOL = "BER-A";
     uint8 internal constant TOKEN_DECIMALS = 18;
 
+    // Default distinct-holder cap for the showcase offering (e.g. a sub-200-investor private
+    // placement). Passed to {_deployAndWire} so the value lives in exactly one place; the test
+    // fixture calls the same helper with a smaller cap it can actually reach (see TREXFixture).
+    uint256 internal constant DEFAULT_MAX_INVESTORS = 199;
+
     /// @dev Every deployed contract, passed by memory pointer to keep the stack shallow.
     struct Deployed {
         ClaimTopicsRegistry claimTopicsRegistry;
@@ -72,6 +80,7 @@ contract Deploy is Script, TREXConstants {
         IdentityRegistryStorage identityRegistryStorage;
         IdentityRegistry identityRegistry;
         ModularCompliance compliance;
+        MaxInvestorsModule maxInvestorsModule;
         Token token;
         Identity identityLibrary;
         ImplementationAuthority implementationAuthority;
@@ -113,8 +122,14 @@ contract Deploy is Script, TREXConstants {
         // a few blocks early never misses a deploy event, whereas starting late would.
         uint256 deployBlock = block.number;
 
-        Deployed memory d =
-            _deployAndWire(deployerPk, deployer, agent, claimIssuerManagement, claimIssuerSigner);
+        Deployed memory d = _deployAndWire(
+            deployerPk,
+            deployer,
+            agent,
+            claimIssuerManagement,
+            claimIssuerSigner,
+            DEFAULT_MAX_INVESTORS
+        );
         d.deployBlock = deployBlock;
 
         // ── Unpause as the agent ──────────────────────────────────────────────────────────
@@ -124,7 +139,7 @@ contract Deploy is Script, TREXConstants {
         d.token.unpause();
         vm.stopBroadcast();
 
-        _assertWiring(d, agent, claimIssuerSigner);
+        _assertWiring(d, agent, claimIssuerSigner, DEFAULT_MAX_INVESTORS);
         _writeAddressBook(d);
         _logAddresses(d);
     }
@@ -138,7 +153,8 @@ contract Deploy is Script, TREXConstants {
         address deployer,
         address agent,
         address claimIssuerManagement,
-        address claimIssuerSigner
+        address claimIssuerSigner,
+        uint256 maxInvestors
     ) internal returns (Deployed memory d) {
         vm.startBroadcast(deployerPk);
 
@@ -186,6 +202,24 @@ contract Deploy is Script, TREXConstants {
                 address(0)
             );
 
+        // 4b. Deploy and bind our custom holder-cap module, then configure its cap.
+        //     addModule is onlyOwner (deployer) and calls module.bindCompliance(compliance);
+        //     the module is plug-and-play so no canComplianceBind gate runs. We bind it HERE —
+        //     before any mint — because the module mirrors holder balances from an empty state,
+        //     so it must see the token's entire holder history (MaxInvestorsModule binding note).
+        //
+        //     The cap is set through compliance.callModuleFunction (onlyOwner): that low-level
+        //     call reaches the module with msg.sender == compliance, satisfying the module's
+        //     onlyComplianceCall guard on setMaxInvestors. This is the canonical T-REX module-
+        //     config path (NOTES §1.5) and keeps "only the compliance owner may set the cap" true.
+        d.maxInvestorsModule = new MaxInvestorsModule();
+        d.compliance.addModule(address(d.maxInvestorsModule));
+        d.compliance
+            .callModuleFunction(
+                abi.encodeWithSelector(MaxInvestorsModule.setMaxInvestors.selector, maxInvestors),
+                address(d.maxInvestorsModule)
+            );
+
         // 5. Grant the agent role on BOTH the Token and the IdentityRegistry (both onlyOwner).
         d.token.addAgent(agent);
         d.identityRegistry.addAgent(agent);
@@ -227,10 +261,12 @@ contract Deploy is Script, TREXConstants {
      * @dev Asserts the full wiring. Any failure reverts the whole run — a partially wired
      *      deployment must never be reported as success. Grouped by concern for readability.
      */
-    function _assertWiring(Deployed memory d, address agent, address claimIssuerSigner)
-        internal
-        view
-    {
+    function _assertWiring(
+        Deployed memory d,
+        address agent,
+        address claimIssuerSigner,
+        uint256 expectedMaxInvestors
+    ) internal view {
         // IdentityRegistry points at the three registries — and in the RIGHT slots.
         require(
             address(d.identityRegistry.issuersRegistry()) == address(d.trustedIssuersRegistry),
@@ -263,6 +299,20 @@ contract Deploy is Script, TREXConstants {
         );
         require(
             d.compliance.getTokenBound() == address(d.token), "wire: compliance not bound to token"
+        );
+
+        // MaxInvestorsModule is bound to the compliance and its cap reads back as configured.
+        require(
+            d.compliance.isModuleBound(address(d.maxInvestorsModule)),
+            "wire: MaxInvestorsModule not bound to compliance"
+        );
+        require(
+            d.maxInvestorsModule.isComplianceBound(address(d.compliance)),
+            "wire: compliance not bound on MaxInvestorsModule"
+        );
+        require(
+            d.maxInvestorsModule.maxInvestors(address(d.compliance)) == expectedMaxInvestors,
+            "wire: MaxInvestorsModule cap mismatch"
         );
         require(
             address(d.token.identityRegistry()) == address(d.identityRegistry),
@@ -334,6 +384,7 @@ contract Deploy is Script, TREXConstants {
         vm.serializeAddress(c, "IdentityRegistryStorage", address(d.identityRegistryStorage));
         vm.serializeAddress(c, "IdentityRegistry", address(d.identityRegistry));
         vm.serializeAddress(c, "ModularCompliance", address(d.compliance));
+        vm.serializeAddress(c, "MaxInvestorsModule", address(d.maxInvestorsModule));
         vm.serializeAddress(c, "Token", address(d.token));
         vm.serializeAddress(c, "IdentityLibrary", address(d.identityLibrary));
         vm.serializeAddress(c, "ImplementationAuthority", address(d.implementationAuthority));
@@ -357,6 +408,7 @@ contract Deploy is Script, TREXConstants {
         console2.log("IdentityRegistryStorage ", address(d.identityRegistryStorage));
         console2.log("IdentityRegistry        ", address(d.identityRegistry));
         console2.log("ModularCompliance       ", address(d.compliance));
+        console2.log("MaxInvestorsModule      ", address(d.maxInvestorsModule));
         console2.log("Token (BER-A)           ", address(d.token));
         console2.log("IdentityLibrary         ", address(d.identityLibrary));
         console2.log("ImplementationAuthority ", address(d.implementationAuthority));
