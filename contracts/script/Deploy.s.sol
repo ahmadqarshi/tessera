@@ -27,6 +27,8 @@ import { IdFactory } from "@onchain-id/solidity/contracts/factory/IdFactory.sol"
 import { ClaimIssuer } from "@onchain-id/solidity/contracts/ClaimIssuer.sol";
 import { IClaimIssuer } from "@onchain-id/solidity/contracts/interface/IClaimIssuer.sol";
 
+import { TREXConstants } from "./TREXConstants.sol";
+
 /**
  * @title Deploy — manual ERC-3643 (T-REX) + ONCHAINID suite deployment.
  *
@@ -53,23 +55,15 @@ import { IClaimIssuer } from "@onchain-id/solidity/contracts/interface/IClaimIss
  *   CLAIM_ISSUER_SIGNER_ADDRESS  A DISTINCT signing EOA registered as a purpose-3 CLAIM key on
  *                                the ClaimIssuer (see the rationale block at the addKey call).
  */
-contract Deploy is Script {
-    // Claim topics we require for verification. 1 = KYC, 2 = AML/sanctions
-    // (packages/shared schemas.ts, contracts/CLAUDE.md).
-    uint256 internal constant TOPIC_KYC = 1;
-    uint256 internal constant TOPIC_AML = 2;
-
-    // ONCHAINID key purposes (ERC-734): 1 = MANAGEMENT, 3 = CLAIM. keyType 1 = ECDSA.
-    uint256 internal constant PURPOSE_CLAIM = 3;
+contract Deploy is Script, TREXConstants {
+    // Shared claim-topic + purpose + address-book constants are inherited from {TREXConstants}.
+    // ONCHAINID keyType 1 = ECDSA (the type of the purpose-3 claim signer key).
     uint256 internal constant KEYTYPE_ECDSA = 1;
 
     // Token metadata for the showcase asset.
     string internal constant TOKEN_NAME = "Vestry Row Fund I";
     string internal constant TOKEN_SYMBOL = "BER-A";
     uint8 internal constant TOKEN_DECIMALS = 18;
-
-    // Written relative to the Foundry root (contracts/); resolves to packages/shared.
-    string internal constant ADDRESS_BOOK_PATH = "../packages/shared/addresses.local.json";
 
     /// @dev Every deployed contract, passed by memory pointer to keep the stack shallow.
     struct Deployed {
@@ -86,7 +80,7 @@ contract Deploy is Script {
         uint256 deployBlock;
     }
 
-    function run() external {
+    function run() external virtual {
         // ── Inputs (no hardcoded keys; all from env) ──────────────────────────────────────
         uint256 deployerPk = vm.envUint("DEPLOYER_PRIVATE_KEY");
         address deployer = vm.addr(deployerPk);

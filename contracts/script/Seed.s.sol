@@ -12,6 +12,8 @@ import { IdFactory } from "@onchain-id/solidity/contracts/factory/IdFactory.sol"
 import { ClaimIssuer } from "@onchain-id/solidity/contracts/ClaimIssuer.sol";
 import { IIdentity } from "@onchain-id/solidity/contracts/interface/IIdentity.sol";
 
+import { TREXConstants } from "./TREXConstants.sol";
+
 /**
  * @title Seed — demo investors, on-chain KYC/AML claims, and a primary distribution.
  *
@@ -46,16 +48,10 @@ import { IIdentity } from "@onchain-id/solidity/contracts/interface/IIdentity.so
  *      purpose-3 claim key on that identity — the investor wallet itself, NOT the deployer or
  *      the issuer. We therefore switch the broadcast sender to the investor for that call.
  */
-contract Seed is Script {
-    // Required claim topics (must match Deploy + packages/shared/schemas.ts).
-    uint256 internal constant TOPIC_KYC = 1;
-    uint256 internal constant TOPIC_AML = 2;
-
+contract Seed is Script, TREXConstants {
+    // Shared claim-topic + purpose + address-book constants are inherited from {TREXConstants}.
     // ERC-735 claim scheme: 1 = ECDSA over the `eth_sign` prefixed hash (NOT EIP-712).
     uint256 internal constant SCHEME_ECDSA = 1;
-
-    // ONCHAINID key purpose 3 = CLAIM signer (ERC-734), mirrored from Deploy.
-    uint256 internal constant PURPOSE_CLAIM = 3;
 
     // ISO 3166-1 numeric country codes. A = Germany (276), B = Luxembourg (442).
     uint16 internal constant COUNTRY_DE = 276;
@@ -83,10 +79,9 @@ contract Seed is Script {
     string internal constant LABEL_B = "Orbis Family Office";
     string internal constant LABEL_C = "Unverified negative fixture";
 
-    // Written relative to the Foundry root (contracts/); resolves to packages/shared. The address
-    // book is the file Deploy emits (read here); the seed manifest is ours (written here).
-    // fs_permissions in foundry.toml grants read-write on exactly these two paths.
-    string internal constant ADDRESS_BOOK_PATH = "../packages/shared/addresses.local.json";
+    // The address book (ADDRESS_BOOK_PATH, inherited from {TREXConstants}) is the file Deploy
+    // emits and Seed reads back; the seed manifest below is ours to write. fs_permissions in
+    // foundry.toml grants read-write on the packages/shared directory that holds both.
     string internal constant SEED_MANIFEST_PATH = "../packages/shared/seed.local.json";
 
     /// @dev Live handles resolved from the address book, plus the signing keys, kept in one
@@ -101,7 +96,7 @@ contract Seed is Script {
         uint256 signerPk;
     }
 
-    function run() external {
+    function run() external virtual {
         Ctx memory c = _loadContext();
 
         // ── Onboard the two verified investors ─────────────────────────────────────────────
@@ -168,6 +163,24 @@ contract Seed is Script {
         string memory salt,
         uint16 country
     ) internal returns (address wallet, address identity) {
+        (wallet, identity) = _registerInvestor(c, investorPk, salt, country);
+        _addKycAmlClaims(c, investorPk, identity);
+    }
+
+    /**
+     * @dev Steps 1–2 of onboarding: create the investor's ONCHAINID and register the
+     *      wallet → (identity, country) mapping. Stops SHORT of adding claims, so the wallet is
+     *      "registered but unverified" until {_addKycAmlClaims} runs. Split out from
+     *      {_onboardVerifiedInvestor} so callers can compose an investor with an identity but
+     *      *no* claims — the distinct negative-path fixture that a claim-less holder represents
+     *      (a different verification failure than a wallet with no identity at all).
+     */
+    function _registerInvestor(
+        Ctx memory c,
+        uint256 investorPk,
+        string memory salt,
+        uint16 country
+    ) internal returns (address wallet, address identity) {
         wallet = vm.addr(investorPk);
 
         // 1. Create the investor's ONCHAINID via the factory (deployer owns the factory).
@@ -179,7 +192,13 @@ contract Seed is Script {
         vm.startBroadcast(c.agentPk);
         c.identityRegistry.registerIdentity(wallet, IIdentity(identity), country);
         vm.stopBroadcast();
+    }
 
+    /**
+     * @dev Steps 3–4 of onboarding: sign the KYC + AML claims off-chain with the claim-signer
+     *      key and have the investor add them to its OWN identity.
+     */
+    function _addKycAmlClaims(Ctx memory c, uint256 investorPk, address identity) internal {
         // 3. Sign both claims off-chain. Trap #1: the digest binds the INVESTOR'S IDENTITY
         //    address, not the issuer's.
         bytes memory kycSig = _signClaim(c.signerPk, identity, TOPIC_KYC, KYC_DATA);
