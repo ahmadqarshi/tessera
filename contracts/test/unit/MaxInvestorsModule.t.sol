@@ -346,15 +346,31 @@ contract MaxInvestorsModuleTest is TREXFixture {
         assertTrue(fresh.isComplianceBound(address(emptyCompliance)), "compliance bound on module");
     }
 
-    // A compliance with no token bound yet is trivially safe to bind (nothing to under-count), and
-    // canComplianceBind short-circuits before the external call rather than reverting on
-    // totalSupply() against the zero address.
-    function test_canComplianceBind_trueWhenNoTokenBound() public {
+    // A compliance with NO token bound is rejected: binding is only allowed once a token is bound,
+    // forcing addModule to run after bindToken. Permitting a token-less bind would leave open
+    // addModule -> bindToken(tokenWithHolders), which never re-runs this gate and reaches the same
+    // under-counted mirror M-1 prevents (see canComplianceBind NatSpec / NOTES §9).
+    function test_canComplianceBind_falseWhenNoTokenBound() public {
         ModularCompliance tokenlessCompliance = new ModularCompliance();
         tokenlessCompliance.init();
-        assertTrue(
+        assertFalse(
             maxInvestorsModule.canComplianceBind(address(tokenlessCompliance)),
-            "no token bound -> no holders to under-count -> safe to bind"
+            "no token bound -> reject; addModule must run after bindToken"
+        );
+    }
+
+    // Same rejection driven through the REAL add path: addModule against a token-less compliance
+    // must revert at the canComplianceBind gate, so an operator cannot add-then-bind-later.
+    function test_addModuleToTokenlessCompliance_reverts() public {
+        ModularCompliance tokenlessCompliance = new ModularCompliance();
+        tokenlessCompliance.init();
+
+        MaxInvestorsModule fresh = new MaxInvestorsModule();
+        vm.expectRevert(bytes("compliance is not suitable for binding to the module"));
+        tokenlessCompliance.addModule(address(fresh)); // owner == this test
+
+        assertFalse(
+            tokenlessCompliance.isModuleBound(address(fresh)), "the rejected module was never bound"
         );
     }
 

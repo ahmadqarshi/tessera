@@ -252,10 +252,18 @@ contract MaxInvestorsModule is AbstractModule {
      *
      *      "Zero holders" is established in O(1), not by iterating: a token's `totalSupply() == 0`
      *      is equivalent to "no wallet holds a non-zero balance" (supply > 0 implies at least one
-     *      holder; supply == 0 implies none). So we bind iff the bound token's supply is zero. A
-     *      compliance with no token bound yet (`getTokenBound() == address(0)`) is trivially safe —
-     *      there is nothing to under-count — so we permit it and short-circuit before the external
-     *      call (calling `totalSupply()` on the zero address would revert).
+     *      holder; supply == 0 implies none). So we bind iff a token is bound AND its supply is zero.
+     *
+     *      We REJECT a compliance with no token bound yet (`getTokenBound() == address(0)`), rather
+     *      than waving it through. Requiring a bound token forces `addModule` to run AFTER
+     *      `bindToken`, which closes an ordering hole: if we permitted a token-less bind, an owner
+     *      could `addModule` first and then `bindToken(tokenWithHolders)` — and `bindToken` never
+     *      re-runs `canComplianceBind` on already-added modules, so that path reaches exactly the
+     *      under-counted mirror M-1 exists to prevent. (Reachable in practice via
+     *      `Token.setCompliance(preloadedCompliance)`.) Demanding a zero-supply bound token at
+     *      add-time is the only ordering this gate can enforce from inside the module. It does NOT
+     *      close the residual `unbindToken` → `bindToken(tokenWithHolders)` rebind, which is an
+     *      owner responsibility — see contracts/NOTES.md §9.
      *
      *      ⚠️ Reentrancy note (keeps contracts/NOTES.md §8 valid): this makes ONE external call —
      *      `token.totalSupply()` — but it lives in this `view` function, reached only from
@@ -268,7 +276,7 @@ contract MaxInvestorsModule is AbstractModule {
     function canComplianceBind(address _compliance) external view override returns (bool) {
         address boundToken = IModularCompliance(_compliance).getTokenBound();
         if (boundToken == address(0)) {
-            return true; // no token bound yet → no holders to under-count → safe to bind
+            return false; // no token bound → addModule must run AFTER bindToken (see NatSpec)
         }
         return IToken(boundToken).totalSupply() == 0;
     }

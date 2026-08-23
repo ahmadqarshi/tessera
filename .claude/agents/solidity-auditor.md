@@ -21,8 +21,10 @@ You **review and report — you do not edit files.**
 - Owner-only registry configuration is not exposed to agents.
 
 **ERC-3643 semantics**
-- `forcedTransfer` bypasses sender consent **only** — receiver `isVerified`
-  check must still run. Flag any path that skips it.
+- `forcedTransfer` runs gate 2 (`isVerified(_to)`) only — it does not call
+  `compliance.canTransfer`; `moduleCheck` is skipped while `moduleTransferAction` still fires.
+  This is verified vendored behaviour (NOTES.md §7.1), not a defect. Flag only if gate 2 is
+  skipped, or if a test asserts a rule-violating forced transfer reverts.
 - Transfer gate order intact: operational → eligibility → `canTransfer` → move →
   `transferred`. Flag any reordering.
 - Frozen accounting: `frozen[addr] <= balanceOf(addr)` must hold after every operation;

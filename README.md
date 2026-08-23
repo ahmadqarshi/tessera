@@ -80,6 +80,15 @@ The audited ERC-3643 suite and ONCHAINID are consumed as **git submodules** unde
   `AGENT_PRIVATE_KEY` only performs token operations. Separate blast radius.
 - **No secrets committed** — keys live in `.env` (gitignored); `.env.example` carries public
   Anvil dev keys and mock-provider defaults only.
+- **`MaxInvestorsModule` bind-safety, and its one residual** — the holder-cap module keeps an
+  incremental balance mirror that must start empty, so it refuses to bind to a compliance whose
+  token already has holders (`canComplianceBind` requires a bound token with `totalSupply() == 0`;
+  it is not plug-and-play, so `addModule` runs the gate). This closes the accidental
+  `addModule`-then-`bindToken(tokenWithHolders)` ordering. One path the module cannot self-defend
+  remains: an owner who calls `unbindToken` and then `bindToken` a *different* token that already
+  has holders — `bindToken` never re-consults modules — silently starts the mirror below reality.
+  That is an **owner operational responsibility**, documented with the exact sequence and mitigation
+  in [`contracts/NOTES.md` §9](contracts/NOTES.md).
 
 ## What this repo demonstrates
 

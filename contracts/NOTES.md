@@ -711,8 +711,10 @@ error.
 2. **Inverting breaks the required deploy order (CLAUDE.md rule 4).** The wiring order is
    `addModule` → `setMaxInvestors` → first `mint`. A fail-closed default (unset ⇒ block) would
    make the first mint's `moduleCheck` return `false` and revert, breaking
-   `pnpm contracts:deploy:local` on a fresh clone. Plug-and-play add-before-configure
-   (`isPlugAndPlay() == true`) structurally requires an add-time default that PERMITS.
+   `pnpm contracts:deploy:local` on a fresh clone. Add-before-configure structurally requires an
+   add-time default that PERMITS. (Note: the M-1 fix makes `isPlugAndPlay() == false` so the *bind*
+   gate runs, but that gate only checks holder count at add time — it does not set the cap. The
+   `moduleCheck` cap default is a separate concern and remains fail-open for exactly this reason.)
 3. **The fail-open window is bounded to zero-holder state.** By the binding invariant (the module
    is added before the token has holders), the only interval where the cap is 0 is between
    `addModule` and `setMaxInvestors` — when the holder count is 0 regardless. "Enforces nothing"
@@ -732,3 +734,47 @@ carry the same post-wire assertion.
 unset default of "reject holder-creating moves". Rejected because it (a) still needs an add-time
 permit to satisfy plug-and-play, pushing the fail-open to the `_configured == false` path anyway,
 and (b) adds a storage slot and branch for a risk already closed at wire time.
+
+### 9.1 Residual the bind gate does NOT close: `unbindToken` → `bindToken(tokenWithHolders)`
+
+**Do not overstate the M-1 guarantee.** `canComplianceBind` (§8, `isPlugAndPlay() == false`) makes
+the module refuse to bind to a compliance unless a token is bound **and** that token has
+`totalSupply() == 0`. Requiring a *bound* token — rather than waving through the token-less case —
+forces `addModule` to run **after** `bindToken`, which closes the accidental ordering
+`addModule` → `bindToken(tokenWithHolders)` (that path never re-runs `canComplianceBind`, since
+`bindToken` does not consult already-added modules, and is reachable via
+`Token.setCompliance(preloadedCompliance)`).
+
+**What remains open.** The gate fires **only at `addModule` time**. `ModularCompliance.bindToken`
+never consults its modules. So an owner can still defeat the mirror with a deliberate rebind after
+the module is already added:
+
+```
+1. addModule(maxInvestorsModule)      // gate passes: token T0 bound, totalSupply(T0) == 0
+2. setMaxInvestors(cap)
+3. ... T0 mints to N holders ...       // mirror tracks all N correctly
+4. unbindToken(T0)                     // no module callback
+5. bindToken(T1)                       // T1 already has M holders; no module callback, no re-check
+   → the module's mirror for this compliance still reflects T0, not T1: the count is desynced,
+     and the cap under-enforces against T1's true holder set.
+```
+
+**Why it is not closeable from inside the module.** The module has no hook on `bindToken`/
+`unbindToken` (those are `ModularCompliance` functions that touch only the compliance's own token
+pointer), and it must not scan holders (CLAUDE.md: no unbounded loops), so it cannot re-derive a
+new token's holder set at rebind time even if it were notified. The vendored `ModularCompliance` is
+audited infrastructure we do not fork (golden rule 1), so we cannot add a module callback to
+`bindToken`.
+
+**Classification: owner operational responsibility, not a module defect.** A `ModularCompliance`
+is a 1:1 companion to its token; rebinding a *different, already-populated* token onto a compliance
+that carries a stateful holder-cap module is a misconfiguration, not a normal operation. The honest
+mitigation is a constraint, not a clever workaround: **this module is a genesis-time control** —
+correct only when the compliance, the module, and the token are wired together while the token has
+zero supply and are never repointed afterward. There is deliberately no supported way to attach an
+accurate cap to an already-populated token, because that would require the holder scan M-1 forbids;
+`addModule` against a populated token reverts by design (§8), so the *accidental* form is blocked and
+only the *deliberate* `unbind`/`rebind` sequence above remains. If a populated token genuinely must
+come under a holder cap, that is a migration (snapshot holders off-chain, deploy a fresh
+compliance+module against a fresh token, re-issue) — not a rebind. Surfaced in the README security
+notes so it is visible to operators, not buried here.
