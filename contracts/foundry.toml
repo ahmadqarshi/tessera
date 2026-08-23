@@ -16,10 +16,17 @@ evm_version = "paris"
 optimizer = true
 optimizer_runs = 200
 # Remappings are declared in remappings.txt so both forge and editor tooling read one source.
-# Read anything under the workspace; write only the local address book Deploy.s.sol emits.
+# Read anything under the workspace; write the local artifacts our scripts emit into
+# packages/shared: the address book (Deploy.s.sol) and the seed manifest (Seed.s.sol).
+# The write grant is scoped to the packages/shared DIRECTORY, not the individual files, on
+# purpose: Foundry canonicalizes each allowed path at config load, and a file-scoped entry for
+# a not-yet-created file (the fresh-clone case) fails to canonicalize and never matches — so a
+# first-ever `deploy`/`seed` would be denied. The directory always exists, so scoping there
+# makes both scripts clone-and-run (golden rule 4). Our scripts still only ever write those two
+# JSON files.
 fs_permissions = [
     { access = "read", path = "./" },
-    { access = "read-write", path = "../packages/shared/addresses.local.json" },
+    { access = "read-write", path = "../packages/shared" },
 ]
 gas_reports = ["*"]
 

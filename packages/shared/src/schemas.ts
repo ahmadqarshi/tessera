@@ -50,3 +50,30 @@ export const addressBookSchema = z.object({
   contracts: z.record(z.string(), addressSchema),
 });
 export type AddressBook = z.infer<typeof addressBookSchema>;
+
+/**
+ * One seeded investor in the seed manifest. `identity` is the investor's ONCHAINID contract
+ * (the zero address for the unverified negative fixture, which has none). `country` is an ISO
+ * 3166-1 numeric code (0 for the fixture). `balance` is base units as a decimal string.
+ */
+export const seedInvestorSchema = z.object({
+  label: z.string().min(1),
+  wallet: addressSchema,
+  identity: addressSchema,
+  country: z.number().int().nonnegative().max(65535),
+  verified: z.boolean(),
+  balance: amountStringSchema,
+});
+export type SeedInvestor = z.infer<typeof seedInvestorSchema>;
+
+/**
+ * The seed manifest for a chain environment (packages/shared/seed.<env>.json), written by
+ * contracts/script/Seed.s.sol. Gives Phase 2/3 e2e tests the seeded wallets, their ONCHAINID
+ * contracts, and the exact distributed balances without re-deriving them from chain.
+ */
+export const seedManifestSchema = z.object({
+  chainId: z.number().int().positive(),
+  token: addressSchema,
+  investors: z.record(z.string(), seedInvestorSchema),
+});
+export type SeedManifest = z.infer<typeof seedManifestSchema>;

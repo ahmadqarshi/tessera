@@ -22,8 +22,9 @@ contracts/out/
 contracts/cache/
 contracts/broadcast/
 
-# Generated address book (local deploys are ephemeral)
+# Generated address book + seed manifest (local deploys/seeds are ephemeral)
 packages/shared/addresses.local.json
+packages/shared/seed.local.json
 
 # Prisma
 apps/api/prisma/*.db

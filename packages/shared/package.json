@@ -15,6 +15,10 @@
       "types": "./dist/address-book.d.ts",
       "default": "./dist/address-book.js"
     },
+    "./seed-manifest": {
+      "types": "./dist/seed-manifest.d.ts",
+      "default": "./dist/seed-manifest.js"
+    },
     "./abis": {
       "types": "./dist/abis/index.d.ts",
       "default": "./dist/abis/index.js"

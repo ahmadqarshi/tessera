@@ -21,8 +21,8 @@ You **review and report — you do not edit files.**
 - Owner-only registry configuration is not exposed to agents.
 
 **ERC-3643 semantics**
-- `forcedTransfer` bypasses sender consent **only** — receiver `isVerified` and compliance
-  checks must still run. Flag any path that skips them.
+- `forcedTransfer` bypasses sender consent **only** — receiver `isVerified`
+  check must still run. Flag any path that skips it.
 - Transfer gate order intact: operational → eligibility → `canTransfer` → move →
   `transferred`. Flag any reordering.
 - Frozen accounting: `frozen[addr] <= balanceOf(addr)` must hold after every operation;

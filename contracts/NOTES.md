@@ -447,6 +447,23 @@ consequences:
 - Registering a **distinct** signing EOA as a purpose-3 key is only required when the signer
   differs from the issuer's management key. Our deploy should pick one convention and state it.
 
+**Asymmetry rule (deliberate — read this before "fixing" the inconsistency).** Our two scripts
+make opposite choices about the super-key, and that is intentional:
+- **Issuer signer — we do NOT rely on the super-key.** `Deploy.s.sol` registers a *distinct*
+  purpose-3 signer (`CLAIM_ISSUER_SIGNER_ADDRESS`) and signs claims with it, rather than signing
+  with the issuer's management key. Rationale: a leaked signer must be able to sign claims **and
+  nothing else** — it holds no management purpose, so it cannot re-key or administer the
+  `ClaimIssuer`. Relying on the super-key here would hand full issuer administration to the
+  claim-signing key.
+- **Investor — we DO rely on the super-key.** `Seed.s.sol` has each investor broadcast `addClaim`
+  on its own identity; it passes `onlyClaimKey` purely because the investor wallet is that
+  identity's purpose-1 MANAGEMENT key (§5a). That is legitimate: the investor **is** their own
+  identity's manager, so there is no extra privilege to leak — the wallet already controls the
+  identity outright.
+
+Rule of thumb: rely on the purpose-1 super-key only where the holder is already the legitimate
+administrator of the contract in question. The issuer signer is not; the investor is.
+
 ### The exact claim signing scheme (from `ClaimIssuer.isClaimValid`)
 
 `ClaimIssuer.sol:46–70` — this is **ERC-735 scheme 1 (`eth_sign` prefixed hash)**, not EIP-712:
@@ -461,6 +478,31 @@ valid         = keyHasPurpose(keccak256(abi.encode(recovered)), 3) && !isClaimRe
   claimId uses the **issuer address**, while the signed `dataHash` uses the **identity address**.
   Do not conflate them.
 - Signature must be 65 bytes; `v < 27` is normalized to `+27` (`ClaimIssuer.sol:108`).
+
+### 5b. Canonical claim `data` payload — PIN THIS (Phase 2 must reuse verbatim)
+
+The `data` bytes sit **inside** the signed digest (`keccak256(abi.encode(identity, topic, data))`),
+so the exact bytes are consensus-critical. If Phase 2's `ClaimIssuerModule` encodes the payload even
+one byte differently from what was signed, `ecrecover` yields a *different* signer and `isClaimValid`
+returns false — and the failure presents as a **signing bug**, not the encoding mismatch it actually
+is. Freeze the format here so the seed script and the module emit byte-identical payloads.
+
+**Canonical format:** `data` is the raw **UTF-8 bytes of a fixed per-topic label string** —
+`bytes(label)` in Solidity, `toUtf8Bytes(label)` / `new TextEncoder().encode(label)` in TS. **No** ABI
+wrapping, **no** length prefix, **no** trailing NUL, and **no** per-investor variation: the investor's
+identity address already lives in the digest, so identical `data` still yields a unique signature per
+holder. The same bytes are signed *and* stored via `addClaim`, because `isClaimValid` re-hashes the
+stored `data`.
+
+| Topic | Constant | Exact label string (UTF-8, verbatim) |
+| --- | --- | --- |
+| 1 (KYC) | `KYC_DATA` | `KYC verified by Tessera claim issuer` |
+| 2 (AML) | `AML_DATA` | `AML/sanctions cleared by Tessera claim issuer` |
+
+Source of truth: `contracts/script/Seed.s.sol` (`KYC_DATA` / `AML_DATA`). Phase 2 MUST reproduce these
+strings character-for-character — do **not** re-word them; changing a single character silently
+invalidates every claim signed against the old text. (The strings carry no PII, per golden rule 2 —
+they are topic labels only; the backing personal data stays with the KYC/AML provider.)
 
 ---
 
