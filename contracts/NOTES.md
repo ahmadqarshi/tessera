@@ -393,6 +393,23 @@ Supporting registries the indexer may also watch:
 - **ONCHAINID Identity** (ERC-735, per investor): `ClaimAdded`, `ClaimChanged`, `ClaimRemoved`
   (see §5) — relevant if we index KYC state changes directly from identities.
 
+### 4.4 MaxInvestorsModule (our custom module) — `src/modules/MaxInvestorsModule.sol`
+
+| Event | Parameters |
+| --- | --- |
+| `MaxInvestorsSet` | `address I _compliance, uint256 _maxInvestors` — cap (re)configured; `0` = unlimited |
+| `HolderCountChanged` | `address I _compliance, uint256 _newCount` — distinct-holder count after a crossing |
+
+> **Indexer contract for `HolderCountChanged`.** It fires from the mint/burn/transfer action hooks
+> **only on an actual zero ↔ non-zero mirror crossing**, carrying the post-crossing count. Routine
+> moves that create no crossing (top-ups, partial burns, transfers between two existing holders)
+> emit nothing. This is the authoritative on-chain signal for the derived holder-count read model:
+> the indexer should key it by `_compliance` and take `_newCount` as the value, rather than
+> re-deriving counts from `Transfer` logs (which is slower and — critically — drifts after a reorg
+> rollback, because a rolled-back `Transfer` must un-count exactly, whereas `HolderCountChanged` is
+> replayed idempotently to the same value). Added for Phase 3; before it existed the module mutated
+> the count silently, which is the L-2 finding this closes.
+
 ---
 
 ## 5. Identity: claim & key storage
@@ -586,3 +603,132 @@ Listed most-material first. **Where these differ, the vendored source is authori
 
 **No other substantive deviations found.** The claim-signing scheme, deployment order, transfer
 gate for ordinary transfers, and the IModule hook surface all match the docs as written.
+
+---
+
+## 8. Reentrancy audit of our custom code (2026-08-24; revised for M-1 bind gate)
+
+**Finding: NEGATIVE — no HOOK in our custom code makes any external or low-level call, so there
+is no reentrancy surface on the transfer/mint/burn path and no reentrancy test is warranted.**
+This is the exact obligation `contracts/CLAUDE.md` sets ("If a module hook makes an external call,
+it needs a reentrancy test") — the antecedent is false for every hook, evidenced below.
+
+⚠️ **Update (M-1 fix).** The module now makes **one** external call in the whole codebase:
+`canComplianceBind` reads `IToken(compliance.getTokenBound()).totalSupply()`. This does **not**
+invalidate the negative above, for a precise reason: `canComplianceBind` is a `view` reached only
+from `ModularCompliance.addModule` at **bind time**, never from an action hook and never on a live
+transfer/mint/burn path. Reentrancy requires an external call that hands control away *before the
+caller's state settles mid-operation*; a bind-time view that mutates no state and runs once, before
+the module tracks anything, has no state to corrupt and no operation to re-enter. The four IModule
+hooks — `moduleCheck`, `moduleTransferAction`, `moduleMintAction`, `moduleBurnAction` — remain free
+of external calls (table below), so the "hooks make no external call ⇒ no guard needed" conclusion
+is unchanged. Read this section as: *the hook path is still clean; the one external call is off it.*
+
+### 8.1 What "external call" means here
+
+An external call is any `call`/`delegatecall`/`staticcall` to another address that could hand
+control to attacker code before our state settles — a `.call{...}`, a `token.foo()` on an
+interface, `transfer`/`send`, or an untrusted callback. Reads of our OWN storage mappings, emits,
+`revert`s, and calls to `internal`/`private` functions in the same contract are *not* external
+calls and cannot re-enter.
+
+### 8.2 Every function in `src/modules/MaxInvestorsModule.sol`, checked
+
+The only custom contract. Line numbers are current as of this audit.
+
+| Function | Kind | External call? | What it actually does |
+| --- | --- | --- | --- |
+| `setMaxInvestors` (`:92`) | state | **No** | writes `_maxInvestors[msg.sender]`, emits `MaxInvestorsSet` |
+| `moduleTransferAction` (`:113`) | hook, state | **No** | two `internal` calls: `_decreaseBalance` then `_increaseBalance` |
+| `moduleMintAction` (`:128`) | hook, state | **No** | one `internal` call: `_increaseBalance` |
+| `moduleBurnAction` (`:137`) | hook, state | **No** | one `internal` call: `_decreaseBalance` |
+| `moduleCheck` (`:157`) | hook, view | **No** | reads `_maxInvestors` / `_balances` / `_investorCount` mappings only |
+| `investorCount` (`:184`) | view | **No** | reads a mapping |
+| `maxInvestors` (`:189`) | view | **No** | reads a mapping |
+| `mirroredBalance` (`:196`) | view | **No** | reads a mapping |
+| `canComplianceBind` | bind-time **view** | **YES (1)** | reads `IToken(compliance.getTokenBound()).totalSupply()` — the ONLY external call in our code; off the hook path (see the M-1 update above) |
+| `isPlugAndPlay` | pure | **No** | returns `false` |
+| `name` | pure | **No** | returns a string literal |
+| `_increaseBalance` | private | **No** | mapping math + count crossing; emits `HolderCountChanged` on a crossing |
+| `_decreaseBalance` | private | **No** | saturating mapping math + count crossing; emits `HolderCountChanged` on a crossing |
+
+All four IModule hooks — `moduleCheck`, `moduleTransferAction`, `moduleMintAction`,
+`moduleBurnAction` — are on this list and make no external call. The sole external call in the
+module, `canComplianceBind`, is a bind-time view and is NOT a hook. The design is deliberate: the
+module keeps its OWN balance mirror instead of calling back into `token.balanceOf` (see the
+contract-level NatSpec, `:22`–`:26`), which is precisely what removes the external-call surface.
+
+`script/Deploy.s.sol` and `script/Seed.s.sol` do make external calls (they deploy and wire the
+suite), but scripts run in a forge cheatcode VM, are never on a live transaction's call path, and
+hold no state an attacker can re-enter. Out of scope for reentrancy.
+
+### 8.3 Inherited surface (`AbstractModule`, vendored)
+
+`bindCompliance` / `unbindCompliance` / `isComplianceBound` come from the audited
+`AbstractModule` and make **no external calls** in their hooks — confirmed in [§2](#2-imodule)
+and by upstream audit. We neither override nor extend them. Vendored, out of our audit scope, but
+noted so the negative is complete.
+
+### 8.4 Call ordering — is the module the reentrancy surface? (answers the §2/§3 question)
+
+Yes in principle, no in fact. Per the ordinary-transfer gate ([§3b](#3b-recoveryaddress-detail),
+step 4) and the mint/transfer/burn flows ([§2](#2-imodule), "Hook argument reality"), the Token
+moves balances **first** and calls `compliance.transferred(...)` / `created` / `destroyed`
+**after** — which fires `moduleTransferAction` / `moduleMintAction` / `moduleBurnAction`
+**post-balance-move**. So the action hooks run when the token's balances are already final and the
+module's own mirror is the last state to update. That ordering means a *stateful* module — this
+one — would be the reentrancy surface, not the token, IF a hook made an external call before the
+mirror settled: an attacker could re-enter with the token consistent but the module mid-update.
+
+It doesn't, so the hazard is latent, not live: `moduleTransferAction` performs only internal
+mapping writes and yields control to no one. There is no interaction step to precede the effects,
+so CEI is trivially satisfied (there are no external interactions at all). The token's own
+`_transfer`-then-`transferred` ordering is vendored/audited and unchanged by us.
+
+**Guardrail for future edits:** the moment any hook in this module gains an external call — e.g. a
+callback, an oracle read, an ERC-20 transfer — this post-balance-move position turns the latent
+hazard live, and `test/unit/Reentrancy.t.sol` with a malicious re-entering compliance stub plus a
+`nonReentrant` guard (or provably-last effects) becomes mandatory. Until then, none exists by
+design.
+
+---
+
+## 9. Fail-open default on `MaxInvestorsModule` (`maxInvestors == 0` = UNLIMITED)
+
+**Decision: keep `0 = unlimited` as a deliberate, documented sentinel. Do NOT invert to
+fail-closed.** The reasoning is captured in the `_maxInvestors` NatSpec (`MaxInvestorsModule.sol`)
+and summarised here.
+
+**The concern (valid).** On a compliance contract, a fail-open default is normally the wrong
+instinct: a module bound without a cap set enforces nothing, and a silent no-op on a control is a
+classic footgun. An operator who binds the module and forgets `setMaxInvestors` gets no cap and no
+error.
+
+**Why fail-open is nonetheless correct here.**
+
+1. **Vendored-convention parity.** `0 = unset = no limit` is the canonical T-REX modular-compliance
+   idiom; CLAUDE.md forbids surprising deviations from the audited patterns.
+2. **Inverting breaks the required deploy order (CLAUDE.md rule 4).** The wiring order is
+   `addModule` → `setMaxInvestors` → first `mint`. A fail-closed default (unset ⇒ block) would
+   make the first mint's `moduleCheck` return `false` and revert, breaking
+   `pnpm contracts:deploy:local` on a fresh clone. Plug-and-play add-before-configure
+   (`isPlugAndPlay() == true`) structurally requires an add-time default that PERMITS.
+3. **The fail-open window is bounded to zero-holder state.** By the binding invariant (the module
+   is added before the token has holders), the only interval where the cap is 0 is between
+   `addModule` and `setMaxInvestors` — when the holder count is 0 regardless. "Enforces nothing"
+   never applies to a token that already carries investors on the deploy path. **Since the M-1 fix
+   this binding invariant is enforced on-chain** (`canComplianceBind` rejects binding to a token
+   with holders; §8 / `isPlugAndPlay() == false`), so the "added before the token has holders"
+   premise this point rests on is no longer merely a deploy convention — the module cannot bind any
+   other way.
+
+**Where the residual risk is handled.** Not by changing the sentinel — by a **wire-time
+assertion**. `script/Deploy.s.sol` asserts the cap reads back as the configured value after wiring
+(`maxInvestorsModule.maxInvestors(compliance) == expectedMaxInvestors`), which is the correct place
+to catch a forgotten cap. Any future production wiring of this module on a new compliance should
+carry the same post-wire assertion.
+
+**Alternative considered and rejected:** a two-field design (`_configured` bool + `_cap`) with an
+unset default of "reject holder-creating moves". Rejected because it (a) still needs an add-time
+permit to satisfy plug-and-play, pushing the fail-open to the `_configured == false` path anyway,
+and (b) adds a storage slot and branch for a risk already closed at wire time.

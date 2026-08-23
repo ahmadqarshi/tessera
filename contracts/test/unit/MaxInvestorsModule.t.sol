@@ -3,6 +3,9 @@ pragma solidity 0.8.17;
 
 import { TREXFixture } from "../helpers/TREXFixture.sol";
 
+import { ModularCompliance } from "@erc-3643/contracts/compliance/modular/ModularCompliance.sol";
+import { Token } from "@erc-3643/contracts/token/Token.sol";
+
 import { MaxInvestorsModule } from "../../src/modules/MaxInvestorsModule.sol";
 
 /**
@@ -32,6 +35,10 @@ contract MaxInvestorsModuleTest is TREXFixture {
     // 0.8.17 cannot reference another contract's event in an `emit`, so we redeclare the exact
     // signature here; a drift from the module's declaration would break the expectation.
     event MaxInvestorsSet(address indexed _compliance, uint256 _maxInvestors);
+
+    // Mirror of {MaxInvestorsModule.HolderCountChanged} — same rationale as above (0.8.17 cannot
+    // reference another contract's event in an `emit`).
+    event HolderCountChanged(address indexed _compliance, uint256 _newCount);
 
     // Fresh verified investors (identity + KYC/AML) that start with a zero balance. Distinct
     // Anvil indices (7/8) and salts from the fixture's own cast (0-6) so no key or salt collides.
@@ -280,6 +287,119 @@ contract MaxInvestorsModuleTest is TREXFixture {
         vm.expectRevert(bytes("only bound compliance can call"));
         maxInvestorsModule.setMaxInvestors(1);
         assertEq(maxInvestorsModule.maxInvestors(address(compliance)), CAP, "cap unchanged");
+    }
+
+    // ── Bind-safety: the module may only bind to a compliance whose token has no holders (M-1) ──
+    //
+    // The mirror initializes empty, so binding to a token that already has holders would start the
+    // count below reality and make the cap silently under-enforce. The module opts OUT of
+    // plug-and-play (isPlugAndPlay() == false) so ModularCompliance.addModule consults
+    // canComplianceBind, which rejects a non-empty token in O(1) via totalSupply() == 0.
+
+    // Reject path, driven through the REAL add path: the fixture's compliance already has holders
+    // A and B (minted in setUp), so adding a fresh module instance to it must revert at the
+    // canComplianceBind gate. addModule is onlyOwner, so we send it as the compliance owner
+    // (deployer) — proving the rejection is the gate's, not an access-control accident.
+    function test_bindToComplianceWithHolders_reverts() public {
+        assertGt(token.totalSupply(), 0, "precondition: fixture token already has holders");
+
+        MaxInvestorsModule fresh = new MaxInvestorsModule();
+        assertFalse(
+            fresh.canComplianceBind(address(compliance)),
+            "a compliance whose token has holders is not bindable"
+        );
+
+        vm.prank(deployer);
+        vm.expectRevert(bytes("compliance is not suitable for binding to the module"));
+        compliance.addModule(address(fresh));
+
+        assertFalse(
+            compliance.isModuleBound(address(fresh)), "the rejected module was never bound"
+        );
+    }
+
+    // Happy path: a fresh compliance + token with zero supply — the exact deploy-time state the
+    // module is written for — binds successfully through the same addModule gate. This is what
+    // {Deploy} relies on (addModule precedes the first mint).
+    function test_bindPreMintToEmptyToken_succeeds() public {
+        ModularCompliance emptyCompliance = new ModularCompliance();
+        emptyCompliance.init();
+
+        Token emptyToken = new Token();
+        emptyToken.init(
+            address(identityRegistry),
+            address(emptyCompliance),
+            TOKEN_NAME,
+            TOKEN_SYMBOL,
+            TOKEN_DECIMALS,
+            address(0)
+        );
+        assertEq(emptyToken.totalSupply(), 0, "a freshly initialized token has no holders");
+
+        MaxInvestorsModule fresh = new MaxInvestorsModule();
+        assertTrue(
+            fresh.canComplianceBind(address(emptyCompliance)), "an empty token is bindable"
+        );
+
+        emptyCompliance.addModule(address(fresh)); // owner == this test; must not revert
+        assertTrue(emptyCompliance.isModuleBound(address(fresh)), "module bound to compliance");
+        assertTrue(fresh.isComplianceBound(address(emptyCompliance)), "compliance bound on module");
+    }
+
+    // A compliance with no token bound yet is trivially safe to bind (nothing to under-count), and
+    // canComplianceBind short-circuits before the external call rather than reverting on
+    // totalSupply() against the zero address.
+    function test_canComplianceBind_trueWhenNoTokenBound() public {
+        ModularCompliance tokenlessCompliance = new ModularCompliance();
+        tokenlessCompliance.init();
+        assertTrue(
+            maxInvestorsModule.canComplianceBind(address(tokenlessCompliance)),
+            "no token bound -> no holders to under-count -> safe to bind"
+        );
+    }
+
+    // The stable module identifier used by tooling and the address book.
+    function test_name_isStable() public {
+        assertEq(maxInvestorsModule.name(), "MaxInvestorsModule", "module name is stable");
+    }
+
+    // The module deliberately opts OUT of plug-and-play so addModule runs the canComplianceBind
+    // gate (M-1). Asserting it directly documents the choice and pins the behaviour.
+    function test_isPlugAndPlay_isFalse() public {
+        assertFalse(
+            maxInvestorsModule.isPlugAndPlay(),
+            "module opts out of plug-and-play so the bind gate runs"
+        );
+    }
+
+    // ── Indexer signal: HolderCountChanged fires on (and only on) a real crossing (L-2) ─────────
+
+    // A mint that creates a new holder emits HolderCountChanged with the post-crossing count, so the
+    // indexer can track holder counts directly instead of re-deriving them from Transfer logs.
+    function test_mintNewHolder_emitsHolderCountChanged() public {
+        assertEq(_count(), 2, "precondition");
+        vm.expectEmit(true, false, false, true, address(maxInvestorsModule));
+        emit HolderCountChanged(address(compliance), 3);
+        vm.prank(agent);
+        token.mint(investorE, XFER);
+    }
+
+    // A burn that zeroes a holder emits the decremented count on the down-crossing.
+    function test_burnToZero_emitsHolderCountChanged() public {
+        vm.expectEmit(true, false, false, true, address(maxInvestorsModule));
+        emit HolderCountChanged(address(compliance), 1);
+        vm.prank(agent);
+        token.burn(investorB, AMOUNT_B);
+    }
+
+    // A top-up mint to an EXISTING holder creates no crossing, so it must emit no
+    // HolderCountChanged. We assert the count is unchanged across the call (a spurious emit would
+    // signal a crossing that did not happen).
+    function test_mintToExistingHolder_noCrossingNoCountChange() public {
+        assertEq(_count(), 2, "precondition");
+        vm.prank(agent);
+        token.mint(investorA, XFER); // A already holds
+        assertEq(_count(), 2, "a top-up creates no crossing, so the count is unchanged");
     }
 
     /// @dev Set the cap through the sanctioned owner path (the deployer owns the compliance in the
