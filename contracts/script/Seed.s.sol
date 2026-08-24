@@ -90,6 +90,21 @@ contract Seed is Script, TREXConstants {
         revert("seed manifest: unsupported chainid (expected 31337 local or 80002 amoy)");
     }
 
+    /// @dev BIP-39 mnemonic the investor A/B/C wallets are derived from, chain-selected with the
+    ///      same guard as {_addressBookPath}. Local Anvil must use the fixed test mnemonic — its
+    ///      derived accounts are the ones Anvil pre-funds, so `seed:local` stays zero-config and
+    ///      byte-identical (SEED_MNEMONIC is deliberately ignored there for reproducibility). On
+    ///      Amoy the investor wallets must be distinct, fundable EOAs you control — never the
+    ///      public Anvil keys — so we prefer SEED_MNEMONIC, falling back to ANVIL_MNEMONIC when it
+    ///      is unset. Unknown chains revert rather than silently seeding the wrong keys.
+    function _seedMnemonic() internal view returns (string memory) {
+        if (block.chainid == CHAINID_LOCAL) return vm.envString("ANVIL_MNEMONIC");
+        if (block.chainid == CHAINID_AMOY) {
+            return vm.envOr("SEED_MNEMONIC", vm.envString("ANVIL_MNEMONIC"));
+        }
+        revert("seed mnemonic: unsupported chainid (expected 31337 local or 80002 amoy)");
+    }
+
     /// @dev Live handles resolved from the address book, plus the signing keys, kept in one
     ///      struct so helpers stay under the stack-depth limit.
     struct Ctx {
@@ -106,9 +121,11 @@ contract Seed is Script, TREXConstants {
         Ctx memory c = _loadContext();
 
         // ── Onboard the two verified investors ─────────────────────────────────────────────
-        uint256 pkA = vm.deriveKey(vm.envString("ANVIL_MNEMONIC"), IDX_INVESTOR_A);
-        uint256 pkB = vm.deriveKey(vm.envString("ANVIL_MNEMONIC"), IDX_INVESTOR_B);
-        address walletC = vm.addr(vm.deriveKey(vm.envString("ANVIL_MNEMONIC"), IDX_INVESTOR_C));
+        // One mnemonic read (chain-selected: ANVIL_MNEMONIC locally, SEED_MNEMONIC on Amoy).
+        string memory mnemonic = _seedMnemonic();
+        uint256 pkA = vm.deriveKey(mnemonic, IDX_INVESTOR_A);
+        uint256 pkB = vm.deriveKey(mnemonic, IDX_INVESTOR_B);
+        address walletC = vm.addr(vm.deriveKey(mnemonic, IDX_INVESTOR_C));
 
         (address walletA, address identityA) =
             _onboardVerifiedInvestor(c, pkA, "halvorsen-capital-ag", COUNTRY_DE);
