@@ -54,6 +54,64 @@ cd contracts && forge build && forge test
 
 If you already cloned without submodules: `git submodule update --init --recursive`.
 
+## Testnet deployment (Polygon Amoy · 80002)
+
+The local Anvil flow above needs no accounts. Deploying the same suite to the public
+**Polygon Amoy** showcase additionally requires three real inputs in `.env` (all gitignored):
+
+| Env var | Purpose |
+| --- | --- |
+| `RPC_URL_AMOY` | An Amoy JSON-RPC endpoint (the public `https://rpc-amoy.polygon.technology` works). |
+| `DEPLOYER_PRIVATE_KEY` | A **funded** Amoy deployer EOA. Fund it from a POL faucet first. Replace the public Anvil key — never broadcast with a well-known key. |
+| `POLYGONSCAN_API_KEY` | A PolygonScan API key, used by `forge verify-contract` (Etherscan-v2 compatible). |
+
+```bash
+pnpm contracts:deploy:amoy    # deploy + wire + in-script assertions, then --verify each contract
+pnpm contracts:seed:amoy      # onboard demo investors A/B (+ unverified C), sign claims, distribute
+pnpm contracts:verify:amoy:all             # re-verify ALL 11 contracts from addresses.amoy.json
+pnpm contracts:verify:amoy -- <address> <path:Name> [--constructor-args <abi-encoded>]  # re-verify one
+```
+
+`contracts:verify:amoy:all` (→ `contracts/script/verify-amoy.sh`) is the idempotent re-run of
+verification: it reads `addresses.amoy.json`, reconstructs the constructor args for the four
+contracts that take them (Identity, ImplementationAuthority, IdFactory, ClaimIssuer) from the
+same book + env the deploy used, and loops `forge verify-contract` over every contract,
+reporting a pass/fail tally. Prefix with `DRY_RUN=1` to print the commands without running them.
+
+`foundry.toml` carries the `amoy` RPC alias and `[etherscan]` verifier config; both read from
+env so no endpoint or key is committed. `Deploy.s.sol` selects
+`packages/shared/addresses.amoy.json` automatically from `block.chainid` (80002), and its
+in-script wiring assertions must pass on Amoy exactly as they do locally.
+
+> **Demo constraint — issuer management key.** On Amoy, as locally,
+> `CLAIM_ISSUER_MANAGEMENT_ADDRESS` **must equal the deployer**: the manual single-broadcast
+> script registers the claim-signer key via `ClaimIssuer.addKey()`, which is `onlyManager`, so
+> the broadcasting deployer has to hold the management purpose. A production deployment would
+> **separate issuer management from the deployer** (management key in a multisig/HSM, distinct
+> from the ops key that deploys). We make this coupling explicit here as a documented demo
+> simplification, not an oversight — the claim *signer* is already a distinct least-privilege
+> purpose-3 key regardless (see `contracts/NOTES.md` §5a and `Deploy.s.sol` step 7).
+
+### Deployed addresses (Amoy · 80002)
+
+Populated from `packages/shared/addresses.amoy.json` after a successful broadcast; each links to
+`https://amoy.polygonscan.com/address/<addr>`. _Pending a funded deployment — the table is filled
+in once `contracts:deploy:amoy` has broadcast and verified._
+
+| Contract | Address |
+| --- | --- |
+| ClaimTopicsRegistry | _pending_ |
+| TrustedIssuersRegistry | _pending_ |
+| IdentityRegistryStorage | _pending_ |
+| IdentityRegistry | _pending_ |
+| ModularCompliance | _pending_ |
+| MaxInvestorsModule | _pending_ |
+| Token (BER-A) | _pending_ |
+| IdentityLibrary | _pending_ |
+| ImplementationAuthority | _pending_ |
+| IdFactory | _pending_ |
+| ClaimIssuer | _pending_ |
+
 ## Vendored contracts & licensing
 
 The audited ERC-3643 suite and ONCHAINID are consumed as **git submodules** under

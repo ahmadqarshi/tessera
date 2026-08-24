@@ -79,10 +79,16 @@ contract Seed is Script, TREXConstants {
     string internal constant LABEL_B = "Orbis Family Office";
     string internal constant LABEL_C = "Unverified negative fixture";
 
-    // The address book (ADDRESS_BOOK_PATH, inherited from {TREXConstants}) is the file Deploy
+    // The address book (_addressBookPath(), inherited from {TREXConstants}) is the file Deploy
     // emits and Seed reads back; the seed manifest below is ours to write. fs_permissions in
-    // foundry.toml grants read-write on the packages/shared directory that holds both.
-    string internal constant SEED_MANIFEST_PATH = "../packages/shared/seed.local.json";
+    // foundry.toml grants read-write on the packages/shared directory that holds both. The
+    // manifest name is chain-selected for the same reason as the address book — a seed on Amoy
+    // must not clobber the local manifest.
+    function _seedManifestPath() internal view returns (string memory) {
+        if (block.chainid == CHAINID_LOCAL) return "../packages/shared/seed.local.json";
+        if (block.chainid == CHAINID_AMOY) return "../packages/shared/seed.amoy.json";
+        revert("seed manifest: unsupported chainid (expected 31337 local or 80002 amoy)");
+    }
 
     /// @dev Live handles resolved from the address book, plus the signing keys, kept in one
     ///      struct so helpers stay under the stack-depth limit.
@@ -130,7 +136,7 @@ contract Seed is Script, TREXConstants {
     /// @dev Resolves live contract handles from the address book Deploy wrote, and reads the
     ///      three broadcasting keys from env. Fails loudly if the book is missing a contract.
     function _loadContext() internal view returns (Ctx memory c) {
-        string memory json = vm.readFile(ADDRESS_BOOK_PATH);
+        string memory json = vm.readFile(_addressBookPath());
         c.token = Token(vm.parseJsonAddress(json, ".contracts.Token"));
         c.identityRegistry =
             IdentityRegistry(vm.parseJsonAddress(json, ".contracts.IdentityRegistry"));
@@ -289,8 +295,9 @@ contract Seed is Script, TREXConstants {
         vm.serializeAddress(root, "token", address(c.token));
         string memory json = vm.serializeString(root, "investors", investorsJson);
 
-        vm.writeJson(json, SEED_MANIFEST_PATH);
-        console2.log("Seed manifest written to", SEED_MANIFEST_PATH);
+        string memory path = _seedManifestPath();
+        vm.writeJson(json, path);
+        console2.log("Seed manifest written to", path);
     }
 
     /// @dev Serializes one investor object; `objId` must be unique across the manifest so
@@ -320,7 +327,8 @@ contract Seed is Script, TREXConstants {
         address walletC,
         Ctx memory c
     ) internal view {
-        console2.log("=== Tessera seed (chainId 31337 local) ===");
+        console2.log("=== Tessera seed ===");
+        console2.log("chainId        ", block.chainid);
         console2.log("-- Investor A: Halvorsen Capital AG (DE / 276) --");
         console2.log("  wallet        ", walletA);
         console2.log("  identity      ", identityA);
