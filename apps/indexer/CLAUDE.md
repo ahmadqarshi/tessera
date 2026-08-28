@@ -63,3 +63,32 @@ await db.transaction(async (t) => {
 Keep this claim accurate and documented in the root README, since it is the artifact reviewers
 look for: *confirmations buffer + hash-tracked reorg rollback + `(txHash, logIndex)`
 idempotency + persisted cursor = exactly-once effective processing across restarts and reorgs.*
+
+## Non-negotiable invariants
+
+Detail and rationale live in the `tessera-backend-standards` skill. These are restated here
+because they must be in context for every session.
+
+- **Four guarantees, each with its own test:** idempotent replay, reorg rollback, restart
+  without gaps, dynamic identity discovery. Never weaken one to make another pass.
+- **One database transaction per batch** — events, derived rows, block hashes, and the
+  checkpoint together or not at all.
+- **Idempotency covers derived state, not just events.** An idempotent insert paired with an
+  unguarded `balance += value` is still broken.
+- **Consume `HolderCountChanged` directly.** Never re-derive holder counts from `Transfer` logs
+  — re-derivation drifts after a rollback.
+- **Investor identities are a dynamic address set.** Discover via `IdentityRegistered`, backfill
+  each from its own deploy block, persist the watch set. Also watch the ClaimIssuer for
+  revocation events. A static address list silently produces an empty claims table rather than
+  an error.
+- **`deployBlock` is the pre-deploy chain tip.** Use it as written; do not optimise it forward.
+- **Rollback touches indexer-owned tables only.** It must never read or write `claims`.
+- **The indexer writes no API-owned table.** It imports the API's Prisma client and defines no
+  schema of its own.
+- **Never index above `safeHead = chainHead - CONFIRMATIONS`.**
+- **Amounts:** `bigint` in memory, `Decimal(78,0)` in the database, decimal strings in JSON.
+  Serialise event args through the shared helper.
+- **A watched contract with no code fails loudly at boot**, naming the address.
+
+Stop and report rather than improvising when a change would give a table a second writer, or
+when passing a test would require weakening any guarantee above.

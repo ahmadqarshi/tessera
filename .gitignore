@@ -33,3 +33,4 @@ apps/api/prisma/*.db
 *.log
 .DS_Store
 coverage/
+internal-docs/
