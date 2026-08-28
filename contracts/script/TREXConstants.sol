@@ -27,5 +27,21 @@ abstract contract TREXConstants {
 
     // Address book emitted by {Deploy} and read back by {Seed}. Written relative to the Foundry
     // root (contracts/); resolves to packages/shared. fs_permissions grants r/w on that dir.
-    string internal constant ADDRESS_BOOK_PATH = "../packages/shared/addresses.local.json";
+    //
+    // Chain-selected, NOT a single constant: the file name must match the chain we are actually
+    // deploying to, or an Amoy run would silently overwrite the local book (and Seed on Amoy
+    // would read local addresses). We derive it from block.chainid so the same script serves both
+    // networks with no flag. Only the two chains this repo targets are recognised — any other id
+    // reverts loudly rather than writing a mislabeled book. The design mockups' "Base · 8453" is
+    // visual filler and is deliberately NOT a branch here (root CLAUDE.md).
+    uint256 internal constant CHAINID_LOCAL = 31337;
+    uint256 internal constant CHAINID_AMOY = 80002;
+
+    /// @dev packages/shared/addresses.<network>.json for the current chain. Both `access` grants
+    ///      in foundry.toml scope to the packages/shared directory, so either file is writable.
+    function _addressBookPath() internal view returns (string memory) {
+        if (block.chainid == CHAINID_LOCAL) return "../packages/shared/addresses.local.json";
+        if (block.chainid == CHAINID_AMOY) return "../packages/shared/addresses.amoy.json";
+        revert("address book: unsupported chainid (expected 31337 local or 80002 amoy)");
+    }
 }

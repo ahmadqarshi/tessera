@@ -35,6 +35,23 @@ verbosity = 3
 fuzz = { runs = 512 }
 invariant = { runs = 256, depth = 32 }
 
+# ── Networks ────────────────────────────────────────────────────────────────────────────────
+# Named RPC endpoints so scripts can use `--rpc-url local|amoy` instead of raw URLs, and so
+# `forge verify-contract --chain amoy` resolves without a hardcoded host. Values come from env
+# (never commit an endpoint with an embedded key). `local` = Anvil (31337); `amoy` = Polygon
+# Amoy testnet (80002), the public showcase chain. The design mockups say "Base · 8453" as
+# visual filler — ignore it; Polygon is canonical (see root CLAUDE.md).
+[rpc_endpoints]
+local = "${RPC_URL_LOCAL}"
+amoy = "${RPC_URL_AMOY}"
+
+# Etherscan/PolygonScan verification config, keyed by the `--chain` alias. PolygonScan's Amoy
+# explorer verifies through the Etherscan-compatible v2 API; the key is read from env
+# (POLYGONSCAN_API_KEY) so no secret is committed. `forge script --verify` and
+# `forge verify-contract --chain amoy` both consume this block.
+[etherscan]
+amoy = { key = "${POLYGONSCAN_API_KEY}", chain = 80002, url = "https://api.etherscan.io/v2/api" }
+
 [fmt]
 line_length = 100
 tab_width = 4

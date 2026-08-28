@@ -400,12 +400,14 @@ contract Deploy is Script, TREXConstants {
         vm.serializeUint(root, "deployBlock", d.deployBlock);
         string memory json = vm.serializeString(root, "contracts", contractsJson);
 
-        vm.writeJson(json, ADDRESS_BOOK_PATH);
-        console2.log("Address book written to", ADDRESS_BOOK_PATH);
+        string memory path = _addressBookPath();
+        vm.writeJson(json, path);
+        console2.log("Address book written to", path);
     }
 
-    function _logAddresses(Deployed memory d) internal pure {
-        console2.log("=== Tessera deployment (chainId 31337 local) ===");
+    function _logAddresses(Deployed memory d) internal view {
+        console2.log("=== Tessera deployment ===");
+        console2.log("chainId                 ", block.chainid);
         console2.log("deployBlock             ", d.deployBlock);
         console2.log("ClaimTopicsRegistry     ", address(d.claimTopicsRegistry));
         console2.log("TrustedIssuersRegistry  ", address(d.trustedIssuersRegistry));

@@ -19,8 +19,10 @@
     "seed": "pnpm --filter @tessera/api seed",
     "contracts:deploy:local": "set -a; [ -f .env ] && . ./.env; set +a; forge script contracts/script/Deploy.s.sol:Deploy --root contracts --rpc-url ${RPC_URL_LOCAL:-http://127.0.0.1:8545} --broadcast",
     "contracts:seed:local": "set -a; [ -f .env ] && . ./.env; set +a; forge script contracts/script/Seed.s.sol:Seed --root contracts --rpc-url ${RPC_URL_LOCAL:-http://127.0.0.1:8545} --broadcast",
-    "contracts:deploy:amoy": "set -a; [ -f .env ] && . ./.env; set +a; forge script contracts/script/Deploy.s.sol:Deploy --root contracts --rpc-url ${RPC_URL_AMOY} --broadcast --verify",
-    "contracts:verify:amoy": "forge verify-contract --root contracts --chain 80002 --etherscan-api-key ${POLYGONSCAN_API_KEY}"
+    "contracts:deploy:amoy": "set -a; [ -f .env ] && . ./.env; set +a; forge script contracts/script/Deploy.s.sol:Deploy --root contracts --rpc-url amoy --broadcast --verify --slow --confirmations ${CONFIRMATIONS:-3}",
+    "contracts:seed:amoy": "set -a; [ -f .env ] && . ./.env; set +a; forge script contracts/script/Seed.s.sol:Seed --root contracts --rpc-url amoy --broadcast --slow --confirmations ${CONFIRMATIONS:-3}",
+    "contracts:verify:amoy": "set -a; [ -f .env ] && . ./.env; set +a; forge verify-contract --root contracts --chain amoy --etherscan-api-key ${POLYGONSCAN_API_KEY} --watch",
+    "contracts:verify:amoy:all": "bash contracts/script/verify-amoy.sh"
   },
   "devDependencies": {
     "prettier": "^3.4.2",
