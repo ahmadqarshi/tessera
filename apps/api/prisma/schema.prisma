@@ -1,9 +1,30 @@
-// Tessera database schema.
+// Tessera database schema — Phase 2 (API) + Phase 3 (indexer).
 //
-// Scaffold pass: only the indexer infrastructure tables that prove the headline subsystem's
-// guarantees (persisted cursor, hash-tracked blocks). Domain and derived read-model tables
-// (holdings, transfers, admin_actions, offerings, …) are added in later phases — see
-// apps/indexer/CLAUDE.md and docs/TASKS.md.
+// One schema, one generated client, one migration story. The indexer imports the client
+// generated from THIS file (apps/api) — there is deliberately no second schema. Phase 3 tables
+// are defined now so the indexer never forces a second baseline migration on an already-seeded
+// database.
+//
+// Table ownership is single-writer and non-negotiable (see the block above `claims` /
+// `claim_chain_state`, and docs/api/DATA-MODEL.md → "Ownership"). The API owns the identity,
+// offering, auth and audit tables; the indexer owns the chain-derived tables. No table has two
+// writers.
+//
+// Amount handling: every monetary or token amount is `Decimal(78, 0)` in the database (exact
+// base-unit integers, never a float, never an `Int` — a uint256 does not fit in a 32-bit
+// column), `bigint` in memory, and a decimal string on the wire.
+//
+// Addresses: every address-typed column stores the LOWERCASE 0x-hex form, always. Prisma does
+// not enforce this at the column level, so every writer must normalise via `lowerAddress()`
+// from `@tessera/shared` before persisting, and every comparison is done lowercased.
+//
+// Column naming: TypeScript stays camelCase; every column is mapped to snake_case with `@map`
+// (tables with `@@map`). This keeps raw SQL — the Phase 3 reconcile command, the operations
+// runbook, and any `$queryRaw` — free of the double-quoting that unmapped camelCase columns
+// force (Postgres folds an unquoted identifier to lowercase, so an unquoted `claimId` fails with
+// "column does not exist"). Columns that are already a single lowercase word need no `@map`.
+// Enum values are UPPER_SNAKE_CASE, the conventional Postgres form, and are stored verbatim
+// (Postgres never case-folds enum labels), so they need no `@map`.
 
 generator client {
   provider = "prisma-client-js"
@@ -14,23 +35,350 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-/// Single-row-per-chain cursor so the indexer resumes exactly where it stopped (no gaps).
+// ---------------------------------------------------------------------------------------------
+// Enums (exported through the generated client)
+// ---------------------------------------------------------------------------------------------
+
+/// Off-chain lifecycle of a claim, as tracked by the API. Deliberately has no REVOKED member:
+/// revocation is *observed* on chain (see `ClaimChainState.revoked`), never *asserted* here.
+enum ClaimStatus {
+  PENDING_SUBMISSION
+  SUBMITTED
+  EXPIRED
+}
+
+/// KYC provider session outcome.
+enum KycStatus {
+  PENDING
+  APPROVED
+  DECLINED
+}
+
+/// Lifecycle of a privileged agent operation, written before broadcast and settled after.
+enum AdminActionStatus {
+  PENDING
+  CONFIRMED
+  FAILED
+}
+
+/// The role a watched contract plays, so the indexer knows which ABI/handlers to apply.
+enum WatchedKind {
+  TOKEN
+  IDENTITY_REGISTRY
+  IDENTITY_REGISTRY_STORAGE
+  MODULAR_COMPLIANCE
+  MAX_INVESTORS_MODULE
+  CLAIM_TOPICS_REGISTRY
+  TRUSTED_ISSUERS_REGISTRY
+  CLAIM_ISSUER
+  INVESTOR_IDENTITY
+}
+
+/// Classification of a token movement, derived from the Transfer log's endpoints and caller.
+/// MINT = from 0x0, BURN = to 0x0, FORCED = agent forcedTransfer, TRANSFER = ordinary.
+enum TransferKind {
+  MINT
+  BURN
+  TRANSFER
+  FORCED
+}
+
+// =============================================================================================
+// Identity & compliance domain  (API-owned unless noted)
+// =============================================================================================
+
+/// A KYC'd investor and their on-chain identity binding. `onchainId` is null until the
+/// investor's ONCHAINID contract is deployed and registered.
+model Investor {
+  wallet      String   @id // lowercase 0x hex
+  onchainId   String?  @map("onchain_id") // ONCHAINID contract address, lowercase hex; null until deployed
+  country     Int // ISO-3166-1 numeric country code
+  displayName String   @map("display_name")
+  email       String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("investors")
+}
+
+// SINGLE-WRITER RULE, and it is not negotiable: `claims` is written ONLY by the API;
+// `claim_chain_state` is written ONLY by the indexer. There is deliberately no foreign key
+// between them — they are joined on (claimId, identityAddress) at read time. The reason is
+// reorg rollback: the indexer must be able to delete and rebuild every row it owns without
+// knowing which columns belong to someone else. A single shared table would force the
+// rollback path to preserve the API's PENDING_SUBMISSION and expiry state column by column,
+// which is exactly the kind of coupling that makes rollback logic subtly and silently wrong.
+//
+// The two tables answer different questions, and the enum split reflects that. `claims.status`
+// tracks what the OPERATOR did: signed it, saw it submitted, let it lapse. `claim_chain_state`
+// tracks what the CHAIN says: present, removed, revoked. Nothing writes REVOKED to
+// `claims.status` — revocation is observed, not asserted. `claims.revocationRequestedAt` and
+// `revocationTxHash` record that the API *asked*; `claim_chain_state.revoked` records that it
+// *happened*. Resolve the pair through `effectiveClaimStatus()` in `@tessera/shared`.
+
+/// API-OWNED. The off-chain lifecycle of a claim only. Never written by the indexer.
+model Claim {
+  id              String      @id @default(cuid())
+  identityAddress String      @map("identity_address") // investor ONCHAINID address bound in the signed digest; lowercase hex
+  topic           Int // ONCHAINID claim topic (1 = KYC, 2 = AML, …)
+  issuerAddress   String      @map("issuer_address") // ClaimIssuer address bound in the claimId; lowercase hex
+  claimId         String      @map("claim_id") // bytes32 hex = keccak256(abi.encode(issuer, topic))
+  signature       String // ERC-735 scheme-1 signature, hex
+  data            String // raw claim payload bytes as hex (the pinned per-topic label bytes)
+  uri             String
+  status          ClaimStatus @default(PENDING_SUBMISSION)
+  issuedAt        DateTime    @default(now()) @map("issued_at")
+  // REQUIRED to exist off-chain even though ERC-735 has no on-chain expiry field. Expiry is an
+  // off-chain concept enforced by issuer-side revokeClaim (Finding 4). Null = never expires.
+  expiresAt       DateTime?   @map("expires_at")
+
+  submittedTxHash       String?   @map("submitted_tx_hash") // set when the investor's wallet submits addClaim
+  revocationRequestedAt DateTime? @map("revocation_requested_at") // the API *asked* for revocation …
+  revocationTxHash      String?   @map("revocation_tx_hash") // … and this is the owner-signed revokeClaim tx it sent
+
+  @@unique([identityAddress, topic, issuerAddress])
+  @@map("claims")
+}
+
+// See the SINGLE-WRITER RULE block above `Claim`. This table is the indexer's half of the split
+// and is written ONLY by the indexer; the API only ever reads it.
+
+/// INDEXER-OWNED. Chain reality for a claim, reconstructed from ERC-735 / ClaimIssuer events.
+/// Written ONLY by the indexer, and fully rebuildable on reorg rollback.
+model ClaimChainState {
+  claimId         String  @map("claim_id") // bytes32 hex, as emitted on chain
+  identityAddress String  @map("identity_address") // investor identity the claim lives on; lowercase hex
+  topic           Int
+  issuerAddress   String  @map("issuer_address") // lowercase hex
+  present         Boolean // ClaimAdded/ClaimChanged -> true, ClaimRemoved -> false
+  revoked         Boolean @default(false) // set by the ClaimIssuer's revocation event
+  signature       String // signature as recorded on chain, hex
+  data            String // data as recorded on chain, hex
+
+  addedBlock    BigInt  @map("added_block") // block of the first ClaimAdded
+  addedTxHash   String  @map("added_tx_hash")
+  addedLogIndex Int     @map("added_log_index")
+  removedBlock  BigInt? @map("removed_block") // block of the ClaimRemoved that cleared `present`
+  revokedBlock  BigInt? @map("revoked_block") // block of the revocation event
+  lastBlock     BigInt  @map("last_block") // highest block whose events have been applied to this row
+
+  @@id([claimId, identityAddress])
+  @@map("claim_chain_state")
+}
+
+/// A KYC provider verification session (Mock by default). `sessionRef` is the provider's id.
+model KycSession {
+  id             String    @id @default(cuid())
+  investorWallet String    @map("investor_wallet") // lowercase hex
+  provider       String // e.g. "mock", "persona"
+  sessionRef     String    @map("session_ref") // provider-side session identifier
+  status         KycStatus @default(PENDING)
+  redirectUrl    String?   @map("redirect_url")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+
+  @@unique([provider, sessionRef])
+  @@map("kyc_sessions")
+}
+
+/// A point-in-time AML/sanctions screening result. `matches` is the raw provider hit list.
+model AmlScreening {
+  id             String   @id @default(cuid())
+  investorWallet String   @map("investor_wallet") // lowercase hex
+  provider       String
+  clear          Boolean
+  matches        Json // array of { list, score }; [] when clear
+  screenedAt     DateTime @default(now()) @map("screened_at")
+
+  @@map("aml_screenings")
+}
+
+// =============================================================================================
+// Token / offering domain  (API-owned)
+// =============================================================================================
+
+/// Off-chain metadata for one tokenized property offering. On-chain live values (paused,
+/// totalSupply) are NOT stored here — those come from `token_state` or a live view call.
+model Offering {
+  tokenAddress      String   @id @map("token_address") // lowercase hex
+  chainId           Int      @map("chain_id")
+  name              String
+  symbol            String
+  decimals          Int
+  complianceAddress String   @map("compliance_address") // ModularCompliance address, lowercase hex
+  tokenOnchainId    String   @map("token_onchain_id") // token's ONCHAINID address, lowercase hex
+  propertyName      String   @map("property_name")
+  propertyAddress   String   @map("property_address") // postal address of the property (not an EVM address)
+  backingValue      Decimal  @map("backing_value") @db.Decimal(78, 0) // appraised backing value, minor units
+  currency          String // ISO-4217 code for backingValue
+  tranche           Json // tranche metadata (sizes, class labels, …)
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  @@map("offerings")
+}
+
+// =============================================================================================
+// Auth & audit  (API-owned)
+// =============================================================================================
+
+/// A single-use, domain-bound SIWE nonce. `address` is null until the signature is verified.
+model SiweNonce {
+  nonce      String    @id
+  address    String? // lowercase hex; set at verify time
+  domain     String
+  issuedAt   DateTime  @default(now()) @map("issued_at")
+  expiresAt  DateTime  @map("expires_at")
+  consumedAt DateTime? @map("consumed_at") // set once; a second use is rejected
+
+  @@map("siwe_nonces")
+}
+
+/// Audit row for every privileged agent operation. Written with status PENDING *before* the
+/// transaction is broadcast, then settled to CONFIRMED or FAILED — so the row survives a crash
+/// mid-flight. Failures are audited too, with `failureReason`.
+model AdminAction {
+  id            String            @id @default(cuid())
+  actorWallet   String            @map("actor_wallet") // agent wallet that performed the action; lowercase hex
+  action        String // dotted verb, e.g. "token.mint"
+  targetAddress String?           @map("target_address") // primary subject of the action; lowercase hex
+  params        Json // action params; amounts serialized as decimal strings, never numbers
+  txHash        String?           @map("tx_hash")
+  status        AdminActionStatus @default(PENDING)
+  failureReason String?           @map("failure_reason")
+  createdAt     DateTime          @default(now()) @map("created_at")
+  confirmedAt   DateTime?         @map("confirmed_at")
+
+  @@map("admin_actions")
+}
+
+// =============================================================================================
+// Indexer domain  (INDEXER-owned — Phase 3 consumes these; defined now for one migration story)
+// =============================================================================================
+
+/// Persisted cursor(s) so the indexer resumes exactly where it stopped, with no gaps. `safeHead`
+/// is the confirmed head (latest − CONFIRMATIONS); events at or below it are reorg-safe.
 model IndexerCheckpoint {
-  chainId       Int      @id
-  lastBlock     BigInt
-  lastBlockHash String
-  updatedAt     DateTime @updatedAt
+  name             String   @id // logical stream name, e.g. "main"
+  lastIndexedBlock BigInt   @map("last_indexed_block")
+  safeHead         BigInt   @map("safe_head")
+  updatedAt        DateTime @updatedAt @map("updated_at")
 
   @@map("indexer_checkpoint")
 }
 
-/// Block hashes tracked per processed block to detect reorgs (hash mismatch -> rollback).
+/// Block hash + parent hash per processed block, so the indexer detects reorgs (a parent-hash
+/// mismatch against the stored predecessor) and knows how far to roll back.
 model IndexedBlock {
-  chainId     Int
-  blockNumber BigInt
-  blockHash   String
-  createdAt   DateTime @default(now())
+  blockNumber BigInt   @id @map("block_number")
+  blockHash   String   @map("block_hash")
+  parentHash  String   @map("parent_hash")
+  indexedAt   DateTime @default(now()) @map("indexed_at")
 
-  @@id([chainId, blockNumber])
   @@map("indexed_blocks")
+}
+
+/// A contract the indexer subscribes to. Registry contracts are known at deploy time; per-investor
+/// identities are discovered at runtime (`discoveredAtBlock`) as they are registered.
+model WatchedContract {
+  address             String      @id // lowercase hex
+  kind                WatchedKind
+  deployBlock         BigInt      @map("deploy_block") // conservative floor for backfill (address-book deployBlock)
+  backfilledFromBlock BigInt?     @map("backfilled_from_block") // lowest block already backfilled
+  backfillComplete    Boolean     @default(false) @map("backfill_complete")
+  discoveredAtBlock   BigInt?     @map("discovered_at_block") // block a runtime-discovered contract was first seen
+  active              Boolean     @default(true)
+  createdAt           DateTime    @default(now()) @map("created_at")
+
+  @@map("watched_contracts")
+}
+
+/// The raw, append-only event log. `(txHash, logIndex)` is the idempotency key the indexer
+/// relies on for exactly-once processing across restarts and replays. `args` holds every value
+/// as JSON with all bigints serialized as decimal strings.
+model ChainEvent {
+  id              String   @id @default(cuid())
+  txHash          String   @map("tx_hash")
+  logIndex        Int      @map("log_index")
+  blockNumber     BigInt   @map("block_number")
+  blockHash       String   @map("block_hash")
+  contractAddress String   @map("contract_address") // lowercase hex
+  eventName       String   @map("event_name")
+  args            Json // decoded args; all bigints as strings
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  @@unique([txHash, logIndex])
+  @@index([blockNumber])
+  @@index([contractAddress, eventName])
+  @@map("chain_events")
+}
+
+/// Derived, replayable ledger of token movements. `(txHash, logIndex)` is the idempotency key.
+model Transfer {
+  txHash       String       @map("tx_hash")
+  logIndex     Int          @map("log_index")
+  blockNumber  BigInt       @map("block_number")
+  blockHash    String       @map("block_hash")
+  tokenAddress String       @map("token_address") // lowercase hex
+  fromAddress  String       @map("from_address") // lowercase hex (0x0 for mint)
+  toAddress    String       @map("to_address") // lowercase hex (0x0 for burn)
+  value        Decimal      @db.Decimal(78, 0)
+  kind         TransferKind
+  timestamp    DateTime
+
+  @@id([txHash, logIndex])
+  @@index([tokenAddress, fromAddress])
+  @@index([tokenAddress, toAddress])
+  @@map("transfers")
+}
+
+/// Derived per-(token, wallet) balance, frozen amount, and address-freeze flag. Idempotently
+/// rebuildable from `transfers` + freeze events; `lastBlock` guards against stale re-application.
+model Holding {
+  tokenAddress  String  @map("token_address") // lowercase hex
+  walletAddress String  @map("wallet_address") // lowercase hex
+  balance       Decimal @db.Decimal(78, 0)
+  frozenTokens  Decimal @map("frozen_tokens") @db.Decimal(78, 0)
+  addressFrozen Boolean @default(false) @map("address_frozen")
+  lastBlock     BigInt  @map("last_block")
+
+  @@id([tokenAddress, walletAddress])
+  @@map("holdings")
+}
+
+/// Derived distinct-holder count per compliance contract, taken from the authoritative
+/// `HolderCountChanged` event (`_compliance`, `_newCount`) — not re-derived from Transfer logs.
+model HolderCount {
+  complianceAddress String @id @map("compliance_address") // lowercase hex
+  count             Int
+  lastBlock         BigInt @map("last_block")
+
+  @@map("holder_counts")
+}
+
+/// Derived per-token pause flag and total supply.
+model TokenState {
+  tokenAddress String  @id @map("token_address") // lowercase hex
+  paused       Boolean @default(false)
+  totalSupply  Decimal @map("total_supply") @db.Decimal(78, 0)
+  lastBlock    BigInt  @map("last_block")
+
+  @@map("token_state")
+}
+
+/// INDEXER-OWNED. One row per detected reorg: an audit trail of when the indexer rewound the
+/// chain-derived tables, how deep, and how much it removed and recomputed. Written ONLY by the
+/// indexer (Phase 3); defined now so the single-migration story holds.
+model Reorg {
+  id                    String   @id @default(cuid())
+  detectedAt            DateTime @map("detected_at") // wall-clock instant the reorg was detected
+  detectedAtBlock       BigInt   @map("detected_at_block") // chain head at detection
+  commonAncestor        BigInt   @map("common_ancestor") // last block shared by both branches (rollback floor)
+  depth                 Int // number of blocks rewound (detectedAtBlock − commonAncestor)
+  eventsRemoved         Int      @map("events_removed") // chain_events rows deleted during rollback
+  derivedKeysRecomputed Int?     @map("derived_keys_recomputed") // derived read-model keys rebuilt; null until computed
+  createdAt             DateTime @default(now()) @map("created_at")
+
+  @@index([detectedAt])
+  @@map("reorgs")
 }

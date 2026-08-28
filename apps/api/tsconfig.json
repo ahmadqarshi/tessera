@@ -1,8 +1,14 @@
 {
   "extends": "@tessera/config/tsconfig.base.json",
   "compilerOptions": {
-    "module": "CommonJS",
-    "moduleResolution": "Node",
+    // NodeNext (not Node10) so TypeScript reads the `exports` field of workspace packages and can
+    // resolve subpath entries like `@tessera/shared/seed-manifest` and the generated ABI modules.
+    // Node10 ignores `exports` and resolves through `main` only, so a subpath import fails the moment
+    // the entry point is split — a resolution error that reads like a build-output problem. NodeNext
+    // still emits CommonJS here (this package has no `"type": "module"`), so the Nest runtime is
+    // unchanged. ("Bundler" is not an option: it requires an ESM `module` setting.)
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "target": "ES2022",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "experimentalDecorators": true,
